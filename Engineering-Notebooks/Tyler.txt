@@ -1,3 +1,10 @@
+9/15/22
+- Added items to backlog about Nemo, learning, etc
+- Researched aeronautical charts apis https://vfrmap.com/map_api.html
+- Discussed with Aaron the timeline of the when servers are going to be available for us
+ 
 9/13/22
 - Helped figure out which backlog items are for this sprint
 - Helped delegate backlog tasks
+
+
