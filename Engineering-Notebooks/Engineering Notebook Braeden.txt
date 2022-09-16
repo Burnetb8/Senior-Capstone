@@ -4,11 +4,14 @@
 -Created GitHub
 -Created Discord
 -Talked with Dr. Liu about vision statement and backlog items
+-Set up meeting with group and Dr. Liu and Aaron
 
+9/14/22
+-Meeting with Dr. Liu and Aaron
 
 9/15/22
 -Met with Dr. Liu and Aaron about tasks for the semester
--Sprint 1 goal decision
+-Create a Sprint 1 goal decision
 -Begin Learning and working through the NeMo Installation
 -Download and Begin to understand Miconda
 -Begin reading and understanding the Dive into Deep Learning Book
