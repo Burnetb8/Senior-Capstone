@@ -9,3 +9,6 @@
 9/15/22
 -Met with Dr. Liu and Aaron about tasks for the semester
 -Sprint 1 goal decision
+-Begin Learning and working through the NeMo Installation
+-Download and Begin to understand Miconda
+-Begin reading and understanding the Dive into Deep Learning Book
