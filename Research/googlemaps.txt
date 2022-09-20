@@ -1,0 +1,4 @@
+Alternatives to google maps API cuz it cost money:
+- Mapbox
+- Radar.com
+- Leaflet.js
