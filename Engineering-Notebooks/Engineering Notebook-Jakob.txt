@@ -1,0 +1,3 @@
+09/20/2022
+Installed Nemo and required dependicies (Cython, pytorch, etc) on my home machine.
+Read over nemo website
