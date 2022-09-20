@@ -8,3 +8,6 @@
 - Helped delegate backlog tasks
 
 
+9/20/22
+- Researched alternatives to google maps api 
+- Got example of plotly dash running 
