@@ -1,0 +1,23 @@
+9/13
+Created Trello with a couple custom rules
+Connected Trello with discord
+Added some items to backlog
+Got assigned some tasks for sprint 1
+
+9/15
+Broke up some backlog tasks to subtasks
+Update sprint backlog
+Edited task assignments
+Asked questions about how specific the aeronautical map needs to be, like if we need to have a way to toggle between VFR and IFR maps
+
+9/20
+Did research on google maps api
+Alternatives to google maps api
+
+9/21
+Set up my Linux PC
+Downloaded Google Earth
+Figured out how to overlay the Jacksonville sectional chart in Google Earth
+	Does not allow you to select any area and the sectional map zoom in
+	Only overlays the google earth view on top of the map
+Found another useful link for google maps api
