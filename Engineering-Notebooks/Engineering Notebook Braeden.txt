@@ -25,4 +25,4 @@
 -Run the code in Google Colab from Dive into Deep Learning Chapter 2
 
 9/22/22
--
+-Talk with Dr. Liu about the Google Maps Paid API issue and Java questions for Plotly Dash
