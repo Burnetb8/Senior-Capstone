@@ -17,7 +17,12 @@
 -Begin reading and understanding the Dive into Deep Learning Book
 
 9/18/22
--Read Nvidia NeMo tutorial and began installation
+-Read Nvidia NeMo tutorial and began installation through google colabs
+-Begin reading Dive into Deep Learning Chapter 2
 
 9/20/22
--Read Dive into Deep Learning Chapter 2 
+-Read Dive into Deep Learning Chapter 2 and understand the code
+-Run the code in Google Colab from Dive into Deep Learning Chapter 2
+
+9/22/22
+-
