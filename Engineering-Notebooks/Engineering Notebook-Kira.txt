@@ -21,3 +21,8 @@ Figured out how to overlay the Jacksonville sectional chart in Google Earth
 	Does not allow you to select any area and the sectional map zoom in
 	Only overlays the google earth view on top of the map
 Found another useful link for google maps api
+
+9/22
+Research on Aeronautical charts/maps api
+Downloaded FAA API python sdk, json file, server stub and documentation
+Uploaded old ATC recordings to github
