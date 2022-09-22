@@ -2,3 +2,7 @@ Alternatives to google maps API cuz it cost money:
 - Mapbox
 - Radar.com
 - Leaflet.js
+
+
+https://www.earthdatascience.org/tutorials/introduction-to-leaflet-animated-maps/
+https://medium.com/@shachiakyaagba_41915/integrating-folium-with-dash-5338604e7c56
