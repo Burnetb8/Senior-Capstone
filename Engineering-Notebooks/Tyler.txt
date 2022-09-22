@@ -11,3 +11,8 @@
 9/20/22
 - Researched alternatives to google maps api 
 - Got example of plotly dash running 
+
+9/22/22
+- Looked at Prof Liu's plotly dash example that he sent via email
+- Researched google maps python alternatives
+- Added Leaflet Folium interactive map example to the Python webserver 
