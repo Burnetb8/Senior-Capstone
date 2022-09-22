@@ -24,5 +24,11 @@
 -Read Dive into Deep Learning Chapter 2 and understand the code
 -Run the code in Google Colab from Dive into Deep Learning Chapter 2
 
-9/22/22
+9/21/22
 -Talk with Dr. Liu about the Google Maps Paid API issue and Java questions for Plotly Dash
+
+9/22/22
+-Desseminate information from Dr. Liu to group from email
+-Fix backlog items
+-Create weekly goals in text file for 9/30
+-Plotly dash explanation on what Dr. Liu wants in Python
