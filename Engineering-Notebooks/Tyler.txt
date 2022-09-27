@@ -16,3 +16,6 @@
 - Looked at Prof Liu's plotly dash example that he sent via email
 - Researched google maps python alternatives
 - Added Leaflet Folium interactive map example to the Python webserver 
+
+9/27/22
+- Added toggle switch to website with example image
