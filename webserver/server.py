@@ -5,7 +5,11 @@ import folium
 from folium.plugins import MarkerCluster
 import pandas as pd
 
-app = Dash(__name__)
+app = Dash(
+    __name__,
+    title='ATC Map',
+)
+app.scripts.config.serve_locally = False
 
 coords = [29.1802, -81.0598]
 
