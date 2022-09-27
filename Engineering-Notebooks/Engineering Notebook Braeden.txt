@@ -32,3 +32,10 @@
 -Fix backlog items
 -Create weekly goals in text file for 9/30
 -Plotly dash explanation on what Dr. Liu wants in Python
+
+9/25/22 
+-Worked with NeMo modeling in Google Colab to better understand ASR
+
+
+9/27/22
+-Mount Google Colab to Google Drive and talk with Aaron about what to present in Sprint 1

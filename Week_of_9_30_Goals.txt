@@ -1,5 +1,0 @@
-Week of 9/30/22 Goals
--Get example map in Web Server Graph and Button Switch -Tyler
--Use an example data sets from the NeMo website to train 2 models (Demonstrate knowledge of the API)- Braeden Jakob 
--Dr. Liu acesss to computers for all of us -Braeden
--Have a recommended API for ground and air maps -Kira
