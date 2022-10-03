@@ -31,4 +31,4 @@ Found out a way to assign point values for the cards in Trello
 10/3
 started testing of aeronautical map api
 started learning plotly dash
-added references to srs
+added references, common definitons, and scope items to srs
