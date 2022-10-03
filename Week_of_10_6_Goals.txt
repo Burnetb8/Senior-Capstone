@@ -3,3 +3,4 @@ Week of 10/6/22 Goals
 -Test API for air maps -Kira
 -Learn Uncertainty Scoring Scatterplots - Braeden Jakob
 -Utterance Distribution Histogram - Braeden Jakob
+-Finish the SRS and SDS
