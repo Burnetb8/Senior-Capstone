@@ -39,3 +39,7 @@
 
 9/27/22
 -Mount Google Colab to Google Drive and talk with Aaron about what to present in Sprint 1
+
+10/3/22
+-Running an example NeMo model to train from a given language and transcribe
+-Begin research into uncertainty models to work with NeMo
