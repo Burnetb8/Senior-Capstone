@@ -27,3 +27,7 @@ Research on Aeronautical charts/maps api
 Downloaded FAA API python sdk, json file, server stub and documentation
 Uploaded old ATC recordings to github
 Found out a way to assign point values for the cards in Trello
+
+10/3
+started testing of aeronautical map api
+started learning plotly dash
