@@ -1,7 +1,5 @@
-Week of 10/6/22 Goals
+Week of 10/7/22 Goals
 -Get example map in Web Server Graph and Button Switch to Aeronautical Map -Tyler 
--Test API for air maps -Kira
--Learn Uncertainty Scoring Scatterplots - Braeden Jakob
--Utterance Distribution Histogram - Braeden Jakob
+-Make a model to train - Braeden Jakob
 -Finish the SRS Tyler Kira
 -Finish the SDS Braeden Jakob
