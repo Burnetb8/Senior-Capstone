@@ -29,7 +29,7 @@ app.layout = html.Div(children=[
         html.Iframe(id='physical_map', srcDoc=open("map.html","r").read(), width="100%", height="500"),
 
         # Hidden by default 
-        html.Img(id='airplane_map', className="hidden", src=app.get_asset_url('Screenshot_20220909-140804.png'), style={"width": "100%"})
+        html.Img(id='airplane_map', className="hidden", src=app.get_asset_url('Jacksonville SEC.png'), style={"width": "100%"})
     ])
 ])
 
