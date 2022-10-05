@@ -1,24 +1,54 @@
-from dash import Dash, html, Input, Output
+from dash import Dash, html, Input, Output, dcc
 import dash_daq as daq
 import plotly.express as px
 import folium
 from folium.plugins import MarkerCluster
 import pandas as pd
+from skimage import io
 
+# Website settings
 app = Dash(
     __name__,
     title='ATC Map',
 )
 app.scripts.config.serve_locally = False
 
-coords = [29.1802, -81.0598]
+# Renders the map into a file
+# Shown by default
+def create_interactive_map():
+    coords = [29.1802, -81.0598]
 
-location_map = folium.Map(location=coords, zoom_start=13)
-location_map.save("map.html")
+    location_map = folium.Map(location=coords, zoom_start=13)
+    location_map.save("map.html")
 
+# Returns the map in ram
+# Hidden by default
+def create_image_map():
+    file = 'assets/Jacksonville SEC.tif'
+    img = io.imread(file) 
+    fig = px.imshow(img, binary_string=True) # Binary string required to render large image https://eoss-image-processing.github.io/2020/09/10/imshow-binary-string.html
+    fig.update_layout(dragmode="pan")
+    
+    # Graph options 
+    config = {
+        'displaylogo': False
+    }
+
+    return {
+        'fig': fig,
+        'config': config
+    }
+
+# Create the two maps
+create_interactive_map()
+image_map = create_image_map()
+map_style = {'width': '100%', 'height': '90vh'}
+
+# Render the layout of the website
 app.layout = html.Div(children=[
     html.H1(children='ATC Map'),
 
+    # Toggle map button
     daq.ToggleSwitch(
         id='map-switch',
         label="Toggle Map",
@@ -26,10 +56,11 @@ app.layout = html.Div(children=[
     ),
 
     html.Div(id='map', children=[
-        html.Iframe(id='interactive_map', srcDoc=open("map.html","r").read(), width="100%", height="500"),
+        # Interactive map
+        html.Iframe(id='interactive_map', srcDoc=open("map.html","r").read(), style=map_style),
 
-        # Hidden by default 
-        html.Img(id='image_map', className="hidden", src=app.get_asset_url('Jacksonville SEC.png'), style={"width": "100%"})
+        # Image map
+        dcc.Graph(id='image_map', figure=image_map['fig'], config=image_map['config'], style=map_style),
     ])
 ])
 
