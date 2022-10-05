@@ -26,22 +26,22 @@ app.layout = html.Div(children=[
     ),
 
     html.Div(id='map', children=[
-        html.Iframe(id='physical_map', srcDoc=open("map.html","r").read(), width="100%", height="500"),
+        html.Iframe(id='interactive_map', srcDoc=open("map.html","r").read(), width="100%", height="500"),
 
         # Hidden by default 
-        html.Img(id='airplane_map', className="hidden", src=app.get_asset_url('Jacksonville SEC.png'), style={"width": "100%"})
+        html.Img(id='image_map', className="hidden", src=app.get_asset_url('Jacksonville SEC.png'), style={"width": "100%"})
     ])
 ])
 
-# Toggle the "hidden" class name for the physical and airplane maps 
+# Toggle the "hidden" class name for the interactive and image maps 
 @app.callback(
-    [Output('physical_map', 'className'), Output('airplane_map', 'className')],
+    [Output('interactive_map', 'className'), Output('image_map', 'className')],
     [Input('map-switch', 'value')]
 )
 def update_output(value):
-    physical_map_classname = "hidden" if value else ""
-    airplane_map_classname = "" if value else "hidden"
-    return physical_map_classname, airplane_map_classname
+    interactive_map_classname = "hidden" if value else ""
+    image_map_classname = "" if value else "hidden"
+    return interactive_map_classname, image_map_classname
 
 if __name__ == '__main__':
     app.run_server(debug=True)
