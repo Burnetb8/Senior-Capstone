@@ -13,7 +13,7 @@ from pathlib import Path
 
 # If I could make this a one-liner I would, but I'm not sure how or if it is possible
 ffmpeg_present = subprocess.run(["command", "-v", "ffmpeg"])
-ffmpeg_present = True if ffmpeg_present.returncode == 0 else False
+ffmpeg_present = not bool(ffmpeg_present.returncode)
 
 
 def enumerate_files(
@@ -43,10 +43,11 @@ def enumerate_files(
     # convert to pathlib object to make system path ops easier
     root = Path(root_path).absolute()
 
-    # check if sphere files need to be converted
-    sphere_paths = glob.glob(str(root.joinpath("**/audio/*.sph")), recursive=True)
-    if len(sphere_paths) > 0:
-        convert_sph_to_wav(sphere_paths)
+    if ffmpeg_present:
+        # check if sphere files need to be converted
+        sphere_paths = glob.glob(str(root.joinpath("**/audio/*.sph")), recursive=True)
+        if len(sphere_paths) > 0:
+            convert_sph_to_wav(sphere_paths)
 
     # audio and transcript globs
     audio = glob.glob(str(root.joinpath("**/audio/*.wav")), recursive=True)
@@ -62,7 +63,7 @@ def enumerate_files(
         return [str(x) for x in audio], [str(x) for x in transcripts]
 
 
-def build_manifests(audio_paths: Union[List[Path], List[str]], transcript_paths: Union[List[Path], List[str]]) -> List[str]:
+def build_atcc_manifests(audio_paths: Union[List[Path], List[str]], transcript_paths: Union[List[Path], List[str]]) -> List[str]:
     """
     Parses transcripts and converts it into NeMo manifest format.
 
@@ -127,7 +128,7 @@ if __name__ == "__main__":
     audio, transcripts = enumerate_files("/data/atc0_ldc94s14a/atc0_comp_raw")
     # manifest format (array or strings, each string corresponds to one line)
     # this is all of the data before being split into train/test/validation
-    manifest_all = build_manifests(audio, transcripts)
+    manifest_all = build_atcc_manifests(audio, transcripts)
 
     # store manifest json in 'manifests' directory
     os.makedirs("manifests", exist_ok=True)
