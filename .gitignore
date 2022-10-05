@@ -1,1 +1,7 @@
 webserver/map.html
+
+**/__pycache__
+__pycache__
+
+examples/**/*.json
+examples/*.json
