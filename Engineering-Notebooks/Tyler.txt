@@ -19,3 +19,8 @@
 
 9/27/22
 - Added toggle switch to website with example image
+
+10/5/22
+- Added TIF to the website instead of the placeholder image
+- Added pan, zoom, and other map controls to the TIF image
+- Moved map creation to functions
