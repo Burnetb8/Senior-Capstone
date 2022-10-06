@@ -24,3 +24,8 @@
 - Added TIF to the website instead of the placeholder image
 - Added pan, zoom, and other map controls to the TIF image
 - Moved map creation to functions
+
+10/6/22
+- Updated SRS
+- Updated SDD
+- Planned for Sprint 2
