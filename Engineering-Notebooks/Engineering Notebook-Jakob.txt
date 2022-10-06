@@ -2,3 +2,15 @@
 Installed Nemo and required dependicies (Cython, pytorch, etc) on my home machine.
 Read over nemo website
 install plotly dash and associated dependicies and ran the code tyler made
+
+09/26/2022
+Read and took notes on the jasper and squeeze papers provided by 
+Aaron. 
+
+10/05/2022 
+Aaron pushed some example code to the github and linked us the
+ATC training data we are going to use
+
+
+10/06/2022
+Created Sprint 1 presentaion
