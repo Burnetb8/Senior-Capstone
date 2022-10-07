@@ -43,3 +43,6 @@
 10/3/22
 -Running an example NeMo model to train from a given language and transcribe
 -Begin research into uncertainty models to work with NeMo
+
+10/6/2022
+-Work on Software Desgin Document 
