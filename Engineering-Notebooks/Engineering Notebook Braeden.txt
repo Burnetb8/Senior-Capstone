@@ -46,3 +46,15 @@
 
 10/6/2022
 -Work on Software Desgin Document 
+
+10/8/2022
+-Worked on creating Backlog Items for Sprint 2
+
+10/10/2022
+-Recieved Laptop from Aaron which has the graphical card ability to complete NVIDIA ASR Nueral Models
+
+10/12/2022
+-Worked on and Finished Sprint 1 Presentation Powerpoint
+
+10/13/2022
+-Presented Sprint 1 Presentation
