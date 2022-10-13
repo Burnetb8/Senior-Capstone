@@ -40,3 +40,6 @@ added nemo reference to srs
 added definitions to srs
 added purpose and mission statement to srs
 added audience to srs
+
+10/13
+added information to demo 1 presentation
