@@ -14,3 +14,12 @@ ATC training data we are going to use
 
 10/06/2022
 Created Sprint 1 presentaion
+
+10/08/2022
+Installed ubuntu and downloaded data from onedrive then transformed it using atcc.py
+
+10/12/2022
+created splitjson.py 
+this file splits the json file created by 
+atcc.py into too a train and test file 
+
