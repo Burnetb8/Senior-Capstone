@@ -33,6 +33,8 @@ started testing of aeronautical map api
 started learning plotly dash
 added references, common definitons, and scope items to srs
 updated the trello
+Added a list and cards in Trello with navigation aids
+
 
 10/4
 updated trello
