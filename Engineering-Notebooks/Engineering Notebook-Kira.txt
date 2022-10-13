@@ -43,3 +43,6 @@ added audience to srs
 
 10/13
 added information to demo 1 presentation
+figured out a way to better handle points to burndown stuff in trello
+created kinda accurate gantt chart
+created estimated burndown for sprint 1
