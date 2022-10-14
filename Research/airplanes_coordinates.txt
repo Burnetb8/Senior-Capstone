@@ -1,5 +1,7 @@
 Need to overlay planes on top of the google map at accurate coordinates based on an API
 
-API : https://aviation-edge.com/developers/
-
-https://pypi.org/project/FlightRadarAPI/
+API:
+https://aviation-edge.com/developers/
+https://pypi.org/project/FlightRadarAPI
+https://github.com/JeanExtreme002/FlightRadarAPI/
+https://www.geodose.com/2020/08/create-flight-tracking-apps-using-python-open-data.html
