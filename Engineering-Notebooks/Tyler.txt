@@ -29,3 +29,7 @@
 - Updated SRS
 - Updated SDD
 - Planned for Sprint 2
+
+10/14/22
+- Make Trello tasks more granular
+- Research aircraft coordinates APIs 
