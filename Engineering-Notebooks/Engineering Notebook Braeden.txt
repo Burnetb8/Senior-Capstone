@@ -61,3 +61,8 @@
 
 10/14/2022 
 -Mount Google Collab and run example scripts using ATC data
+-Specificy requirements and tasks for next Sprint with team
+-Log in to Laptop and Computer with NVIDIA graphics card which has the ability to complete NVIDIA Nueral models
+
+10/18/2022
+-Specify requirements and tasks for next sprint and beyond with Aaron
