@@ -33,3 +33,6 @@
 10/14/22
 - Make Trello tasks more granular
 - Research aircraft coordinates APIs 
+
+10/18/22
+- Update SRS requirements to be more testable based on Aaron feedback
