@@ -3,6 +3,9 @@ Installed Nemo and required dependicies (Cython, pytorch, etc) on my home machin
 Read over nemo website
 install plotly dash and associated dependicies and ran the code tyler made
 
+09/21/22 
+Read through Jasper and Deep speech ATC papers provided Aaron and followed a few of the examples on the Nvidia Nemo website 
+
 09/26/2022
 Read and took notes on the jasper and squeeze papers provided by 
 Aaron. 
@@ -22,4 +25,7 @@ Installed ubuntu and downloaded data from onedrive then transformed it using atc
 created splitjson.py 
 this file splits the json file created by 
 atcc.py into too a train and test file 
+
+
+
 
