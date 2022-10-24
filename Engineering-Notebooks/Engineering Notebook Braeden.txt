@@ -66,3 +66,9 @@
 
 10/18/2022
 -Specify requirements and tasks for next sprint and beyond with Aaron
+
+-10/22/2022
+-Add the OneDrive PowerPoint to the GitHub in Documentation and Submit the Github link
+
+10/25/2022
+-
