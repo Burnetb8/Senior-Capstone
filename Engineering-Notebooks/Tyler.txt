@@ -36,3 +36,6 @@
 
 10/18/22
 - Update SRS requirements to be more testable based on Aaron feedback
+
+10/25/22
+- Crop aeronautical map so it loads a lot faster now
