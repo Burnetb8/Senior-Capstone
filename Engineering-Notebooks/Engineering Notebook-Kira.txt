@@ -48,3 +48,8 @@ added information to demo 1 presentation
 figured out a way to better handle points to burndown stuff in trello
 created kinda accurate gantt chart
 created estimated burndown for sprint 1
+
+10/25
+requested access to get an faa user profile
+requested access to use faa aeronautical data product api
+started research how to use a yaml file in python
