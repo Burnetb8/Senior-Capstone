@@ -74,4 +74,6 @@
 -Meet with Aaron to discuss more ASR related specifications and plan for training models
 
 10/26/2022
--Train models on the GPU laptop and computer in LB 370
+-Set up GPU Laptop and move files so that the models are trained  
+-Train models on the GPU laptop in LB 370
+
