@@ -66,3 +66,12 @@
 
 10/18/2022
 -Specify requirements and tasks for next sprint and beyond with Aaron
+
+-10/22/2022
+-Add the OneDrive PowerPoint to the GitHub in Documentation and Submit the Github link
+
+10/25/2022
+-Meet with Aaron to discuss more ASR related specifications and plan for training models
+
+10/26/2022
+-Train models on the GPU laptop and computer in LB 370

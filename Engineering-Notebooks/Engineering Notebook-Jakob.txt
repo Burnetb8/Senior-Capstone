@@ -18,6 +18,7 @@ ATC training data we are going to use
 10/06/2022
 Created Sprint 1 presentaion
 
+<<<<<<< Updated upstream
 10/08/2022
 Installed ubuntu and downloaded data from onedrive then transformed it using atcc.py
 
@@ -27,5 +28,10 @@ this file splits the json file created by
 atcc.py into too a train and test file 
 
 
+=======
+10/20/2022 
+Fixed packakges on home machine
+created process to install required stuff on school machines
+>>>>>>> Stashed changes
 
 
