@@ -77,3 +77,5 @@
 -Set up GPU Laptop and move files so that the models are trained  
 -Train models on the GPU laptop in LB 370
 
+10/27/2022
+-Found free API for flight tracking OpenSky
