@@ -60,3 +60,6 @@ installed required version of python for NeMO
 installed Pytorch
 installed Anaconda
 installed other needed packages for NeMO
+
+10/28
+Worked on Test Plan document
