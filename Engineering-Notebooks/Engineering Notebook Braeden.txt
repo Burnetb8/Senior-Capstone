@@ -79,3 +79,6 @@
 
 10/27/2022
 -Found free API for flight tracking OpenSky
+
+10/28/2022
+-Work on System Test Plan Document
