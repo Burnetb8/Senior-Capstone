@@ -1,6 +1,7 @@
 from typing import *
 from enum import Enum
 import logging
+import string
 
 
 class TerminalDirective(Enum):
@@ -79,9 +80,11 @@ def get_string_and_normalize(string: str) -> str:
     return string
 
 
-def get_times(string: str) -> Dict[str, float]:
-    times = string.strip().split(" ")
-    return {"start": float(times[0]), "end": float(times[1])}
+def get_times(time_string: str) -> Dict[str, float]:
+    for char in string.whitespace:
+        time_string = time_string.replace(char, " ")
+    times = [x for x in time_string.strip().split(" ") if len(x) != 0]
+    return {"start": float(times[0].strip()), "end": float(times[1].strip())}
 
 
 DIRECTIVES = [str(val) for val in TerminalDirective.__members__.values()]
@@ -96,7 +99,7 @@ callbacks: Dict[TerminalDirective, Callable] = {
 
 def parse_directive(expression: str) -> Directive:
     directive = ""
-    arguments = None
+    arguments = ""
     position = 0
 
     while position < len(expression) and directive not in DIRECTIVES:
@@ -106,7 +109,7 @@ def parse_directive(expression: str) -> Directive:
     if directive in DIRECTIVES and len(directive) != len(expression):
         arguments = expression[position:]
 
-    return Directive(directive=directive, arguments=arguments)
+    return Directive(directive=directive, arguments=arguments.strip())
 
 
 def parse_list(document: str, position: int) -> Tuple[int, List[str]]:
@@ -125,6 +128,7 @@ def parse_list(document: str, position: int) -> Tuple[int, List[str]]:
                 position += 1
 
         if current_char == str(TerminalConstant.OPEN_PAREN):
+            # lisp lists are defined recursively, so it makes sense to parse them recursively as well
             position, temp = parse_list(document, position + 1)
 
             # special case for escaped quotes in text fields

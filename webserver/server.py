@@ -2,9 +2,11 @@ from dash import Dash, html, Input, Output, dcc
 import dash_daq as daq
 import plotly.express as px
 import folium
-from folium.plugins import MarkerCluster
-import pandas as pd
-from skimage import io
+import PIL
+from PIL import Image
+import numpy
+
+PIL.Image.MAX_IMAGE_PIXELS = 933120000 # Allow pillow to load large files (like our tif file)
 
 # Website settings
 app = Dash(
@@ -25,10 +27,27 @@ def create_interactive_map():
 # Hidden by default
 def create_image_map():
     file = 'assets/Jacksonville SEC.tif'
-    img = io.imread(file) 
-    fig = px.imshow(img, binary_string=True) # Binary string required to render large image https://eoss-image-processing.github.io/2020/09/10/imshow-binary-string.html
-    fig.update_layout(dragmode="pan")
-    
+
+    im = Image.open(file) # Open tif
+    imarray = numpy.array(im) # Convert to numpy array
+    cropped_array = imarray[6500:8500, 8000:13000] # Crop: height1:height2, width1:width2
+
+    fig = px.imshow(Image.fromarray(cropped_array),binary_string=True)
+
+    # Enable panning ability, remove white margins around the whole map, set width to 100%
+    fig.update_layout(dragmode="pan", margin=dict(
+        l=0,
+        r=0,
+        b=0,
+        t=0,
+        pad=0   
+    ),
+    autosize=True)
+
+    # Remove the ugly numbers 
+    fig.update_xaxes(visible=False)
+    fig.update_yaxes(visible=False)
+
     # Graph options 
     config = {
         'displaylogo': False
