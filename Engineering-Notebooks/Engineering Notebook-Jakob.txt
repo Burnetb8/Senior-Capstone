@@ -27,14 +27,14 @@ created splitjson.py
 this file splits the json file created by 
 atcc.py into too a train and test file 
 
+10/20/2022 
+Fixed packakges on home machine
+created process to install required stuff on school machines
+
 10/31/2022
 updated splitjson.py to also pull datafrom hiwire dataset and to allow us to more easly change the ratio of training data to validation data
 
 
-=======
-10/20/2022 
-Fixed packakges on home machine
-created process to install required stuff on school machines
->>>>>>> Stashed changes
+
 
 
