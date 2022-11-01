@@ -44,3 +44,7 @@
 - Crop aeronautical map to Daytona Beach
 - Stretch aeronautical map to 100% of page width
 - Remove axes numbers from aeronautical map
+
+11/1/22
+- Add SIR requirements for website
+- Work on System Test Plan
