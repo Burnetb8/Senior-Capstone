@@ -85,3 +85,7 @@
 
 -11/1/2022 
 -Work on System Test Plan Document
+
+11/2/2022
+-Fix and Submit System Test Plan Document
+-Moving data on GPU computer to assist in running a Word Error Rate Script
