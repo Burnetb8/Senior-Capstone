@@ -24,4 +24,10 @@ leave using
 After all this is installed you should be good to follow the tutorial
 nemo website
 
+decompress the data
 
+<<<<<<< Updated upstream
+Useful site for how to install Pytorch: https://www.geeksforgeeks.org/install-pytorch-on-linux/ 
+=======
+tar xvzf 
+>>>>>>> Stashed changes

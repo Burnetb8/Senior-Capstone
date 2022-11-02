@@ -54,3 +54,12 @@ requested access to get an faa user profile
 requested access to use faa aeronautical data product api
 started research how to use a yaml file in python
 peer eval 1
+
+10/26
+installed required version of python for NeMO
+installed Pytorch
+installed Anaconda
+installed other needed packages for NeMO
+
+10/28
+Worked on Test Plan document

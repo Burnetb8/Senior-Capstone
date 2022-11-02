@@ -30,11 +30,23 @@ def create_image_map():
 
     im = Image.open(file) # Open tif
     imarray = numpy.array(im) # Convert to numpy array
-    cropped_array = imarray[5000:6000, 5000:6000] # Crop: height1:height2, width1:width2
+    cropped_array = imarray[6500:8500, 8000:13000] # Crop: height1:height2, width1:width2
 
-    fig = px.imshow(Image.fromarray(cropped_array), binary_string=True) # Binary string required to render large image https://eoss-image-processing.github.io/2020/09/10/imshow-binary-string.html
+    fig = px.imshow(Image.fromarray(cropped_array),binary_string=True)
 
-    fig.update_layout(dragmode="pan")
+    # Enable panning ability, remove white margins around the whole map, set width to 100%
+    fig.update_layout(dragmode="pan", margin=dict(
+        l=0,
+        r=0,
+        b=0,
+        t=0,
+        pad=0   
+    ),
+    autosize=True)
+
+    # Remove the ugly numbers 
+    fig.update_xaxes(visible=False)
+    fig.update_yaxes(visible=False)
 
     # Graph options 
     config = {

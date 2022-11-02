@@ -39,3 +39,12 @@
 
 10/25/22
 - Crop aeronautical map so it loads a lot faster now
+
+10/27/22
+- Crop aeronautical map to Daytona Beach
+- Stretch aeronautical map to 100% of page width
+- Remove axes numbers from aeronautical map
+
+11/1/22
+- Add SIR requirements for website
+- Work on System Test Plan
