@@ -22,6 +22,13 @@ app = Dash(
     external_stylesheets=external_stylesheets
 )
 
+def mark_plane(folium_map, lat, long):
+    folium.Marker(
+        location=[lat, long],
+        popup='<div id="popup">Testing testing</div>',
+    ).add_to(folium_map)
+    folium_map.save("map.html")
+
 # Renders the map into a file
 # Shown by default
 def create_interactive_map():
@@ -29,6 +36,7 @@ def create_interactive_map():
 
     location_map = folium.Map(location=coords, zoom_start=13)
     location_map.save("map.html")
+    return location_map
 
 # Returns the map in ram
 # Hidden by default
@@ -66,9 +74,11 @@ def create_image_map():
     }
 
 # Create the two maps
-create_interactive_map()
+interactive_map = create_interactive_map()
 image_map = create_image_map()
 map_style = {'width': '100%', 'height': '90vh'}
+
+mark_plane(interactive_map, 29.0613, -80.9146)
 
 # Render the layout of the website
 app.layout = html.Div(children=[
