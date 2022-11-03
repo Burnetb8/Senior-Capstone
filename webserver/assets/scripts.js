@@ -41,5 +41,5 @@ function dragElement(element) {
 window.onload = function () {
     setTimeout(function () {
         dragElement(document.getElementById("popup"));
-    }, 250);
+    }, 1000);
 }
