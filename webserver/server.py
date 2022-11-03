@@ -74,6 +74,14 @@ app.layout = html.Div(children=[
         value=False
     ),
 
+    html.Div(
+        id="popup",
+        children=[
+            html.P("test")
+        ],
+        draggable="true"
+    ),
+
     html.Div(id='map', children=[
         # Interactive map
         html.Iframe(id='interactive_map', srcDoc=open("map.html","r").read(), style=map_style),

@@ -48,3 +48,6 @@
 11/1/22
 - Add SIR requirements for website
 - Work on System Test Plan
+
+11/3/22
+- Added floating text box to website
