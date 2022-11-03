@@ -85,7 +85,14 @@
 
 -11/1/2022 
 -Work on System Test Plan Document
+-Look into Word Error Rate functions to implement on the data for statistics from training
 
 11/2/2022
 -Fix and Submit System Test Plan Document
 -Moving data on GPU computer to assist in running a Word Error Rate Script
+-Assist Downloading NeMo and the GitHub onto Kira's computer to run future models
+
+11/3/2022
+-Look into the Python version of the OpenSky API
+-Train a NeMo model on all of the data sets on the GPU laptop
+-Get the .nemo file from the GPU laptop to the GitHub for Jakob to Test Word Error Rate Scripts found
