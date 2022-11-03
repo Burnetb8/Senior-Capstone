@@ -6,14 +6,21 @@ import PIL
 from PIL import Image
 import numpy
 
+external_stylesheets = [{
+    'href': 'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+    'rel': 'stylesheet',
+    'integrity': 'sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf',
+    'crossorigin': 'anonymous'
+}]
+
 PIL.Image.MAX_IMAGE_PIXELS = 933120000 # Allow pillow to load large files (like our tif file)
 
 # Website settings
 app = Dash(
     __name__,
     title='ATC Map',
+    external_stylesheets=external_stylesheets
 )
-app.scripts.config.serve_locally = False
 
 # Renders the map into a file
 # Shown by default
@@ -81,6 +88,8 @@ app.layout = html.Div(children=[
         ],
         draggable="true"
     ),
+
+    html.Div(className="fas fa-plane plane"),
 
     html.Div(id='map', children=[
         # Interactive map

@@ -51,3 +51,4 @@
 
 11/3/22
 - Added floating text box to website
+- Import font awesome, load plane icon on site
