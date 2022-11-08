@@ -37,6 +37,9 @@ updated splitjson.py to also pull datafrom hiwire dataset and to allow us to mor
 11/1/2022 
 Created model_names.txt to hold the information about the names of the models in nemo that we will be using to train
 
+11/07/2022 
+Pytorch works but is unable to use gpu acceleration. Tested word error rate scripts found and ran example models
+
 
 
 
