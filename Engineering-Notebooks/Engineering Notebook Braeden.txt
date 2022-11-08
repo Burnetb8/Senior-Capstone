@@ -96,3 +96,11 @@
 -Look into the Python version of the OpenSky API
 -Train a NeMo model on all of the data sets on the GPU laptop
 -Get the .nemo file from the GPU laptop to the GitHub for Jakob to Test Word Error Rate Scripts found
+
+11/7/2022
+-SRS updates
+
+11/8/2022
+-Uninstall Windows update on GPU laptop causing possible NeMo failures
+-Finish up SDS 
+-Fix GPU laptop
