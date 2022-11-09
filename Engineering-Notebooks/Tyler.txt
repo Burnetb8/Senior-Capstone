@@ -52,3 +52,7 @@
 11/3/22
 - Added floating text box to website
 - Import font awesome, load plane icon on site
+
+11/8/22
+- Created class diagram for website
+- Helped finish SRS 
