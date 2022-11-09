@@ -80,5 +80,7 @@ getting info for window when a flight is selected -› aircraft info and source/
 11/8
 getting time between selected aircrafts last positional update and last general update from Unix timestamp to both local date and time and utc date and time
 get what airline selected aircraft belongs to if the callsign's first 3 characters match with current list of ids, company, and country of the top most common airlines
-
+Filled in blank sections in srs
+moved definitions table in srs to appendix section
+made use case diagram for srs
 
