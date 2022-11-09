@@ -63,3 +63,22 @@ installed other needed packages for NeMO
 
 10/28
 Worked on Test Plan document
+
+11/1
+updated SRS
+
+11/3
+started testing opensky api
+
+11/4
+continued testing adsb and flight tracking info with opensky api
+
+11/7
+getting info for plotting of aircrafts on website
+getting info for window when a flight is selected -› aircraft info and source/data info
+
+11/8
+getting time between selected aircrafts last positional update and last general update from Unix timestamp to both local date and time and utc date and time
+get what airline selected aircraft belongs to if the callsign's first 3 characters match with current list of ids, company, and country of the top most common airlines
+
+
