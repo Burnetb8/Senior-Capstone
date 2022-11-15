@@ -88,4 +88,5 @@ made use case diagram for srs
 added burndown to demo 2
 created adsb code demo for demo 2
 updated trello for sprint 3 with needed tasks to meet semester goal(s)
+updated project timeline slide for demo 2
 
