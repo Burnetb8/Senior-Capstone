@@ -34,7 +34,22 @@ def split_json(all_manifest : str, hiwire_manifest : str, train_manifest : str, 
 
     atcc_all_json += hiwire_all_json
 
-    #training dataset
+    x = 3
+
+    #print(type(atcc_all_json))
+    #print(atcc_all_json[x])
+    #print(type(json.loads(atcc_all_json[x])))
+    #print(type(json.loads(atcc_all_json[x])['duration']))
+
+
+    #Removing clips with duration less than 1 cause that is causing errors
+    mininum_duration = 1
+
+    for atc in atcc_all_json:
+        if(json.loads(atc)['duration'] < mininum_duration):
+            atcc_all_json.remove(atc)
+
+    #creating training set
     training_length = int(len(atcc_all_json) * split_ratio)
     train_list = atcc_all_json[1:training_length]
 
@@ -43,6 +58,7 @@ def split_json(all_manifest : str, hiwire_manifest : str, train_manifest : str, 
         manifest.write("\n".join(train_list))
         #manifest.write("]")
 
+    #creating validation set
     data_len = int(len(atcc_all_json))
     validation_list = atcc_all_json[training_length + 1:data_len]
 
