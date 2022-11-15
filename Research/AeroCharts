@@ -1,1 +1,8 @@
 Can download all aeronautical VFR charts at https://www.faa.gov/air_traffic/flight_info/aeronav/digital_products/vfr 
+
+FAA APIs
+Resources:
+https://github.com/Federal-Aviation-Administration/APRA
+https://github.com/Federal-Aviation-Administration/ASWS
+https://app.swaggerhub.com/apis-docs/FAA/APRA/1.2.0#/Sectional%20Charts/getSectionalInfo
+https://app.swaggerhub.com/apis-docs/FAA/ASWS/1.1.0#/
