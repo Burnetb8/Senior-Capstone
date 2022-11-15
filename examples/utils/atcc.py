@@ -12,7 +12,7 @@ from typing import Union, List, Dict, Tuple
 from pathlib import Path
 
 # If I could make this a one-liner I would, but I'm not sure how or if it is possible
-ffmpeg_present = subprocess.run(["command", "-v", "ffmpeg"])
+ffmpeg_present = subprocess.run(["ffmpeg" ,"-version"])
 ffmpeg_present = not bool(ffmpeg_present.returncode)
 
 
@@ -125,7 +125,7 @@ def convert_sph_to_wav(paths: Union[List[Path], List[str]]):
 
 if __name__ == "__main__":
     # list of audio and transcripts
-    audio, transcripts = enumerate_files("/data/atc0_ldc94s14a/atc0_comp_raw")
+    audio, transcripts = enumerate_files("data/atc0_comp")
     # manifest format (array or strings, each string corresponds to one line)
     # this is all of the data before being split into train/test/validation
     manifest_all = build_atcc_manifests(audio, transcripts)
