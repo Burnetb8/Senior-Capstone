@@ -47,7 +47,7 @@ def create_image_map():
     imarray = numpy.array(im) # Convert to numpy array
     cropped_array = imarray[6500:8500, 8000:13000] # Crop: height1:height2, width1:width2
 
-    fig = px.imshow(Image.fromarray(cropped_array),binary_string=True)
+    fig = px.imshow(cropped_array,binary_string=True)
 
     # Enable panning ability, remove white margins around the whole map, set width to 100%
     fig.update_layout(dragmode="pan", margin=dict(
