@@ -104,3 +104,18 @@
 -Uninstall Windows update on GPU laptop causing possible NeMo failures
 -Finish up SDS 
 -Fix GPU laptop
+
+11/10/22
+-Do initial fixes on the Train_Finetune.py script on the GPU Laptop as it was not working previously
+
+11/15/22
+-Start working on Sprint 2 Powerpoint
+-Talk with Aaron about issues relating to the GPU Laptop
+-Obtained accesss to the Linux account with help of IT
+
+11/16/22
+-Continue working on Sprint 2 PowerPoint
+-Attempt to fix issues with GPU laptop given Aaron's explaination
+
+11/17/22
+-Finish Sprint 2 PowerPoint and present Powerpoint in class
