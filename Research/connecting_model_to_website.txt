@@ -1,0 +1,7 @@
+How to connect website to model:
+Export model to a file
+Store the model and model config files in a subfolder of the webserver folder
+Load the model into the website
+Do some initial work to get the .wav from the website's end
+Call model.predict and pass it the .wav in a loop
+Render results in the <div> and <p>
