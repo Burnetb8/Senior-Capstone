@@ -1,4 +1,5 @@
 from dash import Dash, html, Input, Output, dcc
+from dash.dependencies import State
 import dash_daq as daq
 import plotly.express as px
 import folium
@@ -40,12 +41,12 @@ def create_interactive_map():
 
 # Returns the map in ram
 # Hidden by default
-def create_image_map():
+def create_image_map(x1=8000, x2=13000, y1=6500, y2=8500):
     file = 'assets/Jacksonville SEC.tif'
 
     im = Image.open(file) # Open tif
     imarray = numpy.array(im) # Convert to numpy array
-    cropped_array = imarray[6500:8500, 8000:13000] # Crop: height1:height2, width1:width2
+    cropped_array = imarray[int(y1):int(y2), int(x1):int(x2)] # Crop: height1:height2, width1:width2
 
     fig = px.imshow(cropped_array,binary_string=True)
 
@@ -120,6 +121,17 @@ def update_output(value):
     image_map_classname = "" if value else "hidden"
     return interactive_map_classname, image_map_classname
 
-if __name__ == '__main__':
-    app.run_server(debug=False)
+@app.callback(
+    Output('image_map', 'figure'),
+    Input('image_map', 'relayoutData'),
+    State('image_map', 'figure'))
+def display_relayout_data(relayoutData,figure):
+    print(relayoutData)
 
+    if relayoutData and 'xaxis.range[0]' in relayoutData:
+        return create_image_map(x1=relayoutData['xaxis.range[0]']+8000.5, x2=relayoutData['xaxis.range[1]']+8000.5, y1=relayoutData['yaxis.range[1]']+6500.5, y2=relayoutData['yaxis.range[0]']+6500.5)['fig']
+    else:
+        return figure
+
+if __name__ == '__main__':
+    app.run_server(debug=True)

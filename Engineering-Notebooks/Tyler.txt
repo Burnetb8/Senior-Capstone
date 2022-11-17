@@ -56,3 +56,9 @@
 11/8/22
 - Created class diagram for website
 - Helped finish SRS 
+
+11/17/22
+- Discuss and research how to combine model with website (See research folder)
+- Begin work on cropping map when pan and zoom
+    - Only works on first pan. Second pan, it fails. Something to do with offset?
+- Work on presentation
