@@ -5,3 +5,6 @@ Load the model into the website
 Do some initial work to get the .wav from the website's end
 Call model.predict and pass it the .wav in a loop
 Render results in the <div> and <p>
+
+https://dash.plotly.com/live-updates
+
