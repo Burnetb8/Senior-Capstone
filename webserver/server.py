@@ -4,8 +4,7 @@ import dash_daq as daq
 import plotly.express as px
 import folium
 import PIL
-from PIL import Image
-import numpy
+from matplotlib.pyplot import imread
 
 external_stylesheets = [{
     'href': 'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
@@ -44,8 +43,7 @@ def create_interactive_map():
 def create_image_map(x1=8000, x2=13000, y1=6500, y2=8500):
     file = 'assets/Jacksonville SEC.tif'
 
-    im = Image.open(file) # Open tif
-    imarray = numpy.array(im) # Convert to numpy array
+    imarray = imread(file)
     cropped_array = imarray[int(y1):int(y2), int(x1):int(x2)] # Crop: height1:height2, width1:width2
 
     fig = px.imshow(cropped_array,binary_string=True)
