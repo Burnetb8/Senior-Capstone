@@ -62,3 +62,7 @@
 - Begin work on cropping map when pan and zoom
     - Only works on first pan. Second pan, it fails. Something to do with offset?
 - Work on presentation
+
+11/20/22
+- Change from using plotly express to OpenSeaDragon for rendering tiff image
+- Add code for splitting tiff into tiles
