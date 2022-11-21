@@ -5,3 +5,6 @@ __pycache__
 
 examples/**/*.json
 examples/*.json
+
+node_modules
+package-lock.json

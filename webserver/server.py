@@ -1,10 +1,6 @@
 from dash import Dash, html, Input, Output, dcc
-from dash.dependencies import State
 import dash_daq as daq
-import plotly.express as px
 import folium
-import PIL
-from matplotlib.pyplot import imread
 
 external_stylesheets = [{
     'href': 'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
@@ -12,8 +8,6 @@ external_stylesheets = [{
     'integrity': 'sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf',
     'crossorigin': 'anonymous'
 }]
-
-PIL.Image.MAX_IMAGE_PIXELS = 933120000 # Allow pillow to load large files (like our tif file)
 
 # Website settings
 app = Dash(
@@ -38,43 +32,8 @@ def create_interactive_map():
     location_map.save("map.html")
     return location_map
 
-# Returns the map in ram
-# Hidden by default
-def create_image_map(x1=8000, x2=13000, y1=6500, y2=8500):
-    file = 'assets/Jacksonville SEC.tif'
-
-    imarray = imread(file)
-    cropped_array = imarray[int(y1):int(y2), int(x1):int(x2)] # Crop: height1:height2, width1:width2
-
-    fig = px.imshow(cropped_array,binary_string=True)
-
-    # Enable panning ability, remove white margins around the whole map, set width to 100%
-    fig.update_layout(dragmode="pan", margin=dict(
-        l=0,
-        r=0,
-        b=0,
-        t=0,
-        pad=0   
-    ),
-    autosize=True)
-
-    # Remove the ugly numbers 
-    fig.update_xaxes(visible=False)
-    fig.update_yaxes(visible=False)
-
-    # Graph options 
-    config = {
-        'displaylogo': False
-    }
-
-    return {
-        'fig': fig,
-        'config': config
-    }
-
 # Create the two maps
 interactive_map = create_interactive_map()
-image_map = create_image_map()
 map_style = {'width': '100%', 'height': '90vh'}
 
 mark_plane(interactive_map, 29.0613, -80.9146)
@@ -105,7 +64,7 @@ app.layout = html.Div(children=[
         html.Iframe(id='interactive_map', srcDoc=open("map.html","r").read(), style=map_style),
 
         # Image map
-        dcc.Graph(id='image_map', figure=image_map['fig'], config=image_map['config'], style=map_style),
+        html.Div(id='image_map', style=map_style)
     ])
 ])
 
@@ -118,18 +77,6 @@ def update_output(value):
     interactive_map_classname = "hidden" if value else ""
     image_map_classname = "" if value else "hidden"
     return interactive_map_classname, image_map_classname
-
-@app.callback(
-    Output('image_map', 'figure'),
-    Input('image_map', 'relayoutData'),
-    State('image_map', 'figure'))
-def display_relayout_data(relayoutData,figure):
-    print(relayoutData)
-
-    if relayoutData and 'xaxis.range[0]' in relayoutData:
-        return create_image_map(x1=relayoutData['xaxis.range[0]']+8000.5, x2=relayoutData['xaxis.range[1]']+8000.5, y1=relayoutData['yaxis.range[1]']+6500.5, y2=relayoutData['yaxis.range[0]']+6500.5)['fig']
-    else:
-        return figure
 
 if __name__ == '__main__':
     app.run_server(debug=True)
