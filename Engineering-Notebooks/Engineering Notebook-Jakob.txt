@@ -41,6 +41,8 @@ Created model_names.txt to hold the information about the names of the models in
 Created train_score.py that trains and then immediately scores the models. Also updated splitjson.py to remove any 
 audio clip that has a duration < 1
 
+11/30/2022
+Submitted a discussion post on the Nvidia nemo github to try and get an answer to the error we have gotten.
 
 
 
