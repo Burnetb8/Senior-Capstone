@@ -118,3 +118,10 @@
 
 11/17/22
 -Finish Sprint 2 PowerPoint and present Powerpoint in class
+
+11/29/22
+-Attempt error fixes of GPU laptop scripts
+
+12/1/22
+-Work on SRS and SDS 
+-Run Script on GPU laptop
