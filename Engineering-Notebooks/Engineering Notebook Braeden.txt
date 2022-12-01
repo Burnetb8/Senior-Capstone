@@ -119,9 +119,15 @@
 11/17/22
 -Finish Sprint 2 PowerPoint and present Powerpoint in class
 
+11/20/22
+-Attempt some error fixes for the GPU laptop due to errors recieved when running trainfinetune.py
+
 11/29/22
--Attempt error fixes of GPU laptop scripts
+-Continue research and attempt implementation of error fixes of GPU laptop scripts
 
 12/1/22
--Work on SRS and SDS 
--Run Script on GPU laptop
+-Determine ways to recieve summative statistics while error fixes are resolved from communiction in the Nvidia NEMO GitHub
+-Initialize Google Collab as a way to recieve these statistics and run tests while errors are resolved
+
+12/2/22
+-Work within Google collab to train models and recieve Word Error Rate, Word Error rate per utterance and other statistics for the Jasper, Citrinet, and  Quarznet models 
