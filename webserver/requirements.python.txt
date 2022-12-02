@@ -2,3 +2,5 @@ dash==2.6.1
 dash_daq==0.5.0
 folium==0.12.1
 imagecodecs==2022.9.26
+git+https://github.com/openskynetwork/opensky-api.git#egg=opensky-api&subdirectory=python
+python-dotenv==0.21.0

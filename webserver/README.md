@@ -7,3 +7,7 @@ Tiling:
 Starting:
 1. pip3 install -r requirements.python.txt
 2. python3 server.py
+
+Environment variable file:
+- OPENSKY_USERNAME
+- OPENSKY_PASSWORD

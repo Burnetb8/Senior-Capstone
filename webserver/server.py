@@ -1,9 +1,19 @@
 from dash import Dash, html, Input, Output, dcc
 import dash_daq as daq
 import folium
+from opensky_fetching import fetch_opensky
+
+lat_min = -85.0
+lat_max = -80.0
+lon_min = 28.0
+lon_max = 33.0
+lat_start = -81.0598
+lon_start = 29.1802
+
+opensky_info = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
 
 external_stylesheets = [{
-    'href': 'https://use.fontawesome.com/releases/v5.8.1/css/all.css',
+    'href': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
     'rel': 'stylesheet',
     'integrity': 'sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf',
     'crossorigin': 'anonymous'
@@ -16,17 +26,17 @@ app = Dash(
     external_stylesheets=external_stylesheets
 )
 
-def mark_plane(folium_map, lat, long):
-    folium.Marker(
+def mark_plane(lat, long, name, angle):
+    return folium.Marker(
         location=[lat, long],
-        popup='<div id="popup">Testing testing</div>',
-    ).add_to(folium_map)
-    folium_map.save("map.html")
+        popup=f'<div id="popup">{name}</div>',
+        icon=folium.DivIcon(html=f'<i class="plane fa fa-plane" style="transform: rotate({angle}deg);color: white;font-size: 25px;text-shadow: 0 0 3px #000;">')
+    )
 
 # Renders the map into a file
 # Shown by default
 def create_interactive_map():
-    coords = [29.1802, -81.0598]
+    coords = [lon_start, lat_start]
 
     location_map = folium.Map(location=coords, zoom_start=13)
     location_map.save("map.html")
@@ -36,7 +46,13 @@ def create_interactive_map():
 interactive_map = create_interactive_map()
 map_style = {'width': '100%', 'height': '90vh'}
 
-mark_plane(interactive_map, 29.0613, -80.9146)
+# Mark all planes on interactive map
+for plane in opensky_info:
+    marked_plane = mark_plane(lat=plane.latitude, long=plane.longitude, name=plane.callsign, angle=plane.true_track)
+
+    marked_plane.add_to(interactive_map)
+
+interactive_map.save("map.html")
 
 # Render the layout of the website
 app.layout = html.Div(children=[
