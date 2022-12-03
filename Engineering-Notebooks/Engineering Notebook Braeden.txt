@@ -130,4 +130,6 @@
 -Initialize Google Collab as a way to recieve these statistics and run tests while errors are resolved
 
 12/2/22
+-Attempt Audacity fixes for likely currupted audio files on GPU computer 
 -Work within Google collab to train models and recieve Word Error Rate, Word Error rate per utterance and other statistics for the Jasper, Citrinet, and  Quarznet models 
+-Understand and implement NeMo in google colab to run them and get data 
