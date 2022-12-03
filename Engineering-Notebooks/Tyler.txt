@@ -66,3 +66,8 @@
 11/20/22
 - Change from using plotly express to OpenSeaDragon for rendering tiff image
 - Add code for splitting tiff into tiles
+
+12/2/22
+- Update SRS based on Aaron's comments
+- Use Kira's research and code to add OpenSky integration to fetch planes to the Google map only
+- Research ways to refresh the map without reloading iframe
