@@ -141,3 +141,8 @@
 -Download ATCComp speech data to personal computer and upload the data to my personal google collab to use for training while the GPU Laptop issues are figured out
 -Possible fix for GPU Lpatop is only using hiwire data to train, seems that ATCComp data may be currupted
 -Create script for Google Colab to train models and use the ATCComp data to train these models to get more statistics
+
+12/6/22
+-Run training on GPU Laptop with just Hiwire to see if the error is from a currupted file in ATCComp0 as expecteed by the NVIDIA NeMo Github
+-Start and Compelete the Sprint 3 Presentation
+-Present the Sprint 3 Presentation
