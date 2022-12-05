@@ -136,3 +136,8 @@
 
 12/3/22
 -Complete necessary changes as required by Aaron's comments in SRS and SDS and finalize the formatting for these documents along with submitting them on time
+
+12/5/22
+-Download ATCComp speech data to personal computer and upload the data to my personal google collab to use for training while the GPU Laptop issues are figured out
+-Possible fix for GPU Lpatop is only using hiwire data to train, seems that ATCComp data may be currupted
+-Create script for Google Colab to train models and use the ATCComp data to train these models to get more statistics
