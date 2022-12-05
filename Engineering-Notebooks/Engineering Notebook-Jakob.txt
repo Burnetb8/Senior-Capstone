@@ -18,7 +18,6 @@ ATC training data we are going to use
 10/06/2022
 Created Sprint 1 presentaion
 
-<<<<<<< Updated upstream
 10/08/2022
 Installed ubuntu and downloaded data from onedrive then transformed it using atcc.py
 
@@ -39,6 +38,16 @@ Created model_names.txt to hold the information about the names of the models in
 
 11/07/2022 
 Pytorch works but is unable to use gpu acceleration. Tested word error rate scripts found and ran example models
+
+11/15/2022 
+Created train_score.py that trains and then immediately scores the models. Also updated splitjson.py to remove any 
+audio clip that has a duration < 1
+
+11/30/2022
+Submitted a discussion post on the Nvidia nemo github to try and get an answer to the error we have gotten.
+
+12/05/2022
+Trained using just the Hiwire dataset and it trained successfully. Something about how atcc.py is saving the .wav is screwing with nemos ability to open and see the files.  
 
 
 
