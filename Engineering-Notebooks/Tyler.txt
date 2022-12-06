@@ -71,3 +71,7 @@
 - Update SRS based on Aaron's comments
 - Use Kira's research and code to add OpenSky integration to fetch planes to the Google map only
 - Research ways to refresh the map without reloading iframe
+
+12/6/22
+- Research moving to dash-leaflet from openseadragon for map rendering
+- Render vfr map in dash-leaflet (kinda broken)
