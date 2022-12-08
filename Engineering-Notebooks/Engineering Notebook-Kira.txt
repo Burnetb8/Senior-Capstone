@@ -106,3 +106,7 @@ updated trello
 worked on FAA map code
 Created a google drive for all documents
 Added slides to Final Demo
+
+12/8
+added Opensky-install.txt file to python folder
+added to test plan 
