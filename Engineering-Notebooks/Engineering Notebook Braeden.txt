@@ -146,3 +146,9 @@
 -Run training on GPU Laptop with just Hiwire to see if the error is from a currupted file in ATCComp0 as expecteed by the NVIDIA NeMo Github
 -Start and Compelete the Sprint 3 Presentation
 -Present the Sprint 3 Presentation
+
+12/7/22
+-Work on updating System Test Plan from Professor Akbas feedback
+
+12/8/22
+-Complete updates for System Test Plan and finalize System Test Plan to Submit
