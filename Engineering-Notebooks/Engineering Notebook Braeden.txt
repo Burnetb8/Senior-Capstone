@@ -152,3 +152,6 @@
 
 12/8/22
 -Complete updates for System Test Plan and finalize System Test Plan to Submit
+
+12/11/22
+-Work on and finish the 3 miniute video
