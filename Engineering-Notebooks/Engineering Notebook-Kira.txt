@@ -110,3 +110,7 @@ Added slides to Final Demo
 12/8
 added Opensky-install.txt file to python folder
 added to test plan 
+
+12/13
+assisted in 3-minute video presentation
+updated Trello
