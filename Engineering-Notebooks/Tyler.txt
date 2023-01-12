@@ -75,3 +75,8 @@
 12/6/22
 - Research moving to dash-leaflet from openseadragon for map rendering
 - Render vfr map in dash-leaflet (kinda broken)
+
+1/12/23
+- Met and planned backlog for the next few sprints
+- Planned for sprint 4
+- Continued work on combining the two separate map engines into one for the website 

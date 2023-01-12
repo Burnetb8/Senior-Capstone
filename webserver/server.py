@@ -47,12 +47,22 @@ interactive_map = create_interactive_map()
 map_style = {'width': '100%', 'height': '90vh'}
 
 # Mark all planes on interactive map
-for plane in opensky_info:
-    marked_plane = mark_plane(lat=plane.latitude, long=plane.longitude, name=plane.callsign, angle=plane.true_track)
 
-    marked_plane.add_to(interactive_map)
 
-interactive_map.save("map.html")
+import threading
+
+def plane_update_map():
+    threading.Timer(15.0, plane_update_map).start()
+    print("HELLOOOOOO")
+    
+    for plane in opensky_info:
+        marked_plane = mark_plane(lat=plane.latitude, long=plane.longitude, name=plane.callsign, angle=plane.true_track)
+
+        marked_plane.add_to(interactive_map)
+
+    interactive_map.save("map.html")
+
+plane_update_map()
 
 # Render the layout of the website
 app.layout = html.Div(children=[
