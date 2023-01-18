@@ -10,8 +10,6 @@ lon_max = 33.0
 lat_start = -81.0598
 lon_start = 29.1802
 
-opensky_info = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
-
 external_stylesheets = [{
     'href': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
     'rel': 'stylesheet',
@@ -28,7 +26,7 @@ app = Dash(
 def mark_plane(lat, long, name, angle):
     return dl.DivMarker(
         iconOptions={
-            'html': f'<i class="plane fa fa-plane" style="transform: rotate({angle}deg);color: white;font-size: 25px;text-shadow: 0 0 3px #000;">',
+            'html': f'<i class="plane fa fa-plane" style="transform: rotate({angle-45}deg);color: white;font-size: 25px;text-shadow: 0 0 3px #000;">', # Angle - 45 to account for the font awesome icon pointing 45 degrees northeast at 0 degrees rotation
             'className': ''
         },
         position=(lat, long),
@@ -40,7 +38,11 @@ def mark_plane(lat, long, name, angle):
 def create_interactive_map(planes):
     return dl.Map([
             dl.TileLayer(),
-            planes
+            dl.MarkerClusterGroup(
+                id="plane-markers",
+                children=planes,
+                options={'disableClusteringAtZoom': True}
+            )
         ],
         id='interactive_map',
         zoom=13,
@@ -49,23 +51,14 @@ def create_interactive_map(planes):
     )
 
 # Mark all planes on interactive map
-# import threading
-
 def generate_planes():
-    # threading.Timer(15.0, generate_planes).start()
-    # print("HELLOOOOOO")
-    markers = [mark_plane(
+    opensky_info = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
+    return [mark_plane(
         lat=plane.latitude,
         long=plane.longitude,
         name=plane.callsign,
         angle=plane.true_track
     ) for plane in opensky_info]
-
-    return dl.MarkerClusterGroup(
-        id="markers",
-        children=markers,
-        options={'disableClusteringAtZoom': True}
-    )
 
 # Create the two maps
 planes = generate_planes()
@@ -98,7 +91,12 @@ app.layout = html.Div(children=[
         interactive_map,
 
         # Image map
-        html.Div(id='image_map', style=map_style)
+        html.Div(id='image_map', style=map_style),
+
+        dcc.Interval(
+            id='map-refresh',
+            interval=15*1000 # 15 seconds 
+        )
     ])
 ])
 
@@ -111,6 +109,12 @@ def update_output(value):
     interactive_map_classname = "hidden" if value else ""
     image_map_classname = "" if value else "hidden"
     return interactive_map_classname, image_map_classname
+
+@app.callback(Output('plane-markers', 'children'),
+              Input('map-refresh', 'n_intervals'))
+def update_map(n):
+    p = generate_planes()
+    return p
 
 if __name__ == '__main__':
     app.run_server(debug=True)
