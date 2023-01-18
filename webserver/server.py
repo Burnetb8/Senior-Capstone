@@ -1,6 +1,6 @@
 from dash import Dash, html, Input, Output, dcc
 import dash_daq as daq
-import folium
+import dash_leaflet as dl
 from opensky_fetching import fetch_opensky
 
 lat_min = -85.0
@@ -15,7 +15,6 @@ opensky_info = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
 external_stylesheets = [{
     'href': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
     'rel': 'stylesheet',
-    'integrity': 'sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf',
     'crossorigin': 'anonymous'
 }]
 
@@ -27,42 +26,51 @@ app = Dash(
 )
 
 def mark_plane(lat, long, name, angle):
-    return folium.Marker(
-        location=[lat, long],
-        popup=f'<div id="popup">{name}</div>',
-        icon=folium.DivIcon(html=f'<i class="plane fa fa-plane" style="transform: rotate({angle}deg);color: white;font-size: 25px;text-shadow: 0 0 3px #000;">')
+    return dl.DivMarker(
+        iconOptions={
+            'html': f'<i class="plane fa fa-plane" style="transform: rotate({angle}deg);color: white;font-size: 25px;text-shadow: 0 0 3px #000;">',
+            'className': ''
+        },
+        position=(lat, long),
+        title=name
     )
 
 # Renders the map into a file
 # Shown by default
-def create_interactive_map():
-    coords = [lon_start, lat_start]
-
-    location_map = folium.Map(location=coords, zoom_start=13)
-    location_map.save("map.html")
-    return location_map
-
-# Create the two maps
-interactive_map = create_interactive_map()
-map_style = {'width': '100%', 'height': '90vh'}
+def create_interactive_map(planes):
+    return dl.Map([
+            dl.TileLayer(),
+            planes
+        ],
+        id='interactive_map',
+        zoom=13,
+        center=(lon_start, lat_start),
+        style={'width': '100%', 'height': '90vh', 'z-index': '1'}
+    )
 
 # Mark all planes on interactive map
+# import threading
 
+def generate_planes():
+    # threading.Timer(15.0, generate_planes).start()
+    # print("HELLOOOOOO")
+    markers = [mark_plane(
+        lat=plane.latitude,
+        long=plane.longitude,
+        name=plane.callsign,
+        angle=plane.true_track
+    ) for plane in opensky_info]
 
-import threading
+    return dl.MarkerClusterGroup(
+        id="markers",
+        children=markers,
+        options={'disableClusteringAtZoom': True}
+    )
 
-def plane_update_map():
-    threading.Timer(15.0, plane_update_map).start()
-    print("HELLOOOOOO")
-    
-    for plane in opensky_info:
-        marked_plane = mark_plane(lat=plane.latitude, long=plane.longitude, name=plane.callsign, angle=plane.true_track)
-
-        marked_plane.add_to(interactive_map)
-
-    interactive_map.save("map.html")
-
-plane_update_map()
+# Create the two maps
+planes = generate_planes()
+interactive_map = create_interactive_map(planes)
+map_style = {'width': '100%', 'height': '90vh'}
 
 # Render the layout of the website
 app.layout = html.Div(children=[
@@ -87,7 +95,7 @@ app.layout = html.Div(children=[
 
     html.Div(id='map', children=[
         # Interactive map
-        html.Iframe(id='interactive_map', srcDoc=open("map.html","r").read(), style=map_style),
+        interactive_map,
 
         # Image map
         html.Div(id='image_map', style=map_style)
