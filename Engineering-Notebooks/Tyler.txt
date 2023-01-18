@@ -80,3 +80,8 @@
 - Met and planned backlog for the next few sprints
 - Planned for sprint 4
 - Continued work on combining the two separate map engines into one for the website 
+
+1/18/23
+- Switched google map from Folium to dash-leaflet backend
+- Automatic plane updating for google map every 15 seconds
+- Account for the font awesome default 45 degree northeast offset when the rotation of an icon is set to 0 degrees
