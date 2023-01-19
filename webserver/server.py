@@ -2,6 +2,8 @@ from dash import Dash, html, Input, Output, dcc, ALL, ctx
 import dash_daq as daq
 import dash_leaflet as dl
 from opensky_fetching import fetch_opensky
+from datetime import datetime
+import pytz
 
 lat_min = -85.0
 lat_max = -80.0
@@ -59,15 +61,14 @@ def create_interactive_map(planes):
 # Mark all planes on interactive map
 def generate_planes():
     global all_planes
-    opensky_info = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
-    all_planes = opensky_info
+    all_planes = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
     return [mark_plane(
         lat=plane.latitude,
         long=plane.longitude,
         name=plane.callsign,
         angle=plane.true_track,
         index=index
-    ) for index, plane in enumerate(opensky_info)]
+    ) for index, plane in enumerate(all_planes)]
 
 # Create the two maps
 planes = generate_planes()
@@ -131,25 +132,24 @@ def update_map(n):
 )
 def plane_click(n_clicks):
     global all_planes
-    index = ctx.triggered_id['index']
-    info = None
-    this_plane = all_planes[index]
 
-    info = [
-        f"Callsign: {this_plane.callsign}",
-        f"Origin: {this_plane.origin_country}",
-        f"Last Contact: {this_plane.last_contact}s ago",
-        f"Location: ({this_plane.lat}&deg;, {this_plane.long}&deg;",
-        f"Altitude: {this_plane.geo_altitude}m",
-        f"Velocity: {this_plane.velocity}",
-        f"Track: {this_plane.true_track}&deg;",
-        f"Vertical Rate: {this_plane.vertical_rate}",
-        f"Squawk: {this_plane.squawk}",
-        f"SPI: {this_plane.spi}",
-        f"Source: {this_plane.position_source}",
-        f"Category: {this_plane.category}"
-    ].join("<br>")
-    return html.P(info)
+    if ctx.triggered:
+        index = ctx.triggered_id['index']
+        info = None
+        this_plane = all_planes[index]
+
+        info = [
+            f"Callsign: {this_plane.callsign}",
+            f"Origin: {this_plane.origin_country}",
+            f"Last Contact: {datetime.fromtimestamp(this_plane.last_contact, tz=pytz.timezone('America/New_York')).strftime('%m/%d/%Y %H:%M %Z')}",
+            f"Location: ({this_plane.latitude}\u00B0, {this_plane.longitude}\u00B0)",
+            f"Altitude: {this_plane.geo_altitude}m",
+            f"Velocity: {this_plane.velocity} m/s",
+            f"Track: {this_plane.true_track}\u00B0",
+            f"Vertical Rate: {this_plane.vertical_rate} m/s",
+            f"Squawk: {this_plane.squawk}",
+        ]
+        return html.Div(children=[html.Span([item, html.Br()]) for item in info])
 
 if __name__ == '__main__':
     app.run_server(debug=True)
