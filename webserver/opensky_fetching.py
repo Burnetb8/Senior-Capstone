@@ -8,4 +8,4 @@ api = OpenSkyApi(username=os.getenv("OPENSKY_USERNAME"), password=os.getenv("OPE
 def fetch_opensky(lon_min, lon_max, lat_min, lat_max):
     states = api.get_states(bbox=(lon_min, lon_max, lat_min, lat_max))
 
-    return states.states
+    return states.states if states else []
