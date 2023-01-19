@@ -38,33 +38,8 @@ function dragElement(element) {
     }
 }
 
-function createTilingMap() {
-    // Render the tiling map 
-    var viewer = OpenSeadragon({
-        id: "image_map",
-        prefixUrl: "/openseadragon/images/",
-        tileSources: {
-            height: 12412,
-            width: 16617,
-            tileSize: 512,
-            minLevel: 4,
-            defaultZoomLevel: 17,
-            getTileUrl: function( level, x, y ){
-                return "/assets/output_files/" + level + "/" + x + "_" + y + ".png";
-            }
-        }
-    });
-
-    // Set tiling map initial zoom and pan
-    viewer.addHandler('open', function() {
-        viewer.viewport.zoomTo(4, null, true);
-    })
-}
-
 window.onload = function () {
     setTimeout(function () {
         dragElement(document.getElementById("popup"));
-
-        createTilingMap();
     }, 1000);
 }
