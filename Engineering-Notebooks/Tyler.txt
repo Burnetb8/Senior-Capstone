@@ -85,3 +85,8 @@
 - Switched google map from Folium to dash-leaflet backend
 - Automatic plane updating for google map every 15 seconds
 - Account for the font awesome default 45 degree northeast offset when the rotation of an icon is set to 0 degrees
+
+1/19/23
+- Use pattern matching for click callbacks for plane icons
+- Write plane-specific info in popup div on plane icon click
+- Ran into limitation for OpenSky API: In development, plotly dash restarts very regularly, causing lots of calls to the API. Limitation is 2k requests per day, and I think I hit it. Maybe store test data locally from now on...
