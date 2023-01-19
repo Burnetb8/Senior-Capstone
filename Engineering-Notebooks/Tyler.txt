@@ -90,3 +90,7 @@
 - Use pattern matching for click callbacks for plane icons
 - Write plane-specific info in popup div on plane icon click
 - Ran into limitation for OpenSky API: In development, plotly dash restarts very regularly, causing lots of calls to the API. Limitation is 2k requests per day, and I think I hit it. Maybe store test data locally from now on...
+- Add units to popup box
+- Adjust popup box styling
+- Add error handling for opensky api so website doesn't crash
+- Remove old openseadragon map code
