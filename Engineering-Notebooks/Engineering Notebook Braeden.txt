@@ -168,4 +168,5 @@
 
 1/19/23
 -Begin creation of new model and work on training the new model 
--Update project vision Statement for the final semester and break down backlog to the different group members
+-Update project vision Statement for the final semester and break down backlog to the different group members-
+-Find substitution for ffmpeg file to convert sph file to wav file in atcc.py
