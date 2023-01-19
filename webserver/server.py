@@ -47,7 +47,7 @@ def create_interactive_map(planes):
         id='interactive_map',
         zoom=13,
         center=(lon_start, lat_start),
-        style={'width': '100%', 'height': '90vh', 'z-index': '1'}
+        style={'width': '100%', 'height': '90vh', 'zIndex': '1'}
     )
 
 # Mark all planes on interactive map
