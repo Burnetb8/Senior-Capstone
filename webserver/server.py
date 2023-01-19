@@ -1,4 +1,4 @@
-from dash import Dash, html, Input, Output, dcc
+from dash import Dash, html, Input, Output, dcc, ALL, ctx
 import dash_daq as daq
 import dash_leaflet as dl
 from opensky_fetching import fetch_opensky
@@ -9,6 +9,8 @@ lon_min = 28.0
 lon_max = 33.0
 lat_start = -81.0598
 lon_start = 29.1802
+
+all_planes = []
 
 external_stylesheets = [{
     'href': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
@@ -23,14 +25,18 @@ app = Dash(
     external_stylesheets=external_stylesheets
 )
 
-def mark_plane(lat, long, name, angle):
+def mark_plane(lat, long, name, angle, index):
     return dl.DivMarker(
         iconOptions={
             'html': f'<i class="plane fa fa-plane" style="transform: rotate({angle-45}deg);color: white;font-size: 25px;text-shadow: 0 0 3px #000;">', # Angle - 45 to account for the font awesome icon pointing 45 degrees northeast at 0 degrees rotation
             'className': ''
         },
         position=(lat, long),
-        title=name
+        title=name,
+        id={
+            'type': 'plane',
+            'index': index
+        }
     )
 
 # Renders the map into a file
@@ -52,13 +58,16 @@ def create_interactive_map(planes):
 
 # Mark all planes on interactive map
 def generate_planes():
+    global all_planes
     opensky_info = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
+    all_planes = opensky_info
     return [mark_plane(
         lat=plane.latitude,
         long=plane.longitude,
         name=plane.callsign,
-        angle=plane.true_track
-    ) for plane in opensky_info]
+        angle=plane.true_track,
+        index=index
+    ) for index, plane in enumerate(opensky_info)]
 
 # Create the two maps
 planes = generate_planes()
@@ -115,6 +124,32 @@ def update_output(value):
 def update_map(n):
     p = generate_planes()
     return p
+
+@app.callback(
+    Output('popup', 'children'),
+    Input({'type': 'plane', 'index': ALL}, 'n_clicks')
+)
+def plane_click(n_clicks):
+    global all_planes
+    index = ctx.triggered_id['index']
+    info = None
+    this_plane = all_planes[index]
+
+    info = [
+        f"Callsign: {this_plane.callsign}",
+        f"Origin: {this_plane.origin_country}",
+        f"Last Contact: {this_plane.last_contact}s ago",
+        f"Location: ({this_plane.lat}&deg;, {this_plane.long}&deg;",
+        f"Altitude: {this_plane.geo_altitude}m",
+        f"Velocity: {this_plane.velocity}",
+        f"Track: {this_plane.true_track}&deg;",
+        f"Vertical Rate: {this_plane.vertical_rate}",
+        f"Squawk: {this_plane.squawk}",
+        f"SPI: {this_plane.spi}",
+        f"Source: {this_plane.position_source}",
+        f"Category: {this_plane.category}"
+    ].join("<br>")
+    return html.P(info)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
