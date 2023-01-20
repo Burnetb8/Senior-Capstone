@@ -13,6 +13,7 @@ lat_start = -81.0598
 lon_start = 29.1802
 
 all_planes = []
+selected_plane = None
 
 external_stylesheets = [{
     'href': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
@@ -110,6 +111,19 @@ app.layout = html.Div(children=[
     ])
 ])
 
+def generate_popup_text(this_plane):
+    return [
+        f"Callsign: {this_plane.callsign}",
+        f"Origin: {this_plane.origin_country}",
+        f"Last Contact: {datetime.fromtimestamp(this_plane.last_contact, tz=pytz.timezone('America/New_York')).strftime('%m/%d/%Y %H:%M %Z')}",
+        f"Location: ({this_plane.latitude}\u00B0, {this_plane.longitude}\u00B0)",
+        f"Altitude: {this_plane.geo_altitude}m",
+        f"Velocity: {this_plane.velocity} m/s",
+        f"Track: {this_plane.true_track}\u00B0",
+        f"Vertical Rate: {this_plane.vertical_rate} m/s",
+        f"Squawk: {this_plane.squawk}",
+    ]
+
 # Toggle the "hidden" class name for the interactive and image maps 
 @app.callback(
     [Output('interactive_map', 'className'), Output('image_map', 'className')],
@@ -131,25 +145,22 @@ def update_map(n):
     Input({'type': 'plane', 'index': ALL}, 'n_clicks')
 )
 def plane_click(n_clicks):
-    global all_planes
+    global all_planes, selected_plane
 
     if ctx.triggered:
-        index = ctx.triggered_id['index']
-        info = None
-        this_plane = all_planes[index]
+        if not selected_plane:
+            if 1 in n_clicks:
+                # If no plane selected and click detected, find plane
+                selected_plane = ctx.triggered_id['index']
+            else:
+                # If no plane selected and initial page load, do nothing
+                return html.Div()
+        else:
+            pass # If plane already selected, no need to overwrite variable
 
-        info = [
-            f"Callsign: {this_plane.callsign}",
-            f"Origin: {this_plane.origin_country}",
-            f"Last Contact: {datetime.fromtimestamp(this_plane.last_contact, tz=pytz.timezone('America/New_York')).strftime('%m/%d/%Y %H:%M %Z')}",
-            f"Location: ({this_plane.latitude}\u00B0, {this_plane.longitude}\u00B0)",
-            f"Altitude: {this_plane.geo_altitude}m",
-            f"Velocity: {this_plane.velocity} m/s",
-            f"Track: {this_plane.true_track}\u00B0",
-            f"Vertical Rate: {this_plane.vertical_rate} m/s",
-            f"Squawk: {this_plane.squawk}",
-        ]
-        return html.Div(children=[html.Span([item, html.Br()]) for item in info])
+        this_plane = all_planes[selected_plane]
+
+        return html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(this_plane)])
 
 if __name__ == '__main__':
     app.run_server(debug=True)
