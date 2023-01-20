@@ -13,6 +13,7 @@ lat_start = -81.0598
 lon_start = 29.1802
 
 all_planes = []
+all_planes_info = {}
 selected_plane = None
 
 external_stylesheets = [{
@@ -61,8 +62,9 @@ def create_interactive_map(planes):
 
 # Mark all planes on interactive map
 def generate_planes():
-    global all_planes
+    global all_planes, all_planes_info
     all_planes = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
+    all_planes_info = {plane.callsign: plane for plane in all_planes}
     return [mark_plane(
         lat=plane.latitude,
         long=plane.longitude,
@@ -148,17 +150,16 @@ def plane_click(n_clicks):
     global all_planes, selected_plane
 
     if ctx.triggered:
-        if not selected_plane:
-            if 1 in n_clicks:
-                # If no plane selected and click detected, find plane
-                selected_plane = ctx.triggered_id['index']
-            else:
-                # If no plane selected and initial page load, do nothing
-                return html.Div()
-        else:
-            pass # If plane already selected, no need to overwrite variable
+        click_detected = 1 in n_clicks
 
-        this_plane = all_planes[selected_plane]
+        if click_detected:
+            # If click detected find plane
+            selected_plane = all_planes[ctx.triggered_id['index']].callsign
+        elif not selected_plane:
+            # If initial page load and no plane selected, return blank
+            return html.Div()
+
+        this_plane = all_planes_info[selected_plane]
 
         return html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(this_plane)])
 
