@@ -94,3 +94,9 @@
 - Adjust popup box styling
 - Add error handling for opensky api so website doesn't crash
 - Remove old openseadragon map code
+
+1/21/23:
+- If plane already selected and plane refresh happens, fetch new data for the currently selected plane to put in the popup
+- If plane already selected and plane refresh happens, fetch new data for the currently selected plane to put in the popup
+- Change lookup for popup box plane info to dict
+- Change the indexing of plane icon info to use kvp lookup instead of index. Fixed issues with planes having mismatched coords and details.
