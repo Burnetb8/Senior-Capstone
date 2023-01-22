@@ -1,4 +1,5 @@
-from dash import Dash, html, Input, Output, dcc, ALL, ctx
+import json
+from dash import Dash, html, Input, Output, dcc, ALL, MATCH, callback_context, exceptions
 import dash_daq as daq
 import dash_leaflet as dl
 from opensky_fetching import fetch_opensky
@@ -12,7 +13,6 @@ lon_max = 33.0
 lat_start = -81.0598
 lon_start = 29.1802
 
-all_planes = []
 all_planes_info = {}
 selected_plane = None
 
@@ -29,7 +29,7 @@ app = Dash(
     external_stylesheets=external_stylesheets
 )
 
-def mark_plane(lat, long, name, angle, index):
+def mark_plane(lat, long, name, angle):
     return dl.DivMarker(
         iconOptions={
             'html': f'<i class="plane fa fa-plane" style="transform: rotate({angle-45}deg);color: white;font-size: 25px;text-shadow: 0 0 3px #000;">', # Angle - 45 to account for the font awesome icon pointing 45 degrees northeast at 0 degrees rotation
@@ -39,7 +39,7 @@ def mark_plane(lat, long, name, angle, index):
         title=name,
         id={
             'type': 'plane',
-            'index': index
+            'index': name
         }
     )
 
@@ -62,16 +62,14 @@ def create_interactive_map(planes):
 
 # Mark all planes on interactive map
 def generate_planes():
-    global all_planes, all_planes_info
-    all_planes = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
-    all_planes_info = {plane.callsign: plane for plane in all_planes}
+    global all_planes_info
+    all_planes_info = {plane.callsign: plane for plane in fetch_opensky(lon_min, lon_max, lat_min, lat_max)}
     return [mark_plane(
-        lat=plane.latitude,
-        long=plane.longitude,
-        name=plane.callsign,
-        angle=plane.true_track,
-        index=index
-    ) for index, plane in enumerate(all_planes)]
+        lat=all_planes_info[plane_name].latitude,
+        long=all_planes_info[plane_name].longitude,
+        name=all_planes_info[plane_name].callsign,
+        angle=all_planes_info[plane_name].true_track
+    ) for plane_name in all_planes_info]
 
 # Create the two maps
 planes = generate_planes()
@@ -142,26 +140,38 @@ def update_map(n):
     p = generate_planes()
     return p
 
+# Onclick plane icon
 @app.callback(
     Output('popup', 'children'),
     Input({'type': 'plane', 'index': ALL}, 'n_clicks')
 )
 def plane_click(n_clicks):
-    global all_planes, selected_plane
+    global selected_plane
 
-    if ctx.triggered:
-        click_detected = 1 in n_clicks
+    if 'index' in callback_context.triggered[0]['prop_id']:
+        selected_plane = json.loads(callback_context.triggered[0]['prop_id'][0:-9])['index']
 
-        if click_detected:
-            # If click detected find plane
-            selected_plane = all_planes[ctx.triggered_id['index']].callsign
-        elif not selected_plane:
-            # If initial page load and no plane selected, return blank
-            return html.Div()
+        #TODO prevent initial page load populating popup with index 0's info
+        #TODO Keep the same selected_plane each time map updates
+
+        if selected_plane == None:
+            raise exceptions.PreventUpdate
 
         this_plane = all_planes_info[selected_plane]
 
         return html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(this_plane)])
+    else:
+        raise exceptions.PreventUpdate
+    
+
+# Reset n_clicks attribute for each plane icon, so it can be clicked again
+@app.callback(
+    Output({'type': 'plane', 'index': MATCH}, 'n_clicks'),
+    Input({'type': 'plane', 'index': MATCH}, 'n_clicks')
+)
+def upon_click(n_clicks):
+    if (n_clicks is None): raise exceptions.PreventUpdate
+    return None
 
 if __name__ == '__main__':
     app.run_server(debug=True)
