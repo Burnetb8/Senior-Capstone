@@ -172,8 +172,11 @@
 -Find substitution for ffmpeg file to convert sph file to wav file in atcc.py
 
 1/22/23
--Finish updating project 
+-Finish updating project vision statement for semester
 
 1/23/23
--Check project vision for final semester with Dr. Liu
+-Check project vision statement for final semester with Dr. Liu and Aaron
+-Check with Aaron on the updates for atcc.py with the new sph to wav conversion 
 
+1/24/22
+-Submit project vision statement
