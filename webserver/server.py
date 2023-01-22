@@ -45,12 +45,12 @@ def mark_plane(lat, long, name, angle):
 
 # Renders the map into a file
 # Shown by default
-def create_interactive_map(planes):
+def create_interactive_map():
     return dl.Map([
             dl.TileLayer(),
             dl.MarkerClusterGroup(
                 id="plane-markers",
-                children=planes,
+                children=[],
                 options={'disableClusteringAtZoom': True}
             )
         ],
@@ -72,8 +72,7 @@ def generate_planes():
     ) for plane_name in all_planes_info]
 
 # Create the two maps
-planes = generate_planes()
-interactive_map = create_interactive_map(planes)
+interactive_map = create_interactive_map()
 map_style = {'width': '100%', 'height': '90vh'}
 
 # Render the layout of the website
