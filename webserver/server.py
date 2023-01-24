@@ -163,14 +163,17 @@ def plane_click(n_clicks):
         raise exceptions.PreventUpdate
     
 
+#https://stackoverflow.com/questions/67563745/change-the-value-of-n-click-of-button-in-dash-app
 # Reset n_clicks attribute for each plane icon, so it can be clicked again
 @app.callback(
-    Output({'type': 'plane', 'index': MATCH}, 'n_clicks'),
-    Input({'type': 'plane', 'index': MATCH}, 'n_clicks')
+    Output({'type': 'plane', 'index': ALL}, 'n_clicks'),
+    Input({'type': 'plane', 'index': ALL}, 'n_clicks')
 )
 def upon_click(n_clicks):
-    if (n_clicks is None): raise exceptions.PreventUpdate
-    return None
+    if not 1 in n_clicks: 
+        raise exceptions.PreventUpdate
+    else:
+        return [None for none in n_clicks]
 
 if __name__ == '__main__':
     app.run_server(debug=True)
