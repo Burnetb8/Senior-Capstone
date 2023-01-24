@@ -141,39 +141,23 @@ def update_map(n):
 
 # Onclick plane icon
 @app.callback(
-    Output('popup', 'children'),
+    [Output('popup', 'children'), 
+    Output({'type': 'plane', 'index': ALL}, 'n_clicks')],
     Input({'type': 'plane', 'index': ALL}, 'n_clicks')
 )
 def plane_click(n_clicks):
     global selected_plane
 
-    if 'index' in callback_context.triggered[0]['prop_id']:
+    # If click detected
+    if 1 in n_clicks:
+        # Fetch new plane
         selected_plane = json.loads(callback_context.triggered[0]['prop_id'][0:-9])['index']
-
-        #TODO prevent initial page load populating popup with index 0's info
-        #TODO Keep the same selected_plane each time map updates
-
-        if selected_plane == None:
-            raise exceptions.PreventUpdate
-
-        this_plane = all_planes_info[selected_plane]
-
-        return html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(this_plane)])
-    else:
+    elif not selected_plane:
+        # If no click and no plane, don't do anything
         raise exceptions.PreventUpdate
-    
 
-#https://stackoverflow.com/questions/67563745/change-the-value-of-n-click-of-button-in-dash-app
-# Reset n_clicks attribute for each plane icon, so it can be clicked again
-@app.callback(
-    Output({'type': 'plane', 'index': ALL}, 'n_clicks'),
-    Input({'type': 'plane', 'index': ALL}, 'n_clicks')
-)
-def upon_click(n_clicks):
-    if not 1 in n_clicks: 
-        raise exceptions.PreventUpdate
-    else:
-        return [None for none in n_clicks]
+    # Return the div to the popup, and set reset n_clicks for all planes
+    return (html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(all_planes_info[selected_plane])]), [None for none in n_clicks])
 
 if __name__ == '__main__':
     app.run_server(debug=True)
