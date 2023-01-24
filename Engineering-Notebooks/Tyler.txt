@@ -100,3 +100,9 @@
 - If plane already selected and plane refresh happens, fetch new data for the currently selected plane to put in the popup
 - Change lookup for popup box plane info to dict
 - Change the indexing of plane icon info to use kvp lookup instead of index. Fixed issues with planes having mismatched coords and details.
+
+1/23/22:
+- Fixing bugs from last time
+- Fix clicking on same plane twice not resetting click
+- Reset click counter after verifying if click or not
+- Simplify logic for when to render plane clicks, differentiate between click or load
