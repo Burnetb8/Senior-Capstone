@@ -1,5 +1,6 @@
 import json
-from dash import Dash, html, Input, Output, dcc, ALL, MATCH, callback_context, exceptions
+from dash import Dash, html, Input, Output, dcc, ALL, callback_context
+import dash
 import dash_daq as daq
 import dash_leaflet as dl
 from opensky_fetching import fetch_opensky
@@ -154,10 +155,11 @@ def plane_click(n_clicks):
         selected_plane = json.loads(callback_context.triggered[0]['prop_id'][0:-9])['index']
     elif not selected_plane:
         # If no click and no plane, don't do anything
-        raise exceptions.PreventUpdate
+        return dash.no_update
 
     # Return the div to the popup, and set reset n_clicks for all planes
-    return (html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(all_planes_info[selected_plane])]), [None for none in n_clicks])
+    # Don't push an update to plane elements resetting n_clicks if already none, makes website extremely slow. Only reset n_clicks if not None
+    return (html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(all_planes_info[selected_plane])]), [dash.no_update if not item else None for item in n_clicks])
 
 if __name__ == '__main__':
     app.run_server(debug=True)
