@@ -101,8 +101,11 @@
 - Change lookup for popup box plane info to dict
 - Change the indexing of plane icon info to use kvp lookup instead of index. Fixed issues with planes having mismatched coords and details.
 
-1/23/22:
+1/23/23:
 - Fixing bugs from last time
 - Fix clicking on same plane twice not resetting click
 - Reset click counter after verifying if click or not
 - Simplify logic for when to render plane clicks, differentiate between click or load
+
+1/25/23: 
+- Fix website slow speed: Only update n_clicks if not none
