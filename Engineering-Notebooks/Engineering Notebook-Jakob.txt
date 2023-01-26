@@ -49,6 +49,9 @@ Submitted a discussion post on the Nvidia nemo github to try and get an answer t
 12/05/2022
 Trained using just the Hiwire dataset and it trained successfully. Something about how atcc.py is saving the .wav is screwing with nemos ability to open and see the files.  
 
+01/26/2023
+Downloaded and modified config files for the models we wish to use for our project. Modified our current training scrpits to use these new config files.
+Begain training on these new models.
 
 
 
