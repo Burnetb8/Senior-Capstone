@@ -183,3 +183,6 @@
 
 1/25/22
 -Found Github to try conversion between sph to wav
+
+1/26/22
+-Github solution to sph to wav conversion did not fix, attempt another solution using ffmpeg from original atcc.py
