@@ -186,3 +186,4 @@
 
 1/26/22
 -Github solution to sph to wav conversion did not fix, attempt another solution using ffmpeg from original atcc.py
+-Restructure and set up computer locations in LB 370 for maximum use for training
