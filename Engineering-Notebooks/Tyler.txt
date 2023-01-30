@@ -109,3 +109,8 @@
 
 1/25/23: 
 - Fix website slow speed: Only update n_clicks if not none
+
+1/30/23:
+- Switch map image splitting engine from sharp to pyvips
+Generate new images
+- Switch image map engine from openseadragon to dash-leaflet
