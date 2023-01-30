@@ -61,6 +61,28 @@ def create_interactive_map():
         style={'width': '100%', 'height': '90vh', 'zIndex': '1'}
     )
 
+def create_image_map():
+    return dl.Map([
+        dl.TileLayer(
+            url="/assets/output_files/{z}/{x}_{y}.jpeg",
+            noWrap=True,
+            tileSize=100,
+            # zoomOffset=10
+        ),
+        # dl.MarkerClusterGroup(
+        #     id="plane-markers",
+        #     children=[],
+        #     options={'disableClusteringAtZoom': True}
+        # )
+        ],
+        # zoom=4,
+        # maxZoom=5,
+        # bounds=[[0,24], [32,0]],
+        # center=[0,0],
+        style={'width': '100%', 'height': '90vh', 'zIndex': '1'},
+        id='image_map'
+    )
+
 # Mark all planes on interactive map
 def generate_planes():
     global all_planes_info
@@ -72,8 +94,6 @@ def generate_planes():
         angle=all_planes_info[plane_name].true_track
     ) for plane_name in all_planes_info]
 
-# Create the two maps
-interactive_map = create_interactive_map()
 map_style = {'width': '100%', 'height': '90vh'}
 
 # Render the layout of the website
@@ -99,10 +119,10 @@ app.layout = html.Div(children=[
 
     html.Div(id='map', children=[
         # Interactive map
-        interactive_map,
+        create_interactive_map(),
 
         # Image map
-        html.Div(id='image_map', style=map_style),
+        create_image_map(),
 
         dcc.Interval(
             id='map-refresh',
@@ -135,7 +155,7 @@ def update_output(value):
     return interactive_map_classname, image_map_classname
 
 @app.callback(Output('plane-markers', 'children'),
-              Input('map-refresh', 'n_intervals'))
+                Input('map-refresh', 'n_intervals'))
 def update_map(n):
     p = generate_planes()
     return p
