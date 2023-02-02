@@ -23,6 +23,16 @@ external_stylesheets = [{
     'crossorigin': 'anonymous'
 }]
 
+# https://gamedev.stackexchange.com/a/32556
+def scale_coords(x, src_min, src_max, dest_min, dest_max):
+    return ( x - src_min ) / ( src_max - src_min ) * ( dest_max - dest_min ) + dest_min
+
+def scale_lat(x):
+    return scale_coords(x, 28, 32.25, 50.396936759274446, 84.04426299730034)
+
+def scale_lon(x):
+    return scale_coords(x, -85, -78.5, -161.26172304153445, 4.306640625000001)
+
 # Website settings
 app = Dash(
     __name__,
@@ -66,19 +76,19 @@ def create_image_map():
         dl.TileLayer(
             url="/assets/output_files/{z}/{x}_{y}.jpeg",
             noWrap=True,
-            tileSize=100,
-            # zoomOffset=10
+            tileSize=300,
+            zoomOffset=8
         ),
-        # dl.MarkerClusterGroup(
-        #     id="plane-markers",
-        #     children=[],
-        #     options={'disableClusteringAtZoom': True}
-        # )
+        dl.MarkerClusterGroup(
+            id="plane-markers",
+            children=[],
+            options={'disableClusteringAtZoom': True}
+        )
         ],
-        # zoom=4,
-        # maxZoom=5,
-        # bounds=[[0,24], [32,0]],
-        # center=[0,0],
+        zoom=2,
+        maxZoom=7,
+        minZoom=2,
+        # center=[1000,1000],
         style={'width': '100%', 'height': '90vh', 'zIndex': '1'},
         id='image_map'
     )
@@ -88,8 +98,8 @@ def generate_planes():
     global all_planes_info
     all_planes_info = {plane.callsign: plane for plane in fetch_opensky(lon_min, lon_max, lat_min, lat_max)}
     return [mark_plane(
-        lat=all_planes_info[plane_name].latitude,
-        long=all_planes_info[plane_name].longitude,
+        lat=scale_lat(all_planes_info[plane_name].latitude),
+        long=scale_lon(all_planes_info[plane_name].longitude),
         name=all_planes_info[plane_name].callsign,
         angle=all_planes_info[plane_name].true_track
     ) for plane_name in all_planes_info]
@@ -119,7 +129,7 @@ app.layout = html.Div(children=[
 
     html.Div(id='map', children=[
         # Interactive map
-        create_interactive_map(),
+        # create_interactive_map(),
 
         # Image map
         create_image_map(),
@@ -144,15 +154,15 @@ def generate_popup_text(this_plane):
         f"Squawk: {this_plane.squawk}",
     ]
 
-# Toggle the "hidden" class name for the interactive and image maps 
-@app.callback(
-    [Output('interactive_map', 'className'), Output('image_map', 'className')],
-    [Input('map-switch', 'value')]
-)
-def update_output(value):
-    interactive_map_classname = "hidden" if value else ""
-    image_map_classname = "" if value else "hidden"
-    return interactive_map_classname, image_map_classname
+# # Toggle the "hidden" class name for the interactive and image maps 
+# @app.callback(
+#     [Output('interactive_map', 'className'), Output('image_map', 'className')],
+#     [Input('map-switch', 'value')]
+# )
+# def update_output(value):
+#     interactive_map_classname = "hidden" if value else ""
+#     image_map_classname = "" if value else "hidden"
+#     return interactive_map_classname, image_map_classname
 
 @app.callback(Output('plane-markers', 'children'),
                 Input('map-refresh', 'n_intervals'))

@@ -114,3 +114,7 @@
 - Switch map image splitting engine from sharp to pyvips
 Generate new images
 - Switch image map engine from openseadragon to dash-leaflet
+
+2/2/23:
+- Try to add planes for aeronautical map
+- The planes show up, but are all in the wrong spots
