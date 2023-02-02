@@ -179,7 +179,11 @@ def plane_click(n_clicks):
 
     # Return the div to the popup, and set reset n_clicks for all planes
     # Don't push an update to plane elements resetting n_clicks if already none, makes website extremely slow. Only reset n_clicks if not None
-    return (html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(all_planes_info[selected_plane])]), [dash.no_update if not item else None for item in n_clicks])
+    if selected_plane in all_planes_info:
+        return (html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(all_planes_info[selected_plane])]), [dash.no_update if not item else None for item in n_clicks])
+    else:
+        # Plane must have landed, it's gone
+        return dash.no_update
 
 if __name__ == '__main__':
     app.run_server(debug=True)
