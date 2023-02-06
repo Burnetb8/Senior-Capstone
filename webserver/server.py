@@ -13,6 +13,12 @@ lon_min = 28.0
 lon_max = 33.0
 lat_start = -81.0598
 lon_start = 29.1802
+aeronautical_coords = {
+    'lon_min': -160,
+    'lon_max': 4.306640625000001,
+    'lat_min': 47,
+    'lat_max': 87
+}
 
 active_map = 0 # 0 = google map, 1 = aeronautical chart
 all_planes_info = {}
@@ -33,7 +39,7 @@ def scale_lat(x):
 
     # Only scale coords if on aeronautical chart
     if active_map == 1:
-        return scale_coords(x, 28, 32.25, 50.396936759274446, 84.04426299730034)
+        return scale_coords(x, 28, 32.25, aeronautical_coords['lat_min'], aeronautical_coords['lat_max'])
     else:
         return x
 
@@ -42,7 +48,7 @@ def scale_lon(x):
 
     # Only scale coords if on aeronautical chart
     if active_map == 1:
-        return scale_coords(x, -85, -78.5, -161.26172304153445, 4.306640625000001)
+        return scale_coords(x, -85, -78.5, aeronautical_coords['lon_min'], aeronautical_coords['lon_max'])
     else:
         return x
 
@@ -99,10 +105,11 @@ def create_chart_tilelayer():
 def create_image_map():
     return dl.Map(
     children=[create_chart_tilelayer()],
-    zoom=2,
+    zoom=3,
     maxZoom=7,
-    minZoom=2,
-    # center=[1000,1000],
+    minZoom=3,
+    maxBounds=[[aeronautical_coords['lat_min'], aeronautical_coords['lon_min']], [aeronautical_coords['lat_max'], aeronautical_coords['lon_max']]],
+    center=[0,0],
     style={'width': '100%', 'height': '90vh', 'zIndex': '1'},
     id='image_map'
     )
