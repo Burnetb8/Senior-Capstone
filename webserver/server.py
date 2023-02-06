@@ -14,6 +14,7 @@ lon_max = 33.0
 lat_start = -81.0598
 lon_start = 29.1802
 
+active_map = 0 # 0 = google map, 1 = aeronautical chart
 all_planes_info = {}
 selected_plane = None
 
@@ -28,10 +29,22 @@ def scale_coords(x, src_min, src_max, dest_min, dest_max):
     return ( x - src_min ) / ( src_max - src_min ) * ( dest_max - dest_min ) + dest_min
 
 def scale_lat(x):
-    return scale_coords(x, 28, 32.25, 50.396936759274446, 84.04426299730034)
+    global active_map
+
+    # Only scale coords if on aeronautical chart
+    if active_map == 1:
+        return scale_coords(x, 28, 32.25, 50.396936759274446, 84.04426299730034)
+    else:
+        return x
 
 def scale_lon(x):
-    return scale_coords(x, -85, -78.5, -161.26172304153445, 4.306640625000001)
+    global active_map
+
+    # Only scale coords if on aeronautical chart
+    if active_map == 1:
+        return scale_coords(x, -85, -78.5, -161.26172304153445, 4.306640625000001)
+    else:
+        return x
 
 # Website settings
 app = Dash(
@@ -54,16 +67,20 @@ def mark_plane(lat, long, name, angle):
         }
     )
 
+def create_plane_marker_container():
+    return dl.MarkerClusterGroup(
+        id="plane-markers",
+        children=[],
+        options={'disableClusteringAtZoom': True}
+    )
+
 # Renders the map into a file
 # Shown by default
 def create_interactive_map():
-    return dl.Map([
+    return dl.Map(
+        children=[
             dl.TileLayer(),
-            dl.MarkerClusterGroup(
-                id="plane-markers",
-                children=[],
-                options={'disableClusteringAtZoom': True}
-            )
+            create_plane_marker_container()
         ],
         id='interactive_map',
         zoom=13,
@@ -71,26 +88,23 @@ def create_interactive_map():
         style={'width': '100%', 'height': '90vh', 'zIndex': '1'}
     )
 
+def create_chart_tilelayer():
+    return dl.TileLayer(
+        url="/assets/output_files/{z}/{x}_{y}.jpeg",
+        noWrap=True,
+        tileSize=200,
+        zoomOffset=8
+    )
+
 def create_image_map():
-    return dl.Map([
-        dl.TileLayer(
-            url="/assets/output_files/{z}/{x}_{y}.jpeg",
-            noWrap=True,
-            tileSize=200,
-            zoomOffset=8
-        ),
-        dl.MarkerClusterGroup(
-            id="plane-markers",
-            children=[],
-            options={'disableClusteringAtZoom': True}
-        )
-        ],
-        zoom=2,
-        maxZoom=7,
-        minZoom=2,
-        # center=[1000,1000],
-        style={'width': '100%', 'height': '90vh', 'zIndex': '1'},
-        id='image_map'
+    return dl.Map(
+    children=[create_chart_tilelayer()],
+    zoom=2,
+    maxZoom=7,
+    minZoom=2,
+    # center=[1000,1000],
+    style={'width': '100%', 'height': '90vh', 'zIndex': '1'},
+    id='image_map'
     )
 
 # Mark all planes on interactive map
@@ -129,7 +143,7 @@ app.layout = html.Div(children=[
 
     html.Div(id='map', children=[
         # Interactive map
-        # create_interactive_map(),
+        create_interactive_map(),
 
         # Image map
         create_image_map(),
@@ -154,15 +168,37 @@ def generate_popup_text(this_plane):
         f"Squawk: {this_plane.squawk}",
     ]
 
-# # Toggle the "hidden" class name for the interactive and image maps 
-# @app.callback(
-#     [Output('interactive_map', 'className'), Output('image_map', 'className')],
-#     [Input('map-switch', 'value')]
-# )
-# def update_output(value):
-#     interactive_map_classname = "hidden" if value else ""
-#     image_map_classname = "" if value else "hidden"
-#     return interactive_map_classname, image_map_classname
+# Handler for when the toggle button is clicked
+@app.callback(
+    [Output('interactive_map', 'children'), Output('image_map', 'children'), Output('interactive_map', 'className'), Output('image_map', 'className')],
+    [Input('map-switch', 'value')]
+)
+def update_output(value):
+    global active_map
+    active_map = 0 if not value else 1
+
+    interactive_map_classname = "hidden" if value else ""
+    image_map_classname = "" if value else "hidden"
+
+    if value:
+        # Toggle button activated: Image map
+        # Toggle class and rewrite children for map
+        return (
+            [dl.TileLayer()],
+            [create_chart_tilelayer(),
+            create_plane_marker_container()],
+            interactive_map_classname,
+            image_map_classname
+        )
+    else:
+        # Toggle button not activated: Interactive map
+        # Toggle class and rewrite children for map
+        return (
+            [dl.TileLayer(),
+            create_plane_marker_container()],
+            [create_chart_tilelayer()],interactive_map_classname,
+            image_map_classname
+        )
 
 @app.callback(Output('plane-markers', 'children'),
                 Input('map-refresh', 'n_intervals'))
