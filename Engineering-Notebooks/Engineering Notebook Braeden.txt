@@ -190,3 +190,11 @@
 
 2/2/23
 -Determine issue in preprocessing for Tensor = 1 error in Train_Finetune and understand Aaron's error fixes
+
+2/6/23
+-Begin Sprint 4 Powerpoint presentation and demo
+
+2/7/23
+-Complete Sprint 4 Powerpoint presentation and present the Powerpoint 
+-Begin Sprint 5 goals
+-Talk with Aaron about how to solve final issues with the Neural Modeling
