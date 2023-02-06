@@ -110,7 +110,12 @@ def create_image_map():
 # Mark all planes on interactive map
 def generate_planes():
     global all_planes_info
-    all_planes_info = {plane.callsign: plane for plane in fetch_opensky(lon_min, lon_max, lat_min, lat_max)}
+    new_planes_info = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
+
+    # Only update planes if there are planes to update, otherwise do nothing. This caches the planes if nothing is found
+    if new_planes_info:
+        all_planes_info = {plane.callsign: plane for plane in new_planes_info}
+
     return [mark_plane(
         lat=scale_lat(all_planes_info[plane_name].latitude),
         long=scale_lon(all_planes_info[plane_name].longitude),
