@@ -76,7 +76,7 @@ def create_image_map():
         dl.TileLayer(
             url="/assets/output_files/{z}/{x}_{y}.jpeg",
             noWrap=True,
-            tileSize=300,
+            tileSize=200,
             zoomOffset=8
         ),
         dl.MarkerClusterGroup(
