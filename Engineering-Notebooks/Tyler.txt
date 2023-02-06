@@ -118,3 +118,8 @@ Generate new images
 2/2/23:
 - Try to add planes for aeronautical map
 - The planes show up, but are all in the wrong spots
+
+2/5/23:
+- Fix switching between google and aeronautical maps with the new rendering engine
+- Cache planes when no opensky update found, which prevents planes from disappearing from the map
+- Set max bounds of aeronautical chart map 
