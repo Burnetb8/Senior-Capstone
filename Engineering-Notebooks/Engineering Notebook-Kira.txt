@@ -114,3 +114,30 @@ added to test plan
 12/13
 assisted in 3-minute video presentation
 updated Trello
+
+1/12
+assisted with semester backlog creation
+looked into potential references for noise demodulation and suppression
+
+1/17
+created a when2meet link of outside of class meeting purposes
+
+1/20
+started research into noise reduction
+
+1/25
+worked on VFR version checker and download code
+-FAA APIs used tended to fail after a couple of calls 
+
+1/26
+started trying to figure out how to pull live audio from LiveATC
+- they live stream real time audio but having problem trying to find a way to record the audio and save it to a file
+without potentally adding in another layer of noise
+
+1/31 
+continued noise reduction research
+
+2/7
+continued noise reduction research
+assigned with powerpoint for sprint 4
+updated trello
