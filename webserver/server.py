@@ -80,12 +80,16 @@ def create_plane_marker_container():
         options={'disableClusteringAtZoom': True}
     )
 
+def create_map_scale():
+    return dl.ScaleControl(metric=False)
+
 # Renders the map into a file
 # Shown by default
 def create_interactive_map():
     return dl.Map(
         children=[
             dl.TileLayer(),
+            create_map_scale(),
             create_plane_marker_container()
         ],
         id='interactive_map',
@@ -196,8 +200,10 @@ def update_output(value):
         # Toggle button activated: Image map
         # Toggle class and rewrite children for map
         return (
-            [dl.TileLayer()],
+            [dl.TileLayer(),
+            create_map_scale()],
             [create_chart_tilelayer(),
+            create_map_scale(),
             create_plane_marker_container()],
             interactive_map_classname,
             image_map_classname
@@ -207,8 +213,11 @@ def update_output(value):
         # Toggle class and rewrite children for map
         return (
             [dl.TileLayer(),
+            create_map_scale(),
             create_plane_marker_container()],
-            [create_chart_tilelayer()],interactive_map_classname,
+            [create_chart_tilelayer(),
+            create_map_scale()],
+            interactive_map_classname,
             image_map_classname
         )
 
