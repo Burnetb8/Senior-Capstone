@@ -126,3 +126,4 @@ Generate new images
 
 2/9/23:
 - Add scales to both maps (the scale for the aeronautical chart map is wrong)
+- Change zoom level of the aeronautical chart so that scale matches better 
