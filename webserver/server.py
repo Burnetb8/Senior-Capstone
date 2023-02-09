@@ -14,10 +14,12 @@ lon_max = 33.0
 lat_start = -81.0598
 lon_start = 29.1802
 aeronautical_coords = {
-    'lon_min': -160,
-    'lon_max': 4.306640625000001,
-    'lat_min': 47,
-    'lat_max': 87
+    'lon_min': -175.2,
+    'lon_max': -134,
+    'lat_min': 81.47,
+    'lat_max': 85,
+    'lon_start': -150.28857327997687,
+    'lat_start': 82.71605972541532
 }
 
 active_map = 0 # 0 = google map, 1 = aeronautical chart
@@ -103,17 +105,17 @@ def create_chart_tilelayer():
         url="/assets/output_files/{z}/{x}_{y}.jpeg",
         noWrap=True,
         tileSize=200,
-        zoomOffset=8
+        zoomOffset=6
     )
 
 def create_image_map():
     return dl.Map(
     children=[create_chart_tilelayer()],
-    zoom=3,
-    maxZoom=7,
-    minZoom=3,
+    zoom=8,
+    maxZoom=9,
+    minZoom=4,
     maxBounds=[[aeronautical_coords['lat_min'], aeronautical_coords['lon_min']], [aeronautical_coords['lat_max'], aeronautical_coords['lon_max']]],
-    center=[0,0],
+    center=[aeronautical_coords['lat_start'], aeronautical_coords['lon_start']],
     style={'width': '100%', 'height': '90vh', 'zIndex': '1'},
     id='image_map'
     )
@@ -251,6 +253,6 @@ def plane_click(n_clicks):
     else:
         # Plane must have landed, it's gone
         return dash.no_update
-
+        
 if __name__ == '__main__':
     app.run_server(debug=True)
