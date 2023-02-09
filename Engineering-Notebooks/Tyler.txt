@@ -123,3 +123,6 @@ Generate new images
 - Fix switching between google and aeronautical maps with the new rendering engine
 - Cache planes when no opensky update found, which prevents planes from disappearing from the map
 - Set max bounds of aeronautical chart map 
+
+2/9/23:
+- Add scales to both maps (the scale for the aeronautical chart map is wrong)
