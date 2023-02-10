@@ -198,3 +198,6 @@
 -Complete Sprint 4 Powerpoint presentation and present the Powerpoint 
 -Begin Sprint 5 goals
 -Talk with Aaron about how to solve final issues with the Neural Modeling
+
+2/9/23
+-Implement Aaron fix for running models and run quartznet model on all of the datasets to include ATC_comp and Hiwire datasets to train the model and get an updated and imporved Word Error Rate
