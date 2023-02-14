@@ -100,6 +100,7 @@ model:
         dilation: [1]
         dropout: 0.0
         residual: false
+        #this thing should point to model defaults section but for some reason not doing it and it make a me sad!!!
         separable: ${model.model_defaults.separable}
         se: ${model.model_defaults.se}
         se_context_size: ${model.model_defaults.se_context_size}

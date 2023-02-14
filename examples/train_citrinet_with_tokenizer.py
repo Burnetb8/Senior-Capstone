@@ -4,14 +4,21 @@ import torch
 import gc
 from ruamel.yaml import YAML
 from omegaconf import DictConfig
+from omegaconf import OmegaConf, open_dict
 
 config_path = 'config/citrinet_512_tokenizer.yaml'
+#config_path = 'config/citrinet_512.yaml'
 train_manifest = 'utils/manifests/atcc_train.json'
 validation_manifest = 'utils/manifests/atcc_validation.json'
 #this is a model found by running test.py looking for EncDecoCTCModelBPE
 base_model_name = 'stt_en_citrinet_512'
 save_as = 'ft100epoch_stt_en_citrinet_512_tokenizer.nemo'
+tokenizer_model = 'test_tokenizer.model'
 
+
+"""
+
+#try and load using omegaconf instead
 with open(config_path, 'r') as f:
     config = YAML(typ='safe').load(f)
 
@@ -25,16 +32,33 @@ config['model']['validation_ds']['manifest_filepath'] = validation_manifest
 
 config['model']['optim']['lr'] = 0.001
 
-config['model']['tokenizer']['dir'] = "test_tokenizer.model"
+#config['model']['tokenizer']['dir'] = "test_tokenizer.model"
 
-config['model']['tokenizer']['type'] = "bpe"
+#config['model']['tokenizer']['type'] = "bpe"
 
-trainer = pl.Trainer(gpus=[0], max_epochs=100)
 
-base_model = nemo_asr.models.EncDecCTCModelBPE(cfg = DictConfig(config['model']))
+
+model_config = DictConfig(config['model'])
+
+base_model = nemo_asr.models.EncDecCTCModelBPE(cfg = model_config)
 #base_model = nemo_asr.models.EncDecCTCModelBPE.from_pretrained(base_model_name)
 
 base_model.change_vocabulary(new_tokenizer_dir = DictConfig(config['model']['tokenizer']['dir']), new_tokenizer_type = DictConfig(config['model']['tokenizer']['type']))
+"""
+
+
+trainer = pl.Trainer(gpus=[0], max_epochs=100)
+params = OmegaConf.load(config_path)
+
+params.model.tokenizer.dir = tokenizer_model
+params.model.tokenizer.type = "bpe"
+
+params.model.train_ds.manifest_filepath = train_manifest
+params.model.validation_ds.manifest_filepath = validation_manifest
+
+#base_model.change_vocabulary(new_tokenizer_dir = 'test_tokenizer.model', new_tokenizer_type = DictConfig(config['model']['tokenizer']['type']))
+
+base_model = nemo_asr.models.EncDecCTCModelBPE(cfg=params.model, trainer=trainer)
 
 base_model.setup_optimization(optim_config=DictConfig(config['model']['optim']))
 base_model.setup_training_data(train_data_config=DictConfig(config['model']['train_ds']))
