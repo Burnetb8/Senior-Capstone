@@ -53,6 +53,11 @@ Trained using just the Hiwire dataset and it trained successfully. Something abo
 Downloaded and modified config files for the models we wish to use for our project. Modified our current training scrpits to use these new config files.
 Begain training on these new models.
 
+02/09/2023
+Created script to train tokenizer and was successful implemented data fix found by braden and Aaron
+
+02/14/2023
+Created a script to train a citrinet model with tokenizer having issues with config files
 
 
 
