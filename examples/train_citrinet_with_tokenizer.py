@@ -13,7 +13,7 @@ validation_manifest = 'utils/manifests/atcc_validation.json'
 #this is a model found by running test.py looking for EncDecoCTCModelBPE
 base_model_name = 'stt_en_citrinet_512'
 save_as = 'ft100epoch_stt_en_citrinet_512_tokenizer.nemo'
-tokenizer_model = 'test_tokenizer.model'
+tokenizer_model = 'tokenizers/'
 
 
 """
@@ -51,7 +51,7 @@ trainer = pl.Trainer(gpus=[0], max_epochs=100)
 params = OmegaConf.load(config_path)
 
 params.model.tokenizer.dir = tokenizer_model
-params.model.tokenizer.type = "bpe"
+params.model.tokenizer.type = 'bpe'
 
 params.model.train_ds.manifest_filepath = train_manifest
 params.model.validation_ds.manifest_filepath = validation_manifest
