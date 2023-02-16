@@ -13,7 +13,7 @@ validation_manifest = 'utils/manifests/atcc_validation.json'
 #this is a model found by running test.py looking for EncDecoCTCModelBPE
 base_model_name = 'stt_en_citrinet_512'
 save_as = 'ft100epoch_stt_en_citrinet_512_tokenizer.nemo'
-tokenizer_model = 'tokenizers/'
+tokenizer_model = 'tokenizers/tokenizer_spe_bpe_v400/'
 
 
 """
@@ -60,10 +60,11 @@ params.model.validation_ds.manifest_filepath = validation_manifest
 
 base_model = nemo_asr.models.EncDecCTCModelBPE(cfg=params.model, trainer=trainer)
 
+"""
 base_model.setup_optimization(optim_config=DictConfig(config['model']['optim']))
 base_model.setup_training_data(train_data_config=DictConfig(config['model']['train_ds']))
 base_model.setup_validation_data(val_data_config=DictConfig(config['model']['validation_ds']))
-
+"""
 
 trainer.fit(base_model)
 
