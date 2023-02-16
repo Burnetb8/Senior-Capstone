@@ -201,3 +201,10 @@
 
 2/9/23
 -Implement Aaron fix for running models and run quartznet model on all of the datasets to include ATC_comp and Hiwire datasets to train the model and get an updated and imporved Word Error Rate
+
+2/14/23
+-Updated Professor Pang on the status of our project and goals for this sprint including the website updates and model updates
+-Completed Peer Review for the previous sprint
+
+2/16/23
+-Created the script to train quartnet model on the GPU Laptop using Jakob's previous Citrinet script and began implementation of the Jasper script to train again
