@@ -60,6 +60,7 @@ Created script to train tokenizer and was successful implemented data fix found 
 Created a script to train a citrinet model with tokenizer having issues with config files
 
 02/16/2023
-used the nemo provided script to train a tokenizer then updated train_citrinet_with_tokenizer to work properly and started training
+used the nemo provided script to train a tokenizer then updated train_citrinet_with_tokenizer to work properly and started training.
+Created a python class for tyler to use on the website and helped braden create a blank quartznet model to train
 
 
