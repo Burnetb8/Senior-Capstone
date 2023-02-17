@@ -208,3 +208,4 @@
 
 2/16/23
 -Created the script to train quartnet model on the GPU Laptop using Jakob's previous Citrinet script and began implementation of the Jasper script to train again
+-Determined batch size must be 4 for GPU Laptop when training or memory issue discards training
