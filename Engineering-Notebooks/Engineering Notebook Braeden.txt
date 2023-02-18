@@ -209,3 +209,7 @@
 2/16/23
 -Created the script to train quartnet model on the GPU Laptop using Jakob's previous Citrinet script and began implementation of the Jasper script to train again
 -Determined batch size must be 4 for GPU Laptop when training or memory issue discards training
+
+2/17/23
+-After seeing tokenizer Word Error Rate for new tokenizer training for Citrinet, look into changing the Word Error Rate script as the Word Error Rate still seems high
+-Look into GPU Lapptop memory issue and realized it is not a memory issue but a randomness issue after consulting with Aaron, looking into possible fixes for issue
