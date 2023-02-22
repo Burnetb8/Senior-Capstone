@@ -213,3 +213,11 @@
 2/17/23
 -After seeing tokenizer Word Error Rate for new tokenizer training for Citrinet, look into changing the Word Error Rate script as the Word Error Rate still seems high
 -Look into GPU Lapptop memory issue and realized it is not a memory issue but a randomness issue after consulting with Aaron, looking into possible fixes for issue
+
+-2/20/23
+-Begin quartznet script training on all the data using the created quartznet script to train all of the data as the memory issue should no longer be a problem.
+
+2/23/23
+-Update Professor Pang on the project with updated Word Error Rate number for the citrinet model and how the Word Error Rate scripts need to change as they are not giving accurate results
+-Look into changing the Word Error Rate Scripts with Jakob to get better statistics for the next presentation
+-Get Jakob and Tyler to begin creating the class for the integration of training data output and website
