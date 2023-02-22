@@ -2,6 +2,7 @@ import nemo.collections.asr as nemo_asr
 import pytorch_lightning as pl
 import torch
 import gc
+import json
 from ruamel.yaml import YAML
 from omegaconf import DictConfig
 from omegaconf import OmegaConf, open_dict
@@ -11,6 +12,7 @@ model_check_point = 'ft100epoch_stt_en_citrinet_512_tokenizer.nemo'
 validation_manifest = 'utils/manifests/atcc_validation.json'
 #this is a model found by running test.py looking for EncDecoCTCModelBPE
 tokenizer_model = 'tokenizers/tokenizer_spe_bpe_v400/'
+
 
 trainer = pl.Trainer(gpus=[0], max_epochs=100)
 params = OmegaConf.load(config_path)
@@ -29,17 +31,42 @@ base_model._wer.log_prediction = False
 base_model.cuda()
 base_model.eval()
 
+#preping the validation file
+
+validation_file = open(validation_manifest, 'r')
+
+nice_validation_data = []
+validation_files_paths = []
+validation_targets = []
+
+for l in validation_file:
+    nice_validation_data.append(json.loads(l))
+    
+
+for l in nice_validation_data:
+    validation_files_paths.append(l['audio_filepath'])
+    validation_targets.append(l['text'].lower())
+    break
+
+
+thing = base_model.test_dataloader()
+
+thing = [x.cuda() for x in thing]
+
+validation_predictions = base_model.transcribe(paths2audio_files=validation_files_paths, batch_size=1)
+
+#print(validation_targets)
 
 #need to construct a predictions list and a targets list to give to this from 
-"""
+
 base_model._wer.update(
 
-    predictions = 
-    targets = 
-    target_lengths = 
+    predictions = validation_predictions,
+    targets = validation_targets,
+    target_lengths = thing[3]
+    )
 
-)
-"""
+
 wer_result = base_model._wer.compute()
 
 base_model._wer.reset()
