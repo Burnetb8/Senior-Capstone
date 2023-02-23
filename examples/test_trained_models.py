@@ -49,9 +49,9 @@ for l in nice_validation_data:
     break
 
 
-thing = base_model.test_dataloader()
+#thing = base_model.test_dataloader()
 
-thing = [x.cuda() for x in thing]
+#thing = [x.cuda() for x in thing]
 
 validation_predictions = base_model.transcribe(paths2audio_files=validation_files_paths, batch_size=1)
 
@@ -63,7 +63,6 @@ base_model._wer.update(
 
     predictions = validation_predictions,
     targets = validation_targets,
-    target_lengths = thing[3]
     )
 
 
