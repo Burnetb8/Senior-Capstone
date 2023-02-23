@@ -1,3 +1,5 @@
 How to set up plotly dash
   https://dash.plotly.com/layout 
 https://dash.plotly.com/interactive-graphing
+
+View ram used by process in kb: pmap <pid> | tail -n 1

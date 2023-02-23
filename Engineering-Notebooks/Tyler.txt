@@ -124,6 +124,15 @@ Generate new images
 - Cache planes when no opensky update found, which prevents planes from disappearing from the map
 - Set max bounds of aeronautical chart map 
 
+2/7/23
+- Give sprint 4 presentation 
+- Begin planning for sprint 5
+
 2/9/23:
 - Add scales to both maps (the scale for the aeronautical chart map is wrong)
 - Change zoom level of the aeronautical chart so that scale matches better 
+
+2/16/23:
+- Improve website performance by:
+    - Prevent having callback for every single plane every time the planes refresh (only for the plane clicked)
+    - Update textbox every 500ms

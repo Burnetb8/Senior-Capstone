@@ -1,5 +1,5 @@
 import json
-from dash import Dash, html, Input, Output, dcc, ALL, callback_context
+from dash import Dash, html, Input, Output, dcc, MATCH, callback_context
 import dash
 import dash_daq as daq
 import dash_leaflet as dl
@@ -169,6 +169,11 @@ app.layout = html.Div(children=[
         dcc.Interval(
             id='map-refresh',
             interval=15*1000 # 15 seconds 
+        ),
+
+        dcc.Interval(
+            id='popup-refresh',
+            interval=500 # 0.5 seconds 
         )
     ])
 ])
@@ -223,36 +228,31 @@ def update_output(value):
             image_map_classname
         )
 
+# Update the plane markers at interval
 @app.callback(Output('plane-markers', 'children'),
                 Input('map-refresh', 'n_intervals'))
 def update_map(n):
     p = generate_planes()
     return p
 
-# Onclick plane icon
+# Refresh the popup text at interval
+@app.callback(Output('popup', 'children'),
+              Input('popup-refresh', 'n_intervals'),
+            prevent_initial_call=True)
+def popup_refresh(n):
+    if selected_plane and selected_plane in all_planes_info:
+        return html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(all_planes_info[selected_plane])])
+
+# Update the selected plane on click 
 @app.callback(
-    [Output('popup', 'children'), 
-    Output({'type': 'plane', 'index': ALL}, 'n_clicks')],
-    Input({'type': 'plane', 'index': ALL}, 'n_clicks')
+    Output({'type': 'plane', 'index': MATCH}, 'n_clicks'),
+    Input({'type': 'plane', 'index': MATCH}, 'n_clicks'),
+    prevent_initial_call=True
 )
 def plane_click(n_clicks):
     global selected_plane
+    selected_plane = json.loads(callback_context.triggered[0]['prop_id'][0:-9])['index']
+    return None
 
-    # If click detected
-    if 1 in n_clicks:
-        # Fetch new plane
-        selected_plane = json.loads(callback_context.triggered[0]['prop_id'][0:-9])['index']
-    elif not selected_plane:
-        # If no click and no plane, don't do anything
-        return dash.no_update
-
-    # Return the div to the popup, and set reset n_clicks for all planes
-    # Don't push an update to plane elements resetting n_clicks if already none, makes website extremely slow. Only reset n_clicks if not None
-    if selected_plane in all_planes_info:
-        return (html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(all_planes_info[selected_plane])]), [dash.no_update if not item else None for item in n_clicks])
-    else:
-        # Plane must have landed, it's gone
-        return dash.no_update
-        
 if __name__ == '__main__':
     app.run_server(debug=True)
