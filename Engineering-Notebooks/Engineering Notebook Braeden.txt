@@ -221,3 +221,8 @@
 -Update Professor Pang on the project with updated Word Error Rate number for the citrinet model and how the Word Error Rate scripts need to change as they are not giving accurate results
 -Look into changing the Word Error Rate Scripts with Jakob to get better statistics for the next presentation
 -Get Jakob and Tyler to begin creating the class for the integration of training data output and website
+-Created a try catch for the word error rate script to use any model and get th results
+
+2/24/23
+-Add the created Quartznet and Jasper training models to the Github to try on the other computer as the Laptop is still having the random range error 
+-Possible workaround is to limit the epochs instead of the batch size and get to checkpoints in training
