@@ -226,3 +226,7 @@
 2/24/23
 -Add the created Quartznet and Jasper training models to the Github to try on the other computer as the Laptop is still having the random range error 
 -Possible workaround is to limit the epochs instead of the batch size and get to checkpoints in training
+
+-2/27/23
+-Implemented fix for 10 epochs on data in quartznet training due to the random number issue and determined this fix worked in editing the preprocessing files
+-Began training on 100 epochs with quartznet after preprocessing training and fixing the batch size to possibly improve speed issue
