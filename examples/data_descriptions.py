@@ -1,4 +1,6 @@
 import json
+import pandas
+import matplotlib.pyplot as plt
 
 all_manifest = 'utils/manifests/atcc_all.json'
 
@@ -10,19 +12,28 @@ for l in all_file:
     nice_data.append(json.loads(l))
     
 
-duration_sum = 0
-instance_count = 0
-word_sum = 0
+durations = []
+words = []
 
 for l in nice_data:
-    instance_count += 1
-    duration_sum += l['duration']
-    word_sum += l['text'].count(' ')
 
+    durations.append(l['duration'])
+    words.append(l['text'].count(' '))
 
-avg_dur = duration_sum / instance_count
-avg_word = word_sum / instance_count
+temp = {"durations":durations , "words":words}
 
-print('Average Duration ' + str(avg_dur))
-print('Average Number of Words ' + str(avg_word))
-    
+datavals = pandas.DataFrame(temp)
+
+#print(datavals)
+
+print('Average Duration ' + str(datavals["durations"].mean()))
+print('Std of Duration ' + str(datavals["durations"].std()))
+print('With a minimum of ' + str(datavals["durations"].min()) + ' and a max of ' + str(datavals["durations"].max()) + ' seconds')
+print('Average Number of Words ' + str(datavals["words"].mean()))
+print('Std of Words ' + str(datavals["words"].std()))
+print('With a minimum of ' + str(datavals["words"].min()) + ' and a max of ' + str(datavals["words"].max()) + ' words')
+
+dur_graph = datavals['durations'].plot.hist(bins=24)
+#word_graph = datavals['words'].plot.hist(bins=72)
+
+plt.show()
