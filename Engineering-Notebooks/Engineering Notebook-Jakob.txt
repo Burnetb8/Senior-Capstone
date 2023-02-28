@@ -68,3 +68,7 @@ Created data_descriptions to give overview of data structure and form. Saved tra
 
 02/27/2023
 Updated data_descriptions to give more information about data and create histograms of word count and duration of entries
+
+02/28/2023 
+finished test_trained_models and got wer that makes sense. Fixed issues with data_descriptions on lab machine
+
