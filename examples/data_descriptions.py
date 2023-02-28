@@ -1,5 +1,6 @@
 import json
 import pandas
+import numpy as np
 import matplotlib.pyplot as plt
 
 all_manifest = 'utils/manifests/atcc_all.json'
@@ -33,7 +34,9 @@ print('Average Number of Words ' + str(datavals["words"].mean()))
 print('Std of Words ' + str(datavals["words"].std()))
 print('With a minimum of ' + str(datavals["words"].min()) + ' and a max of ' + str(datavals["words"].max()) + ' words')
 
-dur_graph = datavals['durations'].plot.hist(bins=24)
-#word_graph = datavals['words'].plot.hist(bins=72)
+#dur_graph = datavals['durations'].plot.hist(bins=np.arange(0,24))
+word_graph = datavals['words'].plot.hist(bins=np.arange(0,72))
+
+#plt.xlim(0,25)
 
 plt.show()
