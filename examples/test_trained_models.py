@@ -6,6 +6,7 @@ import json
 from ruamel.yaml import YAML
 from omegaconf import DictConfig
 from omegaconf import OmegaConf, open_dict
+from nemo.collections.asr.metrics.wer import word_error_rate
 
 config_path = 'config/citrinet_512_tokenizer.yaml'
 model_check_point = 'ft100epoch_stt_en_citrinet_512_tokenizer.nemo'
@@ -39,33 +40,18 @@ nice_validation_data = []
 validation_files_paths = []
 validation_targets = []
 
+#loading in validation data from json file
 for l in validation_file:
     nice_validation_data.append(json.loads(l))
     
-
+#Getting file paths and getting hypothesis
 for l in nice_validation_data:
     validation_files_paths.append(l['audio_filepath'])
     validation_targets.append(l['text'].lower())
-    break
-
-
-#thing = base_model.test_dataloader()
-
-#thing = [x.cuda() for x in thing]
 
 validation_predictions = base_model.transcribe(paths2audio_files=validation_files_paths, batch_size=1)
 
-#print(validation_targets)
+wer = word_error_rate(hypotheses=validation_targets, references=validation_predictions, use_cer=False)
 
-#need to construct a predictions list and a targets list to give to this from 
-
-base_model._wer.update(
-
-    predictions = validation_predictions,
-    targets = validation_targets,
-    )
-
-
-wer_result = base_model._wer.compute()
-
-base_model._wer.reset()
+print('Word error rate for model')
+print(str(wer))
