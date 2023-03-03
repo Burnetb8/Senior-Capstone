@@ -234,3 +234,6 @@
 2/28/23
 -Explain fix for the quartznet and run tests to make sure the fix did not break anything
 -Work on Word Error Rate Script to adjust for the quartznet and jasper model scripts
+
+3/2/23
+-Quartznet training finish work on editing word error rate to determine the word error rate or this script
