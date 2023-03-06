@@ -242,3 +242,5 @@
 -Work on System Test plan clarification and submission
 -Finish up the word error rate script and run it to get updated word error rate for quartznet model
 -Begin Jasper model script run
+-Begin Sprint 2 PowerPoint 
+Begin updating SDS for submission
