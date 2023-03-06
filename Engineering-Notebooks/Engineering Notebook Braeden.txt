@@ -237,3 +237,8 @@
 
 3/2/23
 -Quartznet training finish work on editing word error rate to determine the word error rate or this script
+
+3/7/23
+-Work on System Test plan clarification and submission
+-Finish up the word error rate script and run it to get updated word error rate for quartznet model
+-Begin Jasper model script run
