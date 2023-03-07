@@ -18,9 +18,9 @@ class Transcribe_ATC:
         #EncDecCTCModel is for quartznet and jasper
         self.model_check_point = 'ft100epoch_stt_en_citrinet_512_2.nemo'
         try:
-        self.base_model = nemo_asr.models.EncDecCTCModelBPE.restore_from(self.model_check_point)
-    except:
-        self.base_model = nemo_asr.models.EncDecCTCModel.restore_from(self.model_check_point)
+            self.base_model = nemo_asr.models.EncDecCTCModelBPE.restore_from(self.model_check_point)
+        except:
+            self.base_model = nemo_asr.models.EncDecCTCModel.restore_from(self.model_check_point)
 
     def transcribe_audio(self,file_name):
         files = [file_name]
