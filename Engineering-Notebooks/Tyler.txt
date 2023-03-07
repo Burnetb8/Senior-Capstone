@@ -137,3 +137,8 @@ Generate new images
     - Prevent having callback for every single plane every time the planes refresh (only for the plane clicked)
     - Update textbox every 500ms
 - Attempt to run Nvidia NeMo model on my laptop, but it got too hot and did not run 
+
+3/7/23:
+- Create test notebook for livestreaming data from LiveATC to a .wav file
+- Work on presentation for sprint 5
+- Work on test plan
