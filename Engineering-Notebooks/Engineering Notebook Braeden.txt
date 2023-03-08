@@ -243,4 +243,12 @@
 -Finish up the word error rate script and run it to get updated word error rate for quartznet model
 -Begin Jasper model script run
 -Begin Sprint 2 PowerPoint 
-Begin updating SDS for submission
+-Begin updating SDS for submission
+-Begin updating SRS for submisstion
+
+3/8/23
+-Work on editing the kernel value to fix the quartznet and jasper model as previous fix did not work
+-Determine word error rate for the quartznet that was completed due to previous fix to see if it worked
+
+3/9/23
+-Present sprint 5 presentation 
