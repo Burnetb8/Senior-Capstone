@@ -141,3 +141,7 @@ continued noise reduction research
 continued noise reduction research
 assigned with powerpoint for sprint 4
 updated trello
+
+3/7
+continued work on noise reduction code
+looked over Test Plan
