@@ -142,3 +142,8 @@ Generate new images
 - Create test notebook for livestreaming data from LiveATC to a .wav file
 - Work on presentation for sprint 5
 - Work on test plan
+
+3/10/23:
+- Add many requirements to SRS and fix formatting issues.
+- Link new SRS requirements to new test cases in test plan
+- Research how to stream binary data into PyDub AudioSegment to get Numpy Array 
