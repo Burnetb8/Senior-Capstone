@@ -90,7 +90,7 @@ def create_map_scale():
 def create_interactive_map():
     return dl.Map(
         children=[
-            dl.TileLayer(),
+            dl.TileLayer(errorTileUrl="/assets/notile.png"), # Display error message in place of tiles when tiles can't be loaded
             create_map_scale(),
             create_plane_marker_container()
         ],
