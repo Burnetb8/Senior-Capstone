@@ -23,6 +23,7 @@ aeronautical_coords = {
 }
 
 active_map = 0 # 0 = google map, 1 = aeronautical chart
+map_types = ["Interactive Map", "Aeronautical Chart Map"]
 all_planes_info = {}
 selected_plane = None
 
@@ -205,12 +206,13 @@ def generate_popup_text(this_plane):
 
 # Handler for when the toggle button is clicked
 @app.callback(
-    [Output('interactive_map', 'children'), Output('image_map', 'children'), Output('interactive_map', 'className'), Output('image_map', 'className')],
+    [Output('interactive_map', 'children'), Output('image_map', 'children'), Output('interactive_map', 'className'), Output('image_map', 'className'), Output('map-switch', 'label')],
     [Input('map-switch', 'value')]
 )
 def update_output(value):
     global active_map
     active_map = 0 if not value else 1
+    other_map = 0 if value else 1
 
     interactive_map_classname = "hidden" if value else ""
     image_map_classname = "" if value else "hidden"
@@ -225,7 +227,7 @@ def update_output(value):
             create_map_scale(),
             create_plane_marker_container()],
             interactive_map_classname,
-            image_map_classname
+            image_map_classname, create_toggle_label(other_map)
         )
     else:
         # Toggle button not activated: Interactive map
@@ -237,7 +239,7 @@ def update_output(value):
             [create_chart_tilelayer(),
             create_map_scale()],
             interactive_map_classname,
-            image_map_classname
+            image_map_classname, create_toggle_label(other_map)
         )
 
 # Update the plane markers at interval
