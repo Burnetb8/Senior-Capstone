@@ -147,3 +147,13 @@ Generate new images
 - Add many requirements to SRS and fix formatting issues.
 - Link new SRS requirements to new test cases in test plan
 - Research how to stream binary data into PyDub AudioSegment to get Numpy Array 
+
+3/16/23:
+- Display error message in place of tiles when tiles can't be loaded
+- Change site styling:
+    - Update header and toggle switch to look better
+    - Update label for toggle switch to indicate to the user what it does
+    - Make header and map fill up 100% height always
+    - Begin working on about page 
+    - Install font awesome locally instead of loading through third party 
+- Begin work on website multi-page support
