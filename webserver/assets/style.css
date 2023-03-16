@@ -17,6 +17,30 @@
     overflow-y: auto;
 }
 
+#map-switch label {
+    margin-top: 0px;
+}
+
+header {
+    height: 13vh;
+}
+
+#map {
+    height: 87vh;
+    width: 100%;
+    z-index: 1;
+    position: relative;
+}
+
+header p {
+    line-height: 0.3em;
+}
+
+#map-switch > div {
+    align-items: flex-end !important;
+}
+
+
 
 
 /* FONTS */

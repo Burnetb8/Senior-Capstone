@@ -97,7 +97,6 @@ def create_interactive_map():
         id='interactive_map',
         zoom=13,
         center=(lon_start, lat_start),
-        style={'width': '100%', 'height': '90vh', 'zIndex': '1'}
     )
 
 def create_chart_tilelayer():
@@ -116,7 +115,6 @@ def create_image_map():
     minZoom=4,
     maxBounds=[[aeronautical_coords['lat_min'], aeronautical_coords['lon_min']], [aeronautical_coords['lat_max'], aeronautical_coords['lon_max']]],
     center=[aeronautical_coords['lat_start'], aeronautical_coords['lon_start']],
-    style={'width': '100%', 'height': '90vh', 'zIndex': '1'},
     id='image_map'
     )
 
@@ -136,18 +134,34 @@ def generate_planes():
         angle=all_planes_info[plane_name].true_track
     ) for plane_name in all_planes_info]
 
-map_style = {'width': '100%', 'height': '90vh'}
+def create_toggle_label(map):
+    return f"Click to view {map_types[map]}"
+
+header = html.Header(className="foreground w10 wrapper-horizontal", children=[
+    html.Div(className="w5 center left wrapper-horizontal", children=[
+        html.A(href='/', children=[
+            html.H2(children='ATC Map', className="link")
+        ]),
+        html.A(href="/about", children="About", className="link")
+    ]),
+
+    html.Div(className="w5 center right", children=[
+        # Toggle map button
+        daq.ToggleSwitch(
+            id='map-switch',
+            label=create_toggle_label(0 if active_map == 1 else 1),
+            value=False,
+            size=45,
+            color='#2c62c6',
+            labelPosition='bottom',
+            className='link'
+        )
+    ])
+])
 
 # Render the layout of the website
 app.layout = html.Div(children=[
-    html.H1(children='ATC Map'),
-
-    # Toggle map button
-    daq.ToggleSwitch(
-        id='map-switch',
-        label="Toggle Map",
-        value=False
-    ),
+    header,
 
     html.Div(
         id="popup",
@@ -156,8 +170,6 @@ app.layout = html.Div(children=[
         ],
         draggable="true"
     ),
-
-    html.Div(className="fas fa-plane plane"),
 
     html.Div(id='map', children=[
         # Interactive map
