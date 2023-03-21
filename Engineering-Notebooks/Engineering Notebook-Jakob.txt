@@ -18,7 +18,6 @@ ATC training data we are going to use
 10/06/2022
 Created Sprint 1 presentaion
 
-<<<<<<< Updated upstream
 10/08/2022
 Installed ubuntu and downloaded data from onedrive then transformed it using atcc.py
 
@@ -44,6 +43,29 @@ audio clip that has a duration < 1
 11/30/2022
 Submitted a discussion post on the Nvidia nemo github to try and get an answer to the error we have gotten.
 
+12/05/2022
+Trained using just the Hiwire dataset and it trained successfully. Something about how atcc.py is saving the .wav is screwing with nemos ability to open and see the files.  
 
+01/26/2023
+Downloaded and modified config files for the models we wish to use for our project. Modified our current training scrpits to use these new config files.
+Begain training on these new models.
 
+02/09/2023
+Created script to train tokenizer and was successful implemented data fix found by braden and Aaron
+
+02/14/2023
+Created a script to train a citrinet model with tokenizer having issues with config files
+
+02/16/2023
+used the nemo provided script to train a tokenizer then updated train_citrinet_with_tokenizer to work properly and started training.
+Created a python class for tyler to use on the website and helped braden create a blank quartznet model to train
+
+02/20/2023
+Created data_descriptions to give overview of data structure and form. Saved trained citrinet with tokenizer and updated integration script to work for all models
+
+02/27/2023
+Updated data_descriptions to give more information about data and create histograms of word count and duration of entries
+
+02/28/2023 
+finished test_trained_models and got wer that makes sense. Fixed issues with data_descriptions on lab machine
 

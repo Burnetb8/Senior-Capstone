@@ -1,98 +1,64 @@
-from dash import Dash, html, Input, Output, dcc
+from dash import Dash, html, Input, Output
+import dash
 import dash_daq as daq
-import plotly.express as px
-import folium
-import PIL
-from PIL import Image
-import numpy
 
-PIL.Image.MAX_IMAGE_PIXELS = 933120000 # Allow pillow to load large files (like our tif file)
+external_stylesheets = [{
+    'href': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+    'rel': 'stylesheet',
+    'crossorigin': 'anonymous'
+}]
 
 # Website settings
 app = Dash(
     __name__,
     title='ATC Map',
+    external_stylesheets=external_stylesheets,
+    use_pages=True
 )
-app.scripts.config.serve_locally = False
 
-# Renders the map into a file
-# Shown by default
-def create_interactive_map():
-    coords = [29.1802, -81.0598]
+map_types = ["Interactive Map", "Aeronautical Chart Map"]
 
-    location_map = folium.Map(location=coords, zoom_start=13)
-    location_map.save("map.html")
+def create_toggle_label(map):
+    return f"Click to view {map_types[map]}"
 
-# Returns the map in ram
-# Hidden by default
-def create_image_map():
-    file = 'assets/Jacksonville SEC.tif'
+header = html.Header(className="foreground w10 wrapper-horizontal", children=[
+    html.Div(className="w5 center left wrapper-horizontal", children=[
+        html.A(href='/', children=[
+            html.H2(children='ATC Map', className="link")
+        ]),
+        html.A(href="/about", children="About", className="link")
+    ]),
 
-    im = Image.open(file) # Open tif
-    imarray = numpy.array(im) # Convert to numpy array
-    cropped_array = imarray[6500:8500, 8000:13000] # Crop: height1:height2, width1:width2
-
-    fig = px.imshow(Image.fromarray(cropped_array),binary_string=True)
-
-    # Enable panning ability, remove white margins around the whole map, set width to 100%
-    fig.update_layout(dragmode="pan", margin=dict(
-        l=0,
-        r=0,
-        b=0,
-        t=0,
-        pad=0   
-    ),
-    autosize=True)
-
-    # Remove the ugly numbers 
-    fig.update_xaxes(visible=False)
-    fig.update_yaxes(visible=False)
-
-    # Graph options 
-    config = {
-        'displaylogo': False
-    }
-
-    return {
-        'fig': fig,
-        'config': config
-    }
-
-# Create the two maps
-create_interactive_map()
-image_map = create_image_map()
-map_style = {'width': '100%', 'height': '90vh'}
-
-# Render the layout of the website
-app.layout = html.Div(children=[
-    html.H1(children='ATC Map'),
-
-    # Toggle map button
-    daq.ToggleSwitch(
-        id='map-switch',
-        label="Toggle Map",
-        value=False
-    ),
-
-    html.Div(id='map', children=[
-        # Interactive map
-        html.Iframe(id='interactive_map', srcDoc=open("map.html","r").read(), style=map_style),
-
-        # Image map
-        dcc.Graph(id='image_map', figure=image_map['fig'], config=image_map['config'], style=map_style),
+    html.Div(className="w5 center right", children=[
+        # Toggle map button
+        daq.ToggleSwitch(
+            id='map-switch',
+            label=create_toggle_label(0),
+            value=False,
+            size=45,
+            color='#2c62c6',
+            labelPosition='bottom',
+            className='link'
+        )
     ])
 ])
 
-# Toggle the "hidden" class name for the interactive and image maps 
-@app.callback(
-    [Output('interactive_map', 'className'), Output('image_map', 'className')],
-    [Input('map-switch', 'value')]
-)
-def update_output(value):
-    interactive_map_classname = "hidden" if value else ""
-    image_map_classname = "" if value else "hidden"
-    return interactive_map_classname, image_map_classname
+# Render the layout of the website
+app.layout = html.Div(children=[
+    header,
+
+    dash.page_container # Content of each page
+])
+
+# TODO FIX ME!!! Toggle text doesn't change on click 
+# @app.callback(
+#     [Output('map-switch', 'label')],
+#     [Input('map-switch', 'value')]
+# )
+# def toggle_switch(value):
+#     other_map = 0 if value else 1
+#     return create_toggle_label(other_map)
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
-

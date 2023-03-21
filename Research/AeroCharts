@@ -1,1 +1,31 @@
 Can download all aeronautical VFR charts at https://www.faa.gov/air_traffic/flight_info/aeronav/digital_products/vfr 
+
+FAA APIs
+Resources:
+https://github.com/Federal-Aviation-Administration/APRA
+https://github.com/Federal-Aviation-Administration/ASWS
+https://app.swaggerhub.com/apis-docs/FAA/APRA/1.2.0#/Sectional%20Charts/getSectionalInfo
+https://app.swaggerhub.com/apis-docs/FAA/ASWS/1.1.0#/
+
+Flight Info APIs
+Resources: 
+https://openskynetwork.github.io/opensky-api/rest.html
+https://github.com/openskynetwork/opensky-api
+https://aviationstack.com/documentation
+
+Opensky.py Resources
+https://www.pythontutorial.net/python-basics/python-write-csv-file/ 
+https://www.geeksforgeeks.org/python-read-csv-columns-into-list/
+https://stackoverflow.com/questions/43476754/using-python-how-do-you-select-a-random-row-of-a-csv-file
+https://www.simplilearn.com/tutorials/python-tutorial/list-to-string-in-python
+https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
+
+Update Potential Resources:
+https://www.geeksforgeeks.org/basics-of-numpy-arrays/
+
+Sectional Maps:
+https://www.faa.gov/air_traffic/flight_info/aeronav/digital_products/vfr/ -> can use either the sectional set pf planning set
+
+Code Help References:
+https://www.w3schools.com/python/ref_string_split.asp
+https://pynative.com/python-write-list-to-file/

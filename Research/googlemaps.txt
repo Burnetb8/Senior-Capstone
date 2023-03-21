@@ -6,3 +6,11 @@ Alternatives to google maps API cuz it cost money:
 
 https://www.earthdatascience.org/tutorials/introduction-to-leaflet-animated-maps/
 https://medium.com/@shachiakyaagba_41915/integrating-folium-with-dash-5338604e7c56
+
+
+How to render large tiff file:
+https://codepen.io/iangilman/pen/bdgWBz
+https://openseadragon.github.io/examples/tilesource-custom/
+https://openseadragon.github.io/examples/creating-zooming-images/
+https://openseadragon.github.io/docs/OpenSeadragon.Viewport.html
+https://github.com/openseadragon/openseadragon/issues/1988

@@ -44,3 +44,116 @@
 - Crop aeronautical map to Daytona Beach
 - Stretch aeronautical map to 100% of page width
 - Remove axes numbers from aeronautical map
+
+11/1/22
+- Add SIR requirements for website
+- Work on System Test Plan
+
+11/3/22
+- Added floating text box to website
+- Import font awesome, load plane icon on site
+
+11/8/22
+- Created class diagram for website
+- Helped finish SRS 
+
+11/17/22
+- Discuss and research how to combine model with website (See research folder)
+- Begin work on cropping map when pan and zoom
+    - Only works on first pan. Second pan, it fails. Something to do with offset?
+- Work on presentation
+
+11/20/22
+- Change from using plotly express to OpenSeaDragon for rendering tiff image
+- Add code for splitting tiff into tiles
+
+12/2/22
+- Update SRS based on Aaron's comments
+- Use Kira's research and code to add OpenSky integration to fetch planes to the Google map only
+- Research ways to refresh the map without reloading iframe
+
+12/6/22
+- Research moving to dash-leaflet from openseadragon for map rendering
+- Render vfr map in dash-leaflet (kinda broken)
+
+1/12/23
+- Met and planned backlog for the next few sprints
+- Planned for sprint 4
+- Continued work on combining the two separate map engines into one for the website 
+
+1/18/23
+- Switched google map from Folium to dash-leaflet backend
+- Automatic plane updating for google map every 15 seconds
+- Account for the font awesome default 45 degree northeast offset when the rotation of an icon is set to 0 degrees
+
+1/19/23
+- Use pattern matching for click callbacks for plane icons
+- Write plane-specific info in popup div on plane icon click
+- Ran into limitation for OpenSky API: In development, plotly dash restarts very regularly, causing lots of calls to the API. Limitation is 2k requests per day, and I think I hit it. Maybe store test data locally from now on...
+- Add units to popup box
+- Adjust popup box styling
+- Add error handling for opensky api so website doesn't crash
+- Remove old openseadragon map code
+
+1/21/23:
+- If plane already selected and plane refresh happens, fetch new data for the currently selected plane to put in the popup
+- If plane already selected and plane refresh happens, fetch new data for the currently selected plane to put in the popup
+- Change lookup for popup box plane info to dict
+- Change the indexing of plane icon info to use kvp lookup instead of index. Fixed issues with planes having mismatched coords and details.
+
+1/23/23:
+- Fixing bugs from last time
+- Fix clicking on same plane twice not resetting click
+- Reset click counter after verifying if click or not
+- Simplify logic for when to render plane clicks, differentiate between click or load
+
+1/25/23: 
+- Fix website slow speed: Only update n_clicks if not none
+
+1/30/23:
+- Switch map image splitting engine from sharp to pyvips
+Generate new images
+- Switch image map engine from openseadragon to dash-leaflet
+
+2/2/23:
+- Try to add planes for aeronautical map
+- The planes show up, but are all in the wrong spots
+
+2/5/23:
+- Fix switching between google and aeronautical maps with the new rendering engine
+- Cache planes when no opensky update found, which prevents planes from disappearing from the map
+- Set max bounds of aeronautical chart map 
+
+2/7/23
+- Give sprint 4 presentation 
+- Begin planning for sprint 5
+
+2/9/23:
+- Add scales to both maps (the scale for the aeronautical chart map is wrong)
+- Change zoom level of the aeronautical chart so that scale matches better 
+
+2/16/23:
+- Improve website performance by:
+    - Prevent having callback for every single plane every time the planes refresh (only for the plane clicked)
+    - Update textbox every 500ms
+- Attempt to run Nvidia NeMo model on my laptop, but it got too hot and did not run 
+
+3/7/23:
+- Create test notebook for livestreaming data from LiveATC to a .wav file
+- Work on presentation for sprint 5
+- Work on test plan
+
+3/10/23:
+- Add many requirements to SRS and fix formatting issues.
+- Link new SRS requirements to new test cases in test plan
+- Research how to stream binary data into PyDub AudioSegment to get Numpy Array 
+
+3/16/23:
+- Display error message in place of tiles when tiles can't be loaded
+- Change site styling:
+    - Update header and toggle switch to look better
+    - Update label for toggle switch to indicate to the user what it does
+    - Make header and map fill up 100% height always
+    - Begin working on about page 
+    - Install font awesome locally instead of loading through third party 
+- Begin work on website multi-page support

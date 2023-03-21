@@ -1,0 +1,7 @@
+install opensky api:
+pip install -e "git+https://github.com/openskynetwork/opensky-api.git#egg=python&subdirectory=python", 
+	see https://github.com/openskynetwork/opensky-api/issues/46 for more information
+pip install pandas
+pip install pytz
+pip install datetime
+pip install requests
