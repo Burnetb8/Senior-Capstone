@@ -50,14 +50,14 @@ app.layout = html.Div(children=[
     dash.page_container # Content of each page
 ])
 
-# TODO FIX ME!!! Toggle text doesn't change on click 
-# @app.callback(
-#     [Output('map-switch', 'label')],
-#     [Input('map-switch', 'value')]
-# )
-# def toggle_switch(value):
-#     other_map = 0 if value else 1
-#     return create_toggle_label(other_map)
+# Change the toggle text label on click
+@app.callback(
+    [Output('map-switch', 'label')],
+    [Input('map-switch', 'value')]
+)
+def toggle_switch(value):
+    other_map = 0 if value else 1
+    return (create_toggle_label(other_map),)
 
 
 if __name__ == '__main__':

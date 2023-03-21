@@ -30,8 +30,6 @@ active_map = 0 # 0 = google map, 1 = aeronautical chart
 all_planes_info = {}
 selected_plane = None
 
-map_types = ["Interactive Map", "Aeronautical Chart Map"]
-
 def create_map_scale():
     return dl.ScaleControl(metric=False)
 
