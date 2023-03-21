@@ -157,3 +157,7 @@ Generate new images
     - Begin working on about page 
     - Install font awesome locally instead of loading through third party 
 - Begin work on website multi-page support
+
+3/21/23:
+- Merge branches main and master into main
+- Make toggle button change label text on click 
