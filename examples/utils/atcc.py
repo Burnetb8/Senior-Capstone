@@ -23,11 +23,9 @@ def enumerate_files(
     """
     Enumerates the audio and corresponding transcript files in the dataset and performs the file conversion from the NIST Sphere
     format (`sph`)to WAV format (`wav`). **Note**: `ffmpeg` must be installed for the file conversion to work.
-
     Arguments:
     ----------
     `root_path`: string or pathlib.Path object, path to the root of the dataset e.g. /data/atc0_ldc94s14a
-
     Returns:
     --------
     `(audio_paths, transcript_paths)`: Tuple of pathlib.Path objects or strings, depending on input type, that contains the audio and
@@ -74,15 +72,12 @@ def build_atcc_manifests(
 ) -> List[str]:
     """
     Parses transcripts and converts it into NeMo manifest format.
-
     Arguments:
     ----------
     `audio_paths`: Either a list of pathlib.Path object or a list of strings containing the paths to the audio files
     (see ~`enumerate_files`).
-
     `transcript_paths`: Either a list of pathlib.Path object or a list of strings containing the paths to the transcript files
     (see ~`enumerate_files`).
-
     Returns:
     -------
     `manifest_data`: A list of JSON formatted strings with the info necessary for NeMo to process and use the data.
@@ -122,11 +117,9 @@ def build_atcc_manifests(
 def convert_sph_to_wav(paths: Union[List[Path], List[str]]):
     """
     Converts NIST Sphere formatted files to WAV format.
-
     Arguments:
     ----------
     `paths`: paths to the Sphere files to reformat.
-
     Returns:
     --------
     `None`

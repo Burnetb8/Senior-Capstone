@@ -97,7 +97,7 @@ def build_hiwire_manifest(root_path: Union[Path, str]) -> List[str]:
 
 
 if __name__ == "__main__":
-    manifest_all = build_hiwire_manifest("/data/s0293/S0293/speechdata")
+    manifest_all = build_hiwire_manifest("data/S0293/speechdata")
     os.makedirs("manifests", exist_ok=True)
     with open("manifests/hiwire_all.json", "w") as manifest:
         manifest.write("\n".join(manifest_all))
