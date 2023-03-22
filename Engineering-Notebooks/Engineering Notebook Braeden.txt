@@ -252,3 +252,6 @@
 
 3/9/23
 -Present sprint 5 presentation 
+
+3/21/23
+-Fixed the Github by merging the Main and Master branches and fixing the GPU Laptop issues and got the website running on the GPU computer which will be used to transcribe the models onto the website for speech
