@@ -255,3 +255,6 @@
 
 3/21/23
 -Fixed the Github by merging the Main and Master branches and fixing the GPU Laptop issues and got the website running on the GPU computer which will be used to transcribe the models onto the website for speech
+
+3/23/23
+-Fixing issues from the updated Github on the GPU Laptop by adding missing files which were deleted with the update to ease integration of website and models
