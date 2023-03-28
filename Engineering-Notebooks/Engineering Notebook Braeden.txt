@@ -258,3 +258,6 @@
 
 3/23/23
 -Fixing issues from the updated Github on the GPU Laptop by adding missing files which were deleted with the update to ease integration of website and models
+
+3/28/23
+-Set up meetings with Aaron and work on implementing the model and the website, submitting the updated Trello and Backlog.
