@@ -161,3 +161,10 @@ Generate new images
 3/21/23:
 - Merge branches main and master into main
 - Make toggle button change label text on click 
+
+3/28/23:
+- Work with Jakob to merge website and model together
+- Work with Jakob to get website running on GPU laptop and PC
+- Update steps for setting up model+website combo
+- Add new requirements for website for adding the model
+- Begin adding interval for fetching new audio and transcribing every 10 seconds
