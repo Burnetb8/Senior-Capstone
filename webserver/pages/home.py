@@ -9,6 +9,7 @@ from opensky_fetching import fetch_opensky
 from transcribe_given_audio_file import Transcribe_ATC
 import numpy as np
 import pydub
+import requests
 
 dash.register_page(__name__, path='/')
 app = dash.get_app()
