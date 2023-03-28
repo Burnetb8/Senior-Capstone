@@ -82,20 +82,7 @@ def scale_lon(x):
     else:
         return x
 
-def generate_popup_text(this_plane):
-    
-
-    stream_url = 'http://liveatc.net/kdab_del_gnd'
-    with open('stream.wav', 'rb') as f:
-        a = pydub.AudioSegment.from_mp3(f)
-        y = np.array(a.get_array_of_samples())
-        if a.channels == 2:
-            y = y.reshape((-1, 2))
-
-    f.close()
-    #give this object a file path and it returns a string
-    transcription = transcribe.transcribe_audio('stream.wav')
-
+def generate_popup_text(this_plane, transcription):
     return [
         transcription,
         f"Callsign: {this_plane.callsign}",
@@ -182,7 +169,14 @@ layout = html.Div(children=[
         dcc.Interval(
             id='popup-refresh',
             interval=500 # 0.5 seconds 
-        )
+        ),
+
+        dcc.Interval(
+            id='audio-refresh',
+            interval=10000 # 10 seconds 
+        ),
+
+        dcc.Store(id='transcription')
     ])
 ])
 
@@ -232,11 +226,38 @@ def update_map(n):
 
 # Refresh the popup text at interval
 @app.callback(Output('popup', 'children'),
-              Input('popup-refresh', 'n_intervals'),
+              [Input('popup-refresh', 'n_intervals'),
+              Input('transcription', 'data')],
             prevent_initial_call=True)
-def popup_refresh(n):
+def popup_refresh(n, transcription):
     if selected_plane and selected_plane in all_planes_info:
-        return html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(all_planes_info[selected_plane])])
+        return html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(all_planes_info[selected_plane], transcription)])
+
+@app.callback(Output("transcription", "data"),
+              Input("audio-refresh", "n_intervals"))
+def fetch_new_audio(n):
+    # Read stream, save to wav 
+    stream_url = "http://d.liveatc.net/kdab_del_gnd"
+
+    r = requests.get(stream_url, stream=True)
+    block = r.iter_content(20480)[0]
+
+    a = pydub.AudioSegment(block, sample_width=2, frame_rate=11025, channels=1)
+    a.export(f"stream.wav", format="wav")
+
+    # Read wav, transcribe to text
+    stream_url = 'http://liveatc.net/kdab_del_gnd'
+    with open('stream.wav', 'rb') as f:
+        a = pydub.AudioSegment.from_mp3(f)
+        y = np.array(a.get_array_of_samples())
+        if a.channels == 2:
+            y = y.reshape((-1, 2))
+
+    f.close()
+    #give this object a file path and it returns a string
+    transcription = transcribe.transcribe_audio('stream.wav')
+    print(transcription)
+    return transcription
 
 # Update the selected plane on click 
 @app.callback(
