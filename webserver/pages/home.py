@@ -6,9 +6,15 @@ import dash_daq as daq
 import dash_leaflet as dl
 import pytz
 from opensky_fetching import fetch_opensky
+from transcribe_given_audio_file import Transcribe_ATC
+import numpy as np
+import pydub
 
 dash.register_page(__name__, path='/')
 app = dash.get_app()
+
+#this object does the transcription
+transcribe = Transcribe_ATC()
 
 lat_min = -85.0
 lat_max = -80.0
@@ -77,7 +83,21 @@ def scale_lon(x):
         return x
 
 def generate_popup_text(this_plane):
+    
+
+    stream_url = 'http://liveatc.net/kdab_del_gnd'
+    with open('stream.wav', 'rb') as f:
+        a = pydub.AudioSegment.from_mp3(f)
+        y = np.array(a.get_array_of_samples())
+        if a.channels == 2:
+            y = y.reshape((-1, 2))
+
+    f.close()
+    #give this object a file path and it returns a string
+    transcription = transcribe.transcribe_audio('stream.wav')
+
     return [
+        transcription,
         f"Callsign: {this_plane.callsign}",
         f"Origin: {this_plane.origin_country}",
         f"Last Contact: {datetime.fromtimestamp(this_plane.last_contact, tz=pytz.timezone('America/New_York')).strftime('%m/%d/%Y %H:%M %Z')}",
