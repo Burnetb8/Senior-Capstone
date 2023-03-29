@@ -8,4 +8,3 @@ pytz
 chardet
 nemo
 Cython
-nemo_toolkit['all']
