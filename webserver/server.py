@@ -4,6 +4,11 @@ import dash_daq as daq
 import asyncio
 from threading import Thread
 from transcribing import audio_fetch_and_transcribe
+import logging
+
+# Disable the logging spam
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 external_stylesheets = [{
     'href': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
