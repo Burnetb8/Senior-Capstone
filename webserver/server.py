@@ -1,6 +1,9 @@
 from dash import Dash, html, Input, Output
 import dash
 import dash_daq as daq
+import asyncio
+from threading import Thread
+from transcribing import audio_fetch_and_transcribe
 
 external_stylesheets = [{
     'href': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
@@ -59,6 +62,13 @@ def toggle_switch(value):
     other_map = 0 if value else 1
     return (create_toggle_label(other_map),)
 
+def audio_fetching_thread():
+    asyncio.run(audio_fetch_and_transcribe())
 
 if __name__ == '__main__':
+    # Start audio fetching
+    audio_fetching = Thread(target=audio_fetching_thread)
+    audio_fetching.start()
+
     app.run_server(debug=True)
+    audio_fetching.join()
