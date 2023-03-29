@@ -168,3 +168,9 @@ Generate new images
 - Update steps for setting up model+website combo
 - Add new requirements for website for adding the model
 - Begin adding interval for fetching new audio and transcribing every 10 seconds
+
+3/29/23:
+- Run audio fetching and transcribing in separate threads
+- Save latest transcription to global variable, read variable via getter everytime popup box is updated 
+- Prevent extra audio fetching thread from being created by changing debug to False for plotly
+- Disable logging spam for plotly for all the post requests
