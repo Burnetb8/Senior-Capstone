@@ -70,5 +70,5 @@ if __name__ == '__main__':
     audio_fetching = Thread(target=audio_fetching_thread)
     audio_fetching.start()
 
-    app.run_server(debug=True)
+    app.run_server(debug=False) # Must run debug False to prevent extra audio fetching thread from being created
     audio_fetching.join()
