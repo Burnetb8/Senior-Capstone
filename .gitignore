@@ -13,3 +13,6 @@ package-lock.json
 *.pkl
 
 *.exe
+
+*.wav
+*.mp3
