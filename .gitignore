@@ -16,3 +16,5 @@ package-lock.json
 
 *.wav
 *.mp3
+
+*.nemo
