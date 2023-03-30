@@ -145,3 +145,14 @@ updated trello
 3/7
 continued work on noise reduction code
 looked over Test Plan
+
+3/21
+sick day
+started breaking down the VFR map into managable sections
+
+3/27
+updated trello
+
+3/30
+connected trello to github
+
