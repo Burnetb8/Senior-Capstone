@@ -261,3 +261,6 @@
 
 3/28/23
 -Set up meetings with Aaron and work on implementing the model and the website, submitting the updated Trello and Backlog.
+
+3/30/23
+-Work with Jakob and Tyler on the website transcribing the speech
