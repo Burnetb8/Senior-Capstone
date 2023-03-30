@@ -21,14 +21,21 @@ def transcribe_audio():
     #give this object a file path and it returns a string
     return transcribe.transcribe_audio('stream.wav')
 
+def get_transcription_array(block):
+    a = pydub.AudioSegment(block, sample_width=2, frame_rate=11025, channels=1)
+    a_temp = a.get_array_of_samples()
+    return transcribe.transcribe_audio_array(a_temp)
+
 def audio_fetch_and_transcribe():
     global transcription
 
     r = fetch_stream()
 
     for block in r.iter_content(20480):
-        block_to_wav(block)
-        transcription = transcribe_audio()
+        type(block)
+        #block_to_wav(block)
+        transcription = get_transcription_array(block)
+        print(transcription)
 
 def get_latest_transcription():
     return transcription

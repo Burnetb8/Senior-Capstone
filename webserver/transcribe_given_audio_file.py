@@ -2,9 +2,13 @@ import nemo.collections.asr as nemo_asr
 import pytorch_lightning as pl
 import torch
 import gc
+import os
+from typing import *
+import numpy as np
 from ruamel.yaml import YAML
 from omegaconf import DictConfig
 from omegaconf import OmegaConf, open_dict
+from nemo.collections.asr.parts.preprocessing.segment import AudioSegment
 
 
 
@@ -25,6 +29,53 @@ class Transcribe_ATC:
     def transcribe_audio(self,file_name):
         files = [file_name]
         return self.base_model.transcribe(paths2audio_files=files, batch_size=1)[0] 
+    
+    @torch.no_grad()
+    def transcribe_audio_array(self,
+        signal,
+        duration: float = 0.0,
+        offset: float = 0.0,
+        device: Union[Literal["cuda"], Literal["cpu"]] = "cuda",
+    ):
+
+
+        # save model states/values
+        model_state = self.base_model.training
+        dither_value = self.base_model.preprocessor.featurizer.dither
+        pad_value = self.base_model.preprocessor.featurizer.pad_to
+
+        # eliminate intentional randomness in preprocessing
+        self.base_model.preprocessor.featurizer.dither = 0.0
+        self.base_model.preprocessor.featurizer.pad_to = 0
+
+        # inference setup: put model in evaluation mode, freeze encoder/decoder
+        self.base_model.eval()
+        self.base_model.encoder.freeze()
+        self.base_model.decoder.freeze()
+
+        self.base_model.to(device)
+
+        # get input data and length
+        # signal = AudioSegment.from_file(
+        #     path, 16000, offset=offset, duration=duration
+        # ).samples
+
+        # get model predictions/logits
+        logits, logits_length, predictions = self.base_model.forward(
+            input_signal=torch.tensor(np.array([signal])).to(device),
+            input_signal_length=torch.tensor([signal.shape[0]]).long().to(device),
+        )
+
+        prediction, _ = self.base_model.decoding.ctc_decoder_predictions_tensor(
+            logits, logits_length
+        )
+
+        # reset model states/preprocessor values
+        self.base_model.train(mode=model_state)
+        self.base_model.preprocessor.featurizer.dither = dither_value
+        self.base_model.preprocessor.featurizer.pad_to = pad_value
+
+        return prediction[0]
 
 
 
