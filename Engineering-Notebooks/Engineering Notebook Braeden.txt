@@ -263,4 +263,4 @@
 -Set up meetings with Aaron and work on implementing the model and the website, submitting the updated Trello and Backlog.
 
 3/30/23
--Work with Jakob and Tyler on the website transcribing the speech
+-Work with Jakob and Tyler on the website to transcribe the audio to speech using the citrinet nemo model with the tokenizer and 0.29 error rate
