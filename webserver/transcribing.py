@@ -4,7 +4,7 @@ import requests
 import os
 import subprocess
 
-transcription = ""
+transcription_buffer = []
 
 #this object does the transcription
 transcribe = Transcribe_ATC()
@@ -25,7 +25,7 @@ def get_transcription_array(filename):
     return transcribe.transcribe_audio("stream.wav")
 
 def audio_fetch_and_transcribe():
-    global transcription
+    global transcription_buffer
 
     r = fetch_stream()
     filename = "stream.mp3"
@@ -38,7 +38,11 @@ def audio_fetch_and_transcribe():
 
         # Transcribe
         transcription = get_transcription_array(filename)
-        print(f'transcription: {transcription}')
+        if transcription:
+            transcription_buffer += transcription.split(" ") # Add new words to array
+            transcription_buffer = transcription_buffer[-20:] # Truncate the array to only the last 20
+
+        print(f'transcription_buffer: {transcription_buffer}')
 
 def get_latest_transcription():
-    return transcription
+    return " ".join(transcription_buffer)
