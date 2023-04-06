@@ -4,7 +4,7 @@
 - Discussed with Aaron the timeline of the when servers are going to be available for us
  
 9/13/22
-- Helped figure out which backlog items are for this sprint
+- Helped figure out which backlog items are for this sprint# Write 10 seco
 - Helped delegate backlog tasks
 
 
@@ -174,3 +174,12 @@ Generate new images
 - Save latest transcription to global variable, read variable via getter everytime popup box is updated 
 - Prevent extra audio fetching thread from being created by changing debug to False for plotly
 - Disable logging spam for plotly for all the post requests
+
+4/4/23:
+- Work with Jakob and Braeden to try and get the model and website connected
+- Kept running into errors where the .wav file seems corrupted. It can play full 10 seconds in VScode audio player, but only 1 second of static noise in other players
+- Also, passing array directly doesn't work either. Seems like it's only passing the first second of data or something
+
+4/5/23:
+- Write directly to mp3 file when streaming LiveATC every 10 seconds, bypassing PyDub for this part
+- This was done instead of trying to load blocks of bytes into PyDub AudioSegment and then exporting the file
