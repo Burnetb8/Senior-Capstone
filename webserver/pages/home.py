@@ -1,6 +1,6 @@
 from datetime import datetime
 import json
-from dash import html, Input, Output, dcc, MATCH, callback_context
+from dash import html, Input, Output, State, dcc, MATCH, callback_context
 import dash
 import dash_daq as daq
 import dash_leaflet as dl
@@ -26,8 +26,6 @@ aeronautical_coords = {
     'lat_start': 82.71605972541532
 }
 
-# TODO make active_map support multiple clients 
-active_map = 0 # 0 = google map, 1 = aeronautical chart
 all_planes_info = {}
 selected_plane = None
 
@@ -59,18 +57,14 @@ def mark_plane(lat, long, name, angle):
 def scale_coords(x, src_min, src_max, dest_min, dest_max):
     return ( x - src_min ) / ( src_max - src_min ) * ( dest_max - dest_min ) + dest_min
 
-def scale_lat(x):
-    global active_map
-
+def scale_lat(x, active_map):
     # Only scale coords if on aeronautical chart
     if active_map == 1:
         return scale_coords(x, 28, 32.25, aeronautical_coords['lat_min'], aeronautical_coords['lat_max'])
     else:
         return x
 
-def scale_lon(x):
-    global active_map
-
+def scale_lon(x, active_map):
     # Only scale coords if on aeronautical chart
     if active_map == 1:
         return scale_coords(x, -85, -78.5, aeronautical_coords['lon_min'], aeronautical_coords['lon_max'])
@@ -92,7 +86,7 @@ def generate_popup_text(this_plane):
     ]
 
 # Mark all planes on interactive map
-def generate_planes():
+def generate_planes(active_map):
     global all_planes_info
     new_planes_info = fetch_opensky(lon_min, lon_max, lat_min, lat_max)
 
@@ -101,8 +95,8 @@ def generate_planes():
         all_planes_info = {plane.callsign: plane for plane in new_planes_info}
 
     return [mark_plane(
-        lat=scale_lat(all_planes_info[plane_name].latitude),
-        long=scale_lon(all_planes_info[plane_name].longitude),
+        lat=scale_lat(all_planes_info[plane_name].latitude, active_map),
+        long=scale_lon(all_planes_info[plane_name].longitude, active_map),
         name=all_planes_info[plane_name].callsign,
         angle=all_planes_info[plane_name].true_track
     ) for plane_name in all_planes_info]
@@ -164,17 +158,18 @@ layout = html.Div(children=[
         dcc.Interval(
             id='popup-refresh',
             interval=500 # 0.5 seconds 
-        )
+        ),
+
+        dcc.Store(id='active-map')
     ])
 ])
 
 # Handler for when the toggle button is clicked
 @app.callback(
-    [Output('interactive_map', 'children'), Output('image_map', 'children'), Output('interactive_map', 'className'), Output('image_map', 'className')],
+    [Output('interactive_map', 'children'), Output('image_map', 'children'), Output('interactive_map', 'className'), Output('image_map', 'className'), Output('active-map', 'data')],
     [Input('map-switch', 'value')]
 )
 def update_output(value):
-    global active_map
     active_map = 0 if not value else 1
 
     interactive_map_classname = "hidden" if value else ""
@@ -190,7 +185,8 @@ def update_output(value):
             create_map_scale(),
             create_plane_marker_container()],
             interactive_map_classname,
-            image_map_classname
+            image_map_classname,
+            active_map
         )
     else:
         # Toggle button not activated: Interactive map
@@ -202,14 +198,16 @@ def update_output(value):
             [create_chart_tilelayer(),
             create_map_scale()],
             interactive_map_classname,
-            image_map_classname
+            image_map_classname,
+            active_map
         )
 
 # Update the plane markers at interval
 @app.callback(Output('plane-markers', 'children'),
-                Input('map-refresh', 'n_intervals'))
-def update_map(n):
-    p = generate_planes()
+                Input('map-refresh', 'n_intervals'),
+                State('active-map', 'data'))
+def update_map(n, active_map):
+    p = generate_planes(active_map)
     return p
 
 # Refresh the popup text at interval
