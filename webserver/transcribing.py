@@ -13,29 +13,31 @@ def fetch_stream():
     stream_url = "http://d.liveatc.net/kdab_del_gnd"
     return requests.get(stream_url, stream=True)
 
-def block_to_wav(block):
-    a = pydub.AudioSegment(block, sample_width=2, frame_rate=11025, channels=1)
-    a.export(f"stream.wav", format="wav")
+def get_transcription_array(filename):
+    # Load the file into PyDub AudioSegment
+    audio_segment = pydub.AudioSegment.from_file(file=filename, format="mp3")
 
-def transcribe_audio():
-    #give this object a file path and it returns a string
-    return transcribe.transcribe_audio('stream.wav')
+    # Get array of samples (signals) from the audio segment
+    samples = audio_segment.get_array_of_samples()
 
-def get_transcription_array(block):
-    a = pydub.AudioSegment(block, sample_width=2, frame_rate=11025, channels=1)
-    a_temp = a.get_array_of_samples()
-    return transcribe.transcribe_audio_array(a_temp)
+    # Pass array to model, get transcription result 
+    return transcribe.transcribe_audio_array(np.array(samples))
 
 def audio_fetch_and_transcribe():
     global transcription
 
     r = fetch_stream()
+    filename = "stream.mp3"
 
     for block in r.iter_content(20480):
-        type(block)
-        #block_to_wav(block)
-        transcription = get_transcription_array(block)
-        print(transcription)
+        # Write 10 seconds of streamed data to the file
+        with open(filename, 'wb') as f:
+            f.write(block)
+        f.close()
+
+        # Transcribe
+        transcription = get_transcription_array(filename)
+        print(f'transcription: {transcription}')
 
 def get_latest_transcription():
     return transcription
