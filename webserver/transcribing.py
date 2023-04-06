@@ -30,8 +30,8 @@ def audio_fetch_and_transcribe():
     r = fetch_stream()
     filename = "stream.mp3"
 
-    for block in r.iter_content(20480):
-        # Write 10 seconds of streamed data to the file
+    for block in r.iter_content(6144):
+        # Write 3 seconds of streamed data to the file
         with open(filename, 'wb') as f:
             f.write(block)
         f.close()
