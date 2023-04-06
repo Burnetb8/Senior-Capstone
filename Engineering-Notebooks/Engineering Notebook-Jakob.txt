@@ -72,3 +72,14 @@ Updated data_descriptions to give more information about data and create histogr
 02/28/2023 
 finished test_trained_models and got wer that makes sense. Fixed issues with data_descriptions on lab machine
 
+03/23/2023 
+created transcribe given audio file which is a class that sets up the nemo models and then will transcribe the speech from a provided file.
+
+03/30/2023 
+updated transcribe given audio to work with mutiple different model types
+
+04/04/2023 
+was able to get trancribe given audio to connect with the website however issue with wav files means text is incosistant
+
+04/06/2023 
+tyler was able to update the wrapper he made for transcribe given audio file to improve the text transcription

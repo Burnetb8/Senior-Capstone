@@ -265,5 +265,9 @@
 3/30/23
 -Work with Jakob and Tyler on the website to transcribe the audio to speech using the citrinet nemo model with the tokenizer and 0.29 error rate
 
--4/4/23
+4/4/23
 -Worked with Jakob, Tyler and Aaron on fixing the word output on the website due to current audio being to short and only putting one word for the transcription
+
+4/6/2023
+-Started checkpoint training with Jakob on the Citrinet model to possible improve the word error rate
+-Finished up transcription on website with Tyler and Jakob and recieved an output, now looking to improve transcription with error rate and edits to the website
