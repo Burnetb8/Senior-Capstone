@@ -1,7 +1,8 @@
 from transcribe_given_audio_file import Transcribe_ATC
 import numpy as np
-import pydub
 import requests
+import os
+import subprocess
 
 transcription = ""
 
@@ -14,14 +15,14 @@ def fetch_stream():
     return requests.get(stream_url, stream=True)
 
 def get_transcription_array(filename):
-    # Load the file into PyDub AudioSegment
-    audio_segment = pydub.AudioSegment.from_file(file=filename, format="mp3")
+    # Convert mp3 to wav
+    os.chdir("/home/students/carrt12/Desktop/Senior-Capstone/webserver")
+    subprocess.call(['ffmpeg', '-y', '-i', filename, 'stream.wav'])
+    # TODO address error: Estimating duration from bitrate, this may be inaccurate 
+    # [src/libmpg123/layer3.c:INT123_do_layer3():1773] error: part2_3_length (1088) too large for available bit count (712)
 
-    # Get array of samples (signals) from the audio segment
-    samples = audio_segment.get_array_of_samples()
-
-    # Pass array to model, get transcription result 
-    return transcribe.transcribe_audio_array(np.array(samples))
+    # Pass file to model, get transcription result 
+    return transcribe.transcribe_audio("stream.wav")
 
 def audio_fetch_and_transcribe():
     global transcription
