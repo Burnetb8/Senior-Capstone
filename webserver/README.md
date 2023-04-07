@@ -5,12 +5,19 @@ Tiling:
 4. mv output_files ../assets
 
 Starting:
-1. conda activate nemo
-2. conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
-3. pip3 install -r requirements.python.txt
-4. pip3 install nemo_toolkit['all']
-5. python3 server.py
+1. pip3 install -r requirements.python.txt
+2. Add .nemo model file to webserver directory
+3. python3 server.py
 
 Environment variable file:
 - OPENSKY_USERNAME
 - OPENSKY_PASSWORD
+
+System Requirements:
+- System:
+    - RedHat Enterprise Linux V8.6
+    - Ubuntu 22
+    - Windows 11 Pro 21H2
+- PyTorch 1.8.1
+- Nvidia GPU
+- Conda
