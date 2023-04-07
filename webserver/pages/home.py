@@ -1,12 +1,15 @@
 from datetime import datetime
 import json
-from dash import html, Input, Output, State, dcc, MATCH, callback_context
+from dash import html, Input, Output, State, dcc, MATCH, ALL, callback_context
 import dash
 import dash_daq as daq
 import dash_leaflet as dl
 import pytz
 from opensky_fetching import fetch_opensky
+from datetime import datetime
 from transcribing import get_latest_transcription
+
+# TODO also change color of plane in iconOptions
 
 dash.register_page(__name__, path='/')
 app = dash.get_app()
@@ -27,7 +30,6 @@ aeronautical_coords = {
 }
 
 all_planes_info = {}
-selected_plane = None
 
 def create_map_scale():
     return dl.ScaleControl(metric=False)
@@ -160,7 +162,9 @@ layout = html.Div(children=[
             interval=500 # 0.5 seconds 
         ),
 
-        dcc.Store(id='active-map')
+        # Variables stored per-client
+        dcc.Store(id='active-map'),
+        dcc.Store(id='selected-plane')
     ])
 ])
 
@@ -212,19 +216,35 @@ def update_map(n, active_map):
 
 # Refresh the popup text at interval
 @app.callback(Output('popup', 'children'),
-              [Input('popup-refresh', 'n_intervals')],
+              Input('popup-refresh', 'n_intervals'),
+              State('selected-plane', 'data'),
             prevent_initial_call=True)
-def popup_refresh(n):
+def popup_refresh(n, selected_plane):
     if selected_plane and selected_plane in all_planes_info:
         return html.Div(children=[html.Span([item, html.Br()]) for item in generate_popup_text(all_planes_info[selected_plane])])
 
-# Update the selected plane on click 
+# On click plane icon, reset plane click and then change class name to indicate that it has been changed 
 @app.callback(
-    Output({'type': 'plane', 'index': MATCH}, 'n_clicks'),
+    [Output({'type': 'plane', 'index': MATCH}, 'n_clicks'), Output({'type': 'plane', 'index': MATCH}, 'iconOptions')],
     Input({'type': 'plane', 'index': MATCH}, 'n_clicks'),
+    State({'type': 'plane', 'index': MATCH}, 'iconOptions'),
     prevent_initial_call=True
 )
-def plane_click(n_clicks):
-    global selected_plane
-    selected_plane = json.loads(callback_context.triggered[0]['prop_id'][0:-9])['index']
-    return None
+def plane_click(n_clicks, iconOptions):
+    iconOptions['className'] = f"selected{datetime.now()}"
+    return [None, iconOptions]
+
+# Detect changed icons (from above callback), change selected plane for client
+@app.callback(
+    Output('selected-plane', 'data'),
+    Input({'type': 'plane', 'index': ALL}, 'iconOptions'),
+    prevent_initial_call=True
+)
+def plane_click(iconOptions):
+    if any([options['className'] for options in iconOptions]):
+        # If plane has actually been clicked on
+        selected_plane = json.loads(callback_context.triggered[0]['prop_id'][0:-12])['index']
+        return selected_plane
+    else:
+        # If planes have just reset positions, not been clicked on
+        return dash.no_update
