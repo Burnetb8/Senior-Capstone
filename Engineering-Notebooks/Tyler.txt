@@ -183,3 +183,11 @@ Generate new images
 4/5/23:
 - Write directly to mp3 file when streaming LiveATC every 10 seconds, bypassing PyDub for this part
 - This was done instead of trying to load blocks of bytes into PyDub AudioSegment and then exporting the file
+
+4/6/23:
+- Write 3 seconds of data instead of 10 when pulling audio, making for more accurate transcriptions as the average training audio snippet was 3.1 seconds
+- Store and display 20 words from transcription at a time
+- Store active map per client instead of globally
+- Update readme instructions and system requirements
+- Update system test plan requirements
+- Store selected plane per client instead of globally, fully adding multi-client support
