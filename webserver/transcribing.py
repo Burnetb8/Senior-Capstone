@@ -1,7 +1,6 @@
 from transcribe_given_audio_file import Transcribe_ATC
 import numpy as np
 import requests
-import os
 import subprocess
 
 transcription_buffer = []
@@ -16,7 +15,6 @@ def fetch_stream():
 
 def get_transcription_array(filename):
     # Convert mp3 to wav
-    os.chdir("/home/students/carrt12/Desktop/Senior-Capstone/webserver")
     subprocess.call(['ffmpeg', '-y', '-i', filename, 'stream.wav'])
     # TODO address error: Estimating duration from bitrate, this may be inaccurate 
     # [src/libmpg123/layer3.c:INT123_do_layer3():1773] error: part2_3_length (1088) too large for available bit count (712)
