@@ -25,6 +25,20 @@ class Transcribe_ATC:
             self.base_model = nemo_asr.models.EncDecCTCModelBPE.restore_from(self.model_check_point)
         except:
             self.base_model = nemo_asr.models.EncDecCTCModel.restore_from(self.model_check_point)
+        
+        # save model states/values
+        model_state = self.base_model.training
+        dither_value = self.base_model.preprocessor.featurizer.dither
+        pad_value = self.base_model.preprocessor.featurizer.pad_to
+
+        # eliminate intentional randomness in preprocessing
+        self.base_model.preprocessor.featurizer.dither = 0.0
+        self.base_model.preprocessor.featurizer.pad_to = 0
+
+        # inference setup: put model in evaluation mode, freeze encoder/decoder
+        self.base_model.eval()
+        self.base_model.encoder.freeze()
+        self.base_model.decoder.freeze()
 
     def transcribe_audio(self,file_name):
         files = [file_name]
@@ -39,19 +53,7 @@ class Transcribe_ATC:
     ):
 
 
-        # save model states/values
-        model_state = self.base_model.training
-        dither_value = self.base_model.preprocessor.featurizer.dither
-        pad_value = self.base_model.preprocessor.featurizer.pad_to
 
-        # eliminate intentional randomness in preprocessing
-        self.base_model.preprocessor.featurizer.dither = 0.0
-        self.base_model.preprocessor.featurizer.pad_to = 0
-
-        # inference setup: put model in evaluation mode, freeze encoder/decoder
-        self.base_model.eval()
-        self.base_model.encoder.freeze()
-        self.base_model.decoder.freeze()
 
         self.base_model.to(device)
 
