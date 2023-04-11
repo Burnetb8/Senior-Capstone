@@ -27,9 +27,9 @@ class Transcribe_ATC:
             self.base_model = nemo_asr.models.EncDecCTCModel.restore_from(self.model_check_point)
         
         # save model states/values
-        model_state = self.base_model.training
-        dither_value = self.base_model.preprocessor.featurizer.dither
-        pad_value = self.base_model.preprocessor.featurizer.pad_to
+        self.model_state = self.base_model.training
+        self.dither_value = self.base_model.preprocessor.featurizer.dither
+        self.pad_value = self.base_model.preprocessor.featurizer.pad_to
 
         # eliminate intentional randomness in preprocessing
         self.base_model.preprocessor.featurizer.dither = 0.0
@@ -52,9 +52,6 @@ class Transcribe_ATC:
         device: Union[Literal["cuda"], Literal["cpu"]] = "cuda",
     ):
 
-
-
-
         self.base_model.to(device)
 
         # get input data and length
@@ -73,9 +70,9 @@ class Transcribe_ATC:
         )
 
         # reset model states/preprocessor values
-        self.base_model.train(mode=model_state)
-        self.base_model.preprocessor.featurizer.dither = dither_value
-        self.base_model.preprocessor.featurizer.pad_to = pad_value
+        self.base_model.train(mode=self.model_state)
+        self.base_model.preprocessor.featurizer.dither = self.dither_value
+        self.base_model.preprocessor.featurizer.pad_to = self.ad_value
 
         return prediction[0]
 
