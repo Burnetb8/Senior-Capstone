@@ -275,3 +275,10 @@
 4/11/23
 -Training failed due to a memory error, so restarted training from checkpoint to try and improve the Word Error Rate from 0.29
 -Began editing the System Test Plan Final Version for submission
+
+4/13/23
+-Training ended up with 0.31 Word Error Rate so we will utilize the best error rate of 0.29 for our website transcriptions as of now
+-Begin changes listed in the review of the System Test Plan for Final Test Plan submission
+
+4/14/23
+-Finish edits to the Finalized System Test Plan and Submit
