@@ -8,8 +8,8 @@ from omegaconf import OmegaConf, open_dict
 
 config_path = 'config/citrinet_512_tokenizer.yaml'
 #config_path = 'config/citrinet_512.yaml'
-train_manifest = 'utils/manifests/atcc_train.json'
-validation_manifest = 'utils/manifests/atcc_validation.json'
+train_manifest = 'manifests/atcc_train.json'
+validation_manifest = 'manifests/atcc_validation.json'
 #this is a model found by running test.py looking for EncDecoCTCModelBPE
 base_model_name = 'stt_en_citrinet_512'
 save_as = 'ft100epoch_stt_en_citrinet_512_tokenizer.nemo'
