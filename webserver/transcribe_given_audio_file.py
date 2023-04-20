@@ -25,6 +25,20 @@ class Transcribe_ATC:
             self.base_model = nemo_asr.models.EncDecCTCModelBPE.restore_from(self.model_check_point)
         except:
             self.base_model = nemo_asr.models.EncDecCTCModel.restore_from(self.model_check_point)
+        
+        # save model states/values
+        self.model_state = self.base_model.training
+        self.dither_value = self.base_model.preprocessor.featurizer.dither
+        self.pad_value = self.base_model.preprocessor.featurizer.pad_to
+
+        # eliminate intentional randomness in preprocessing
+        self.base_model.preprocessor.featurizer.dither = 0.0
+        self.base_model.preprocessor.featurizer.pad_to = 0
+
+        # inference setup: put model in evaluation mode, freeze encoder/decoder
+        self.base_model.eval()
+        self.base_model.encoder.freeze()
+        self.base_model.decoder.freeze()
 
     def transcribe_audio(self,file_name):
         files = [file_name]
@@ -37,21 +51,6 @@ class Transcribe_ATC:
         offset: float = 0.0,
         device: Union[Literal["cuda"], Literal["cpu"]] = "cuda",
     ):
-
-
-        # save model states/values
-        model_state = self.base_model.training
-        dither_value = self.base_model.preprocessor.featurizer.dither
-        pad_value = self.base_model.preprocessor.featurizer.pad_to
-
-        # eliminate intentional randomness in preprocessing
-        self.base_model.preprocessor.featurizer.dither = 0.0
-        self.base_model.preprocessor.featurizer.pad_to = 0
-
-        # inference setup: put model in evaluation mode, freeze encoder/decoder
-        self.base_model.eval()
-        self.base_model.encoder.freeze()
-        self.base_model.decoder.freeze()
 
         self.base_model.to(device)
 
@@ -71,9 +70,9 @@ class Transcribe_ATC:
         )
 
         # reset model states/preprocessor values
-        self.base_model.train(mode=model_state)
-        self.base_model.preprocessor.featurizer.dither = dither_value
-        self.base_model.preprocessor.featurizer.pad_to = pad_value
+        self.base_model.train(mode=self.model_state)
+        self.base_model.preprocessor.featurizer.dither = self.dither_value
+        self.base_model.preprocessor.featurizer.pad_to = self.ad_value
 
         return prediction[0]
 

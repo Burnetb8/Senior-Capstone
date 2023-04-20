@@ -268,6 +268,17 @@
 4/4/23
 -Worked with Jakob, Tyler and Aaron on fixing the word output on the website due to current audio being to short and only putting one word for the transcription
 
-4/6/2023
+4/6/23
 -Started checkpoint training with Jakob on the Citrinet model to possible improve the word error rate
 -Finished up transcription on website with Tyler and Jakob and recieved an output, now looking to improve transcription with error rate and edits to the website
+
+4/11/23
+-Training failed due to a memory error, so restarted training from checkpoint to try and improve the Word Error Rate from 0.29
+-Began editing the System Test Plan Final Version for submission
+
+4/13/23
+-Training ended up with 0.31 Word Error Rate so we will utilize the best error rate of 0.29 for our website transcriptions as of now
+-Begin changes listed in the review of the System Test Plan for Final Test Plan submission
+
+4/14/23
+-Finish edits to the Finalized System Test Plan and Submit
