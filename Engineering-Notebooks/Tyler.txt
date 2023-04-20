@@ -191,3 +191,7 @@ Generate new images
 - Update readme instructions and system requirements
 - Update system test plan requirements
 - Store selected plane per client instead of globally, fully adding multi-client support
+
+4/20/23:
+- Work on final presentation
+- Add text for about page 

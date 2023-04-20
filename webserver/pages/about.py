@@ -10,7 +10,7 @@ layout = html.Div(children=[
                 html.Div(className="foreground card", children=[
                     html.Div(className="p3 margin-below", children=[
                         html.H3(children="About"),
-                        html.P("Blah blah description here")
+                        html.P("This project was created in a group as a Senior Design Project at Embry-Riddle Aeronautical University. It was sponsored by Dr. Jianhua Liu.<br><br>Flight training can be difficult when it comes to flight planning, aeronautical sectional map reading, and understanding Air Traffic Control (ATC) communications.<br><br>The software is a web-based ASR map that displays an interactive map with the ability to toggle to an aeronautical sectional chart. The real-time flight tracker is displayed over both maps with icons representing the individual planes. Each plane can be clicked to display information about the flight. Using the LiveATC website, real-time ATC communications are run through a speech recognizer using Nvidia NeMo. The transcribed text from NeMo will then be displayed on the website alongside the plane information.")
                     ])
                 ])
             ]),
