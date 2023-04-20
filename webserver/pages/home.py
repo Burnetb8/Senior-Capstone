@@ -9,8 +9,6 @@ from opensky_fetching import fetch_opensky
 from datetime import datetime
 from transcribing import get_latest_transcription
 
-# TODO also change color of plane in iconOptions
-
 dash.register_page(__name__, path='/')
 app = dash.get_app()
 
@@ -44,7 +42,7 @@ def create_plane_marker_container():
 def mark_plane(lat, long, name, angle):
     return dl.DivMarker(
         iconOptions={
-            'html': f'<i class="plane fa fa-plane" style="transform: rotate({angle-45}deg);color: white;font-size: 25px;text-shadow: 0 0 3px #000;">', # Angle - 45 to account for the font awesome icon pointing 45 degrees northeast at 0 degrees rotation
+            'html': f'<i class="plane fa fa-plane" style="transform: rotate({angle-45}deg);color: #525252;font-size: 30px;text-shadow: 0 0 3px #000;">', # Angle - 45 to account for the font awesome icon pointing 45 degrees northeast at 0 degrees rotation
             'className': ''
         },
         position=(lat, long),
