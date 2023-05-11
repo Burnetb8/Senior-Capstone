@@ -11,21 +11,21 @@ from omegaconf import OmegaConf, open_dict
 from nemo.collections.asr.parts.preprocessing.segment import AudioSegment
 
 
-
-
 class Transcribe_ATC:
-
-
     def __init__(self):
-        #EncDecCTCModelBPE is for citrinet models you will need to change this depending
-        #on the model we are using 
-        #EncDecCTCModel is for quartznet and jasper
-        self.model_check_point = 'ft100epoch_stt_en_citrinet_512_tokenizer.nemo'
+        # EncDecCTCModelBPE is for citrinet models you will need to change this depending
+        # on the model we are using
+        # EncDecCTCModel is for quartznet and jasper
+        self.model_check_point = "ft100epoch_stt_en_citrinet_512_tokenizer.nemo"
         try:
-            self.base_model = nemo_asr.models.EncDecCTCModelBPE.restore_from(self.model_check_point)
+            self.base_model = nemo_asr.models.EncDecCTCModelBPE.restore_from(
+                self.model_check_point
+            )
         except:
-            self.base_model = nemo_asr.models.EncDecCTCModel.restore_from(self.model_check_point)
-        
+            self.base_model = nemo_asr.models.EncDecCTCModel.restore_from(
+                self.model_check_point
+            )
+
         # save model states/values
         self.model_state = self.base_model.training
         self.dither_value = self.base_model.preprocessor.featurizer.dither
@@ -40,18 +40,18 @@ class Transcribe_ATC:
         self.base_model.encoder.freeze()
         self.base_model.decoder.freeze()
 
-    def transcribe_audio(self,file_name):
+    def transcribe_audio(self, file_name):
         files = [file_name]
-        return self.base_model.transcribe(paths2audio_files=files, batch_size=1)[0] 
-    
+        return self.base_model.transcribe(paths2audio_files=files, batch_size=1)[0]
+
     @torch.no_grad()
-    def transcribe_audio_array(self,
+    def transcribe_audio_array(
+        self,
         signal,
         duration: float = 0.0,
         offset: float = 0.0,
         device: Union[Literal["cuda"], Literal["cpu"]] = "cuda",
     ):
-
         self.base_model.to(device)
 
         # get input data and length
@@ -75,7 +75,3 @@ class Transcribe_ATC:
         self.base_model.preprocessor.featurizer.pad_to = self.ad_value
 
         return prediction[0]
-
-
-
-

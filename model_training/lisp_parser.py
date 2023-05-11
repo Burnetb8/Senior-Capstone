@@ -44,6 +44,8 @@ class TerminalConstant(Enum):
     #
     # according to the limited lexical analysis I've done on this data,
     # all 5 cases should be covered and normalized by this code
+
+
 class Directive(object):
     directive: TerminalDirective
     arguments: Union[str, List[str]]

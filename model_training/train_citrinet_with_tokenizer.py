@@ -6,14 +6,14 @@ from ruamel.yaml import YAML
 from omegaconf import DictConfig
 from omegaconf import OmegaConf, open_dict
 
-config_path = 'config/citrinet_512_tokenizer.yaml'
-#config_path = 'config/citrinet_512.yaml'
-train_manifest = 'manifests/atcc_train.json'
-validation_manifest = 'manifests/atcc_validation.json'
-#this is a model found by running test.py looking for EncDecoCTCModelBPE
-base_model_name = 'stt_en_citrinet_512'
-save_as = 'ft100epoch_stt_en_citrinet_512_tokenizer.nemo'
-tokenizer_model = 'tokenizers/tokenizer_spe_bpe_v400/'
+config_path = "config/citrinet_512_tokenizer.yaml"
+# config_path = 'config/citrinet_512.yaml'
+train_manifest = "manifests/atcc_train.json"
+validation_manifest = "manifests/atcc_validation.json"
+# this is a model found by running test.py looking for EncDecoCTCModelBPE
+base_model_name = "stt_en_citrinet_512"
+save_as = "ft100epoch_stt_en_citrinet_512_tokenizer.nemo"
+tokenizer_model = "tokenizers/tokenizer_spe_bpe_v400/"
 
 
 """
@@ -51,12 +51,12 @@ trainer = pl.Trainer(gpus=[0], max_epochs=100)
 params = OmegaConf.load(config_path)
 
 params.model.tokenizer.dir = tokenizer_model
-params.model.tokenizer.type = 'bpe'
+params.model.tokenizer.type = "bpe"
 
 params.model.train_ds.manifest_filepath = train_manifest
 params.model.validation_ds.manifest_filepath = validation_manifest
 
-#base_model.change_vocabulary(new_tokenizer_dir = 'test_tokenizer.model', new_tokenizer_type = DictConfig(config['model']['tokenizer']['type']))
+# base_model.change_vocabulary(new_tokenizer_dir = 'test_tokenizer.model', new_tokenizer_type = DictConfig(config['model']['tokenizer']['type']))
 
 base_model = nemo_asr.models.EncDecCTCModelBPE(cfg=params.model, trainer=trainer)
 

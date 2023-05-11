@@ -14,7 +14,6 @@ import librosa
 from typing import List, Union
 
 
-
 """
 These functions are responsible for formatting the Hiwire dataset
 """
@@ -103,6 +102,7 @@ def build_hiwire_manifest(root_path: Union[Path, str]) -> List[str]:
             )
 
     return manifest_data
+
 
 """
 These are the functions needed to format the ATC dataset 
@@ -229,24 +229,30 @@ def convert_sph_to_wav(paths: Union[List[Path], List[str]]):
         # print(subprocess_cmd)
         subprocess.run(subprocess_cmd)
 
+
 """
 This function is used to split into a test and train manifest
 """
 
-def split_json(all_manifest : str, hiwire_manifest : str, train_manifest : str, validation_manifest : str):
+
+def split_json(
+    all_manifest: str,
+    hiwire_manifest: str,
+    train_manifest: str,
+    validation_manifest: str,
+):
     """
-    
+
     load atcc_all.json and hiwire_all.json from file then combine and split them into test and train files
     split ratio is train/total so a split_ratio = 0.75 would mean 75% goes to train and 25% to validation
 
     """
-    
+
     split_ratio = 0.75
 
-    #atcc_all_json = open(all_manifest, "r")
-    #to remove the first not nessicary line
-    #print(atcc_all_json.readline())
-
+    # atcc_all_json = open(all_manifest, "r")
+    # to remove the first not nessicary line
+    # print(atcc_all_json.readline())
 
     with open(all_manifest) as f:
         atcc_all_json = f.read().splitlines()
@@ -258,47 +264,45 @@ def split_json(all_manifest : str, hiwire_manifest : str, train_manifest : str, 
 
     x = 3
 
-    #print(type(atcc_all_json))
-    #print(atcc_all_json[x])
-    #print(type(json.loads(atcc_all_json[x])))
-    #print(type(json.loads(atcc_all_json[x])['duration']))
+    # print(type(atcc_all_json))
+    # print(atcc_all_json[x])
+    # print(type(json.loads(atcc_all_json[x])))
+    # print(type(json.loads(atcc_all_json[x])['duration']))
 
-
-    #Removing clips with duration less than 1 cause that is causing errors
+    # Removing clips with duration less than 1 cause that is causing errors
     mininum_duration = 1
 
     for atc in atcc_all_json:
-        if(json.loads(atc)['duration'] < mininum_duration):
+        if json.loads(atc)["duration"] < mininum_duration:
             atcc_all_json.remove(atc)
 
-    #creating training set
+    # creating training set
     training_length = int(len(atcc_all_json) * split_ratio)
     train_list = atcc_all_json[1:training_length]
 
-    with open(train_manifest, 'w') as manifest:
-        #manifest.write("[\n")
+    with open(train_manifest, "w") as manifest:
+        # manifest.write("[\n")
         manifest.write("\n".join(train_list))
-        #manifest.write("]")
+        # manifest.write("]")
 
-    #creating validation set
+    # creating validation set
     data_len = int(len(atcc_all_json))
-    validation_list = atcc_all_json[training_length + 1:data_len]
+    validation_list = atcc_all_json[training_length + 1 : data_len]
 
-    with open(validation_manifest, 'w') as manifest:
-        #manifest.write("[ \n")
+    with open(validation_manifest, "w") as manifest:
+        # manifest.write("[ \n")
         manifest.write("\n".join(validation_list))
-        #manifest.write("]")
+        # manifest.write("]")
 
 
 if __name__ == "__main__":
-
-    #using the above defined functions to format Hiwire dataset
+    # using the above defined functions to format Hiwire dataset
     manifest_all = build_hiwire_manifest("data/S0293/speechdata")
     os.makedirs("manifests", exist_ok=True)
     with open("manifests/hiwire_all.json", "w") as manifest:
         manifest.write("\n".join(manifest_all))
 
-    #Using the above defined functions to format the ATC dataset
+    # Using the above defined functions to format the ATC dataset
     # list of audio and transcripts
     audio, transcripts = enumerate_files("data/atc0_comp")
     # manifest format (array or strings, each string corresponds to one line)
@@ -310,11 +314,9 @@ if __name__ == "__main__":
     with open("manifests/atcc_all.json", "w", encoding="utf-8") as manifest:
         manifest.write("\n".join(manifest_all))
 
-    #spliting into test and training datasets
-    all_manifest = 'manifests/atcc_all.json'
-    hiwire_manifest = 'manifests/hiwire_all.json'
-    train_manifest = 'manifests/atcc_train.json'
-    validation_manifest = 'manifests/atcc_validation.json'
-    split_json(all_manifest,hiwire_manifest,train_manifest,validation_manifest)
-
-    
+    # spliting into test and training datasets
+    all_manifest = "manifests/atcc_all.json"
+    hiwire_manifest = "manifests/hiwire_all.json"
+    train_manifest = "manifests/atcc_train.json"
+    validation_manifest = "manifests/atcc_validation.json"
+    split_json(all_manifest, hiwire_manifest, train_manifest, validation_manifest)
