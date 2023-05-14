@@ -6,7 +6,7 @@ import subprocess
 transcription_buffer = []
 
 # this object does the transcription
-transcribe = Transcribe_ATC()
+# transcribe = Transcribe_ATC()
 
 
 def fetch_stream():

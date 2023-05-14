@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Geographic Map</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='map.css') }}" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin="" />
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script src="{{ url_for('static', filename='map.js') }}"></script>
+
+    <script>
+        map.setView({
+            lat: {{ initial_center['lat'] }},
+            lng: {{ initial_center['lon'] }},
+        }, {{ initial_center['zoom'] }});
+        {% for marker in markers %}
+        L.marker([{{ marker['lat'] }}, {{ marker['lon']}}])
+            .addTo(map)
+        {% if marker['popup'] %}
+            .bindPopup("{{ marker['popup'] }}")
+            .openPopup();
+        {% endif %}
+        {% endfor %}
+    </script>
+</body>
+
+</html>

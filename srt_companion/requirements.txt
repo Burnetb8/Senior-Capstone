@@ -1,6 +1,0 @@
-numpy
-pandas
-scipy
-plotly
-dash
-folium

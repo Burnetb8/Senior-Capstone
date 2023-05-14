@@ -1,5 +1,0 @@
-Week of 10/7/22 Goals
--Get example map in Web Server Graph and Button Switch to Aeronautical Map -Tyler 
--Make a model to train - Braeden Jakob
--Finish the SRS Tyler Kira
--Finish the SDS Braeden Jakob
