@@ -73,9 +73,8 @@ function main() {
             marker.on('click', (ev) => {
                 // Remove previous data
                 $("#infoPane tr").each(function (index) {
-                    if ($(this).attr("id") != "tableHeader") {
+                    if ($(this).attr("id") != "tableHeader")
                         $(this).remove();
-                    }
                 });
 
                 // Add plane entries entries
