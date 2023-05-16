@@ -10,25 +10,37 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin="" />
 
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
+    <script src="{{ url_for('static', filename='leaflet.rotatedMarker.js') }}"></script>
+    <script src="{{ url_for('static', filename='jquery-3.7.0.min.js') }}"></script>
 </head>
 
 <body>
-    <div id="map"></div>
+    <div id="map">
+        <div id="infoPane">
+            <img id="closeButton" src="{{ url_for('static', filename='xmark-solid.svg') }}" />
+            <table>
+                <tr id="tableHeader">
+                    <th>Key</th>
+                    <th>Value</th>
+                </tr>
+            </table>
+        </div>
+    </div>
     <script src="{{ url_for('static', filename='map.js') }}"></script>
 
     <script>
+        var planeIcon = L.icon({
+            iconUrl: "{{ url_for('static', filename='plane-up-solid.svg') }}",
+            iconSize: [20, 20]
+        });
+
         map.setView({
             lat: {{ initial_center['lat'] }},
             lng: {{ initial_center['lon'] }},
         }, {{ initial_center['zoom'] }});
-        {% for marker in markers %}
-        L.marker([{{ marker['lat'] }}, {{ marker['lon']}}])
-            .addTo(map)
-        {% if marker['popup'] %}
-            .bindPopup("{{ marker['popup'] }}")
-            .openPopup();
-        {% endif %}
-        {% endfor %}
+
+        main();
+        setInterval(main, 15000);
     </script>
 </body>
 
