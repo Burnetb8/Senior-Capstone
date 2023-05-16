@@ -6,18 +6,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='map.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/map.css') }}" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin="" />
 
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
-    <script src="{{ url_for('static', filename='leaflet.rotatedMarker.js') }}"></script>
-    <script src="{{ url_for('static', filename='jquery-3.7.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/jquery-3.7.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/leaflet.rotatedMarker.js') }}"></script>
 </head>
 
 <body>
     <div id="map">
         <div id="infoPane">
-            <img id="closeButton" src="{{ url_for('static', filename='xmark-solid.svg') }}" />
+            <img id="closeButton" src="{{ url_for('static', filename='images/xmark-solid.svg') }}" />
             <table>
                 <tr id="tableHeader">
                     <th>Key</th>
@@ -26,11 +26,11 @@
             </table>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='map.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 
     <script>
         var planeIcon = L.icon({
-            iconUrl: "{{ url_for('static', filename='plane-up-solid.svg') }}",
+            iconUrl: "{{ url_for('static', filename='images/markers/plane-up-solid.svg') }}",
             iconSize: [20, 20]
         });
 
