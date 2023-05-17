@@ -27,3 +27,11 @@ body,
     width: 25px;
     float: right;
 }
+
+.planeMarker {
+    transform-origin: center;
+}
+
+.airportMarker {
+    transform-origin: center;
+}

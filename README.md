@@ -69,3 +69,7 @@ flask --app source run --debug
 
 Flask should print the IP address and port that it is running on to `stdout` (usually `localhost:5000`).
 Copy and paste this into your browser and the index page should load, then you can browse and use the app as desired.
+
+## Data Sources
+List of US Airports - https://data.humdata.org/dataset/ourairports-usa
+Active Flights - https://opensky-network.org/

@@ -29,9 +29,18 @@
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 
     <script>
-        var planeIcon = L.icon({
+        const planeIcon = L.icon({
             iconUrl: "{{ url_for('static', filename='images/markers/plane-up-solid.svg') }}",
-            iconSize: [20, 20]
+            iconSize: [20, 20],
+            iconAnchor: [10, 10],
+            className: "planeMarker"
+        });
+
+        const airportIcon = L.icon({
+            iconUrl: "{{ url_for('static', filename='images/markers/airport.svg') }}",
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            className: "airportMarker"
         });
 
         map.setView({
@@ -39,8 +48,26 @@
             lng: {{ initial_center['lon'] }},
         }, {{ initial_center['zoom'] }});
 
+        const airport_data_request = new XMLHttpRequest();
+
+        // add event listener for when an airport data response is received
+        airport_data_request.addEventListener("load", () => {
+            // ignore cases where response body is null
+            console.log(airport_data_request.response);
+            if (airport_data_request.response == null)
+                return;
+
+            console.log(airport_data_request.response);
+            airportData = airport_data_request.response.airport_data;
+            draw_airport_markers(airport_data_request.response.airport_data);
+        });
+
+        airport_data_request.open("GET", "/data/airports/FL");
+        airport_data_request.responseType = "json";
+        airport_data_request.send();
+
         main();
-        setInterval(main, 15000);
+        setInterval(main, 30000);
     </script>
 </body>
 

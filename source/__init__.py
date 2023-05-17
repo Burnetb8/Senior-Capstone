@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 
-from .blueprints import index, about, map
+from .blueprints import index, about, map, data
 
 
 def create_app(test_config=None):
@@ -12,13 +12,11 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
 
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
+    os.makedirs(app.instance_path, exist_ok=True)
 
     app.register_blueprint(index.bp)
     app.register_blueprint(about.bp)
     app.register_blueprint(map.bp)
+    app.register_blueprint(data.bp)
 
     return app
