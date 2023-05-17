@@ -1,5 +1,6 @@
 .vscode/
 webserver/map.html
+instance/
 
 source/secrets.py
 
