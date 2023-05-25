@@ -71,5 +71,6 @@ Flask should print the IP address and port that it is running on to `stdout` (us
 Copy and paste this into your browser and the index page should load, then you can browse and use the app as desired.
 
 ## Data Sources
-List of US Airports - https://data.humdata.org/dataset/ourairports-usa
-Active Flights - https://opensky-network.org/
+[Modified] List of US Airports - https://data.humdata.org/dataset/ourairports-usa
+
+Real-time Flight Data - https://opensky-network.org/

@@ -101,11 +101,13 @@ function draw_flight_path(icao24) {
                 }
             ).addTo(flightPathLayer);
 
+            let waypoint_time = new Date(waypoint.time);
+
             waypointMark.on('mouseover', function () {
                 L.popup(
                     [waypoint.latitude, waypoint.longitude],
                     {
-                        content: `Location: ${waypoint.latitude}\u00b0N ${waypoint.longitude}\u00b0W`
+                        content: `Time: ${waypoint_time.toLocaleString()}<br />Location: ${waypoint.latitude}\u00b0N ${waypoint.longitude}\u00b0W`
                     }
                 ).openOn(map);
             });

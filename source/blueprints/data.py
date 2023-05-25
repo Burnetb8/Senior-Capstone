@@ -1,9 +1,11 @@
+from pprint import pprint
+
 import pandas as pd
 from flask import Blueprint, g, make_response
 from opensky_api import OpenSkyApi
 from requests.exceptions import ReadTimeout
+
 from .map import initial_center
-from pprint import pprint
 
 try:
     # try to use the opensky API with credentials
@@ -87,7 +89,7 @@ def plane_states():
 
 
 @bp.route("/flight_track/<icao24>")
-def get_flight_track(icao24):
+def flight_track(icao24):
     response_data = {"waypoints": []}
 
     if "flight_tracks" not in g:
@@ -102,9 +104,11 @@ def get_flight_track(icao24):
         flight_path = track.path
 
     for waypoint in flight_path:
+        print(f"Waypoint time: {waypoint[0]}")
         response_data["waypoints"].append(
             {
-                "time": waypoint[0],
+                # convert from seconds since unix epoch to milliseconds for compatibility with JS Date API
+                "time": waypoint[0] * 1000,
                 "latitude": waypoint[1],
                 "longitude": waypoint[2],
             }
