@@ -37,6 +37,7 @@ airport_data = pd.read_csv(
         "iata_code",
         "local_code",
         "home_link",
+        "stream_freqs"
     ],
 )
 
@@ -87,6 +88,10 @@ def plane_states():
 
     return make_response(data, 200)
 
+# @bp.route("/atc_stream/<icao_name>")
+# def atc_stream(icao_name):
+
+
 
 @bp.route("/flight_track/<icao24>")
 def flight_track(icao24):
@@ -127,7 +132,7 @@ def airports(state):
             # how many airports there are in the US
             if row.type == "large_airport" or row.type == "medium_airport":
                 data = {
-                    "identifier": row.ident,
+                    "ident": row.ident,
                     "name": row.name,
                     "latitude": row.latitude,
                     "longitude": row.longitude,

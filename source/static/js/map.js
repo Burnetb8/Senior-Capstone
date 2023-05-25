@@ -188,7 +188,7 @@ function draw_airport_markers(airport_data) {
         marker.on('click', (event) => {
             clear_table();
 
-            $("#infoPane table").append(`<tr><td>Identifier</td><td>${airport.identifier}</td></tr>`);
+            $("#infoPane table").append(`<tr><td>Identifier</td><td>${airport.ident}</td></tr>`);
             $("#infoPane table").append(`<tr><td>Name</td><td>${airport.name}</td></tr>`);
             $("#infoPane table").append(`<tr><td>Position (Latitude, Longitude)</td><td>${airport.latitude}\u00b0N ${airport.longitude}\u00b0W</td></tr>`);
             $("#infoPane table").append(`<tr><td>Elevation</td><td>${airport.elevation} feet</td></tr>`);
