@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import pandas as pd
 from flask import Blueprint, g, make_response
 from opensky_api import OpenSkyApi
@@ -37,7 +35,7 @@ airport_data = pd.read_excel(
         "iata_code",
         "local_code",
         "home_link",
-        "stream_freqs"
+        "stream_freqs",
     ],
 )
 
@@ -88,10 +86,6 @@ def plane_states():
 
     return make_response(data, 200)
 
-# @bp.route("/atc_stream/<icao_name>")
-# def atc_stream(icao_name):
-
-
 
 @bp.route("/flight_track/<icao24>")
 def flight_track(icao24):
@@ -109,7 +103,6 @@ def flight_track(icao24):
         flight_path = track.path
 
     for waypoint in flight_path:
-        print(f"Waypoint time: {waypoint[0]}")
         response_data["waypoints"].append(
             {
                 # convert from seconds since unix epoch to milliseconds for compatibility with JS Date API
@@ -149,7 +142,8 @@ def airports(state):
                 # filter out nan values
                 for k, v in data.items():
                     if pd.isna(v):
-                        data[k] = "N/A"
+                        # json lib doesn't encode nan values correctly, but does encode None correctly
+                        data[k] = None
 
                 if not pd.isna(row.stream_freqs):
                     data["tower_frequencies"] = row.stream_freqs.split(",")

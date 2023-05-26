@@ -29,6 +29,10 @@ body,
     float: right;
 }
 
+#closeButton:hover {
+    cursor: pointer;
+}
+
 .planeMarker {
     transform-origin: center;
 }
@@ -47,7 +51,6 @@ body,
 }
 
 .collapsible:after {
-    margin-left: 5px;
     content: "\02B9C";
     float: right;
 }

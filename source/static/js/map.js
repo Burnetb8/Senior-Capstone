@@ -89,7 +89,7 @@ function draw_flight_path(icao24) {
         if (flight_path_request.response == null)
             return;
 
-        var waypoint_coords = [];
+        let waypoint_coords = [];
         flightPathLayer.clearLayers();
 
         for (const waypoint of flight_path_request.response.waypoints) {
@@ -111,7 +111,9 @@ function draw_flight_path(icao24) {
                 L.popup(
                     [waypoint.latitude, waypoint.longitude],
                     {
-                        content: `Time: ${waypoint_time.toLocaleString()}<br />Location: ${waypoint.latitude}\u00b0N ${waypoint.longitude}\u00b0W`
+                        content: `
+                        Time: ${waypoint_time.toLocaleString()}<br />
+                        Location: ${waypoint.latitude}\u00b0N ${waypoint.longitude}\u00b0W`
                     }
                 ).openOn(map);
             });
@@ -150,25 +152,98 @@ function draw_plane_markers(plane_data) {
         marker.setRotationAngle(plane.true_track);
         marker.addTo(planeLayer);
 
-        marker.on('click', (ev) => {
+        marker.on('click', () => {
             clear_table();
 
             // Add plane entries entries; TODO: find a better way to do this
-            $("#infoTable").appen("<tr><th>Plane Properties</th></tr>");
-            $("#infoTable").append(`<tr><td>ICAO 24-bit Address</td><td>${plane.icao24.toUpperCase()}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Callsign</td><td>${plane.callsign}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Country Origin</td><td>${plane.origin_country}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Time of Last Position Report</td><td>${Date(plane.time_position)}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Last Contact (time)</td><td>${Date(plane.last_contact)}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Position (Latitude, Longitude)</td><td>${plane.latitude}\u00b0N ${plane.longitude}\u00b0W</td></tr>`);
-            $("#infoTable").append(`<tr><td>Geometric Altitude (m)</td><td>${plane.geo_altitude}</td></tr>`);
-            $("#infoTable").append(`<tr><td>On Ground?</td><td>${plane.on_ground ? "Yes" : "No"}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Velocity (m/s)</td><td>${plane.velocity}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Heading (True Track, in degrees)</td><td>${plane.true_track}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Vertical Rate (m/s)</td><td>${plane.vertical_rate}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Squawk</td><td>${plane.squawk}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Position Source</td><td>${get_position_source_string(plane.position_source)}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Plane Category</td><td>${get_plane_category_string(plane.category)}</td></tr>`);
+            $("#infoTable").append(`
+                <tr>
+                    <th colspan="2">Plane Properties</th>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>ICAO 24-bit Address</td>
+                    <td>${plane.icao24.toUpperCase()}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Callsign</td>
+                    <td>${plane.callsign}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Country Origin</td>
+                    <td>${plane.origin_country}</td>
+                </tr>`
+            );
+            $("#infoTable").append(`
+                <tr>
+                    <td>Time of Last Position Report</td>
+                    <td>${Date(plane.time_position)}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Last Contact (time)</td>
+                    <td>${Date(plane.last_contact)}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Position</td>
+                    <td>${plane.latitude}\u00b0N ${plane.longitude}\u00b0W</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Geometric Altitude</td>
+                    <td>${plane.geo_altitude} meters</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>On Ground?</td>
+                    <td>${plane.on_ground ? "Yes" : "No"}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Velocity</td><td>${plane.velocity} meters per second</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Heading</td>
+                    <td>${plane.true_track}\u00b0</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Vertical Rate</td>
+                    <td>${plane.vertical_rate} meters per second</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Squawk</td>
+                    <td>${plane.squawk}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Position Source</td>
+                    <td>${get_position_source_string(plane.position_source)}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Plane Category</td>
+                    <td>${get_plane_category_string(plane.category)}</td>
+                </tr>
+            `);
 
             draw_flight_path(plane.icao24);
 
@@ -194,22 +269,78 @@ function draw_airport_markers(airport_data) {
             clear_table();
 
             // Add airport properties
-            $("#infoTable").append("<tr><th>Airport Properties</th></tr>");
-            $("#infoTable").append(`<tr><td>Identifier</td><td>${airport.ident}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Name</td><td>${airport.name}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Position (Latitude, Longitude)</td><td>${airport.latitude}\u00b0N  ${airport.longitude}\u00b0W</td></tr>`);
-            $("#infoTable").append(`<tr><td>Elevation</td><td>${airport.elevation} feet</td></tr>`);
-            $("#infoTable").append(`<tr><td>Region Name</td><td>${airport.region_name}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Municipality</td><td>${airport.municipality}</td></tr>`);
-            $("#infoTable").append(`<tr><td>GPS Code</td><td>${airport.gps_code}</td></tr>`);
-            $("#infoTable").append(`<tr><td>IATA Code</td><td>${airport.iata_code}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Local Code</td><td>${airport.local_code}</td></tr>`);
-            $("#infoTable").append(`<tr><td>Website</td><td>${airport.home_link}</td></tr>`);
+            $("#infoTable").append(`
+                <tr>
+                    <th colspan="2">Airport Properties</th>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Identifier</td>
+                    <td>${airport.ident}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Name</td>
+                    <td>${airport.name}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Position</td>
+                    <td>${airport.latitude}\u00b0N  ${airport.longitude}\u00b0W</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Elevation</td>
+                    <td>${airport.elevation} feet</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Region Name</td>
+                    <td>${airport.region_name}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Municipality</td>
+                    <td>${airport.municipality}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>GPS Code</td>
+                    <td>${airport.gps_code}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>IATA Code</td>
+                    <td>${airport.iata_code}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Local Code</td>
+                    <td>${airport.local_code}</td>
+                </tr>
+            `);
+            $("#infoTable").append(`
+                <tr>
+                    <td>Website</td>
+                    <td>${airport.home_link}</td>
+                </tr>
+            `);
 
             // If there are airport frequencies available, add them to the info pane
             if (airport.tower_frequencies) {
                 // collapsible button to show/hide media players
-                const $tower_freq = $("<button type='button' class='collapsible'>Tower Frequencies</button>");
+                const $tower_freq = $(`
+                    <button type='button' class='collapsible'>Tower Frequencies</button>
+                `);
                 // container for the media players and labels
                 let $content_div = $("<div class='content'></div>");
 
@@ -224,10 +355,20 @@ function draw_airport_markers(airport_data) {
                 $tower_freq.after($content_div);
 
                 for (const frequency of airport.tower_frequencies) {
-                    let $audio_figure = $(`<figure><figcaption>${frequency}</figcaption></figure>`);
+                    let $audio_figure = $(`
+                        <figure>
+                            <figcaption>${frequency}</figcaption>
+                        </figure>
+                    `);
 
                     $content_div.append($audio_figure);
-                    $audio_figure.append(`<audio controls src="https://livetraffic2.near.aero/stream/${airport.ident}_${frequency.replace(".", "")}.mp3"></audio>`);
+                    $audio_figure.append(`
+                        <audio
+                            controls
+                            src="https://livetraffic2.near.aero/stream/${airport.ident}_${frequency.replace(".", "")}.mp3"
+                        >
+                        </audio>
+                    `);
                 }
             }
 
