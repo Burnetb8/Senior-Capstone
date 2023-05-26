@@ -18,12 +18,7 @@
     <div id="map">
         <div id="infoPane">
             <img id="closeButton" src="{{ url_for('static', filename='images/xmark-solid.svg') }}" />
-            <table>
-                <tr id="tableHeader">
-                    <th>Key</th>
-                    <th>Value</th>
-                </tr>
-            </table>
+            <table id="infoTable"></table>
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>

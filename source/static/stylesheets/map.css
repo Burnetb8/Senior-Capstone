@@ -20,6 +20,7 @@ body,
     z-index: 800;
     background-color: white;
     display: none;
+    cursor: default;
 }
 
 #closeButton {
@@ -34,4 +35,34 @@ body,
 
 .airportMarker {
     transform-origin: center;
+}
+
+.collapsible {
+    padding-top: 2%;
+    background-color: white;
+    outline: none;
+    border: none;
+    text-align: left;
+    width: 100%;
+}
+
+.collapsible:after {
+    margin-left: 5px;
+    content: "\02B9C";
+    float: right;
+}
+
+.active:after {
+    content: "\02B9F";
+}
+
+.collapsible:hover {
+    cursor: pointer;
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: white;
 }

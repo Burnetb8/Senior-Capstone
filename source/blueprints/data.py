@@ -20,8 +20,8 @@ except ImportError:
 
 bp = Blueprint("data", __name__, url_prefix="/data")
 
-airport_data = pd.read_csv(
-    "data/us-airports.csv",
+airport_data = pd.read_excel(
+    "data/us-airports.xlsx",
     usecols=[
         "ident",
         "type",
@@ -150,6 +150,9 @@ def airports(state):
                 for k, v in data.items():
                     if pd.isna(v):
                         data[k] = "N/A"
+
+                if not pd.isna(row.stream_freqs):
+                    data["tower_frequencies"] = row.stream_freqs.split(",")
 
                 response_data["airport_data"].append(data)
 
