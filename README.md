@@ -74,3 +74,5 @@ Copy and paste this into your browser and the index page should load, then you c
 [Modified] List of US Airports - https://data.humdata.org/dataset/ourairports-usa
 
 Real-time Flight Data - https://opensky-network.org/
+
+Icons - https://fontawesome.com/icons
