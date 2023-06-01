@@ -256,6 +256,14 @@ function draw_plane_markers(plane_data) {
     }
 }
 
+/**
+ * Draws the airport markers that are fetched from the data API when the app starts.
+ * Sets up the callback functions for clicking the icons and populating the info table
+ * with whatever data is available.
+ *
+ * @param {Array} airport_data An array of objects associated with a valid API response
+ * from the /data/airports/<state> API endpoint.
+ */
 function draw_airport_markers(airport_data) {
     // TODO: combine airport and plane marker draw functions into one function
     airportLayer.clearLayers();
@@ -381,7 +389,10 @@ function draw_airport_markers(airport_data) {
     }
 }
 
-function main() {
+/**
+ * One-time event listener setup.
+ */
+function setup_event_listeners() {
     // Event listener for clicking on the close button
     $("#closeButton").on('click', (event) => {
         // Hide table
@@ -390,6 +401,7 @@ function main() {
         $(".leaflet-control-zoom").show();
     });
 
+    // Prevent mouse events from interacting with the map below the info panel
     $("#infoPane").on('click', (event) => {
         event.stopImmediatePropagation();
     });
@@ -406,7 +418,12 @@ function main() {
 
         draw_plane_markers(planeData);
     });
+}
 
+/**
+ * Main function that gets called on map startup.
+ */
+function main() {
     // create http request object
     const plane_data_request = new XMLHttpRequest();
 

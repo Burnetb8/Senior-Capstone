@@ -24,6 +24,8 @@
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 
     <script>
+        setup_event_listeners();
+
         const planeIcon = L.icon({
             iconUrl: "{{ url_for('static', filename='images/markers/plane-up-solid.svg') }}",
             iconSize: [20, 20],
