@@ -23,6 +23,7 @@ jobs:
       - name: Dependency Setup
         run: |
           pip install -r requirements/docs_requirements.txt
+          pip install -U ghp-import
           npm install -g jsdoc
 
       - name: Sphinx Build
