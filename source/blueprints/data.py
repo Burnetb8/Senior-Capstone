@@ -182,7 +182,20 @@ def airports(state):
             # filter by medium and large airports, because I didn't realize just
             # how many airports there are in the US
             if row.type == "large_airport" or row.type == "medium_airport":
-                data = {}
+                data = {
+                    "ident": row.ident,
+                    "name": row.name,
+                    "latitude": row.latitude,
+                    "longitude": row.longitude,
+                    "elevation": row.elevation,
+                    "region_name": row.region_name,
+                    "local_region": row.local_region,
+                    "municipality": row.municipality,
+                    "gps_code": row.gps_code,
+                    "iata_code": row.iata_code,
+                    "local_code": row.local_code,
+                    "home_link": row.home_link,
+                }
 
                 # filter out nan values
                 for k, v in data.items():
