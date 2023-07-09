@@ -1,3 +1,15 @@
+*********
+THIS FOLDER IS LARGLY OUT OF DATE AND CONTAINS MAINLY
+TEST SCRIPTS
+
+FOR UPDATED SCRIPTS GO TO THE 
+/model_training 
+FOLDER
+
+***********
+
+
+
 Install instrutions 
 
 Using apt-get install the following
