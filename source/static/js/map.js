@@ -352,6 +352,7 @@ function draw_airport_markers(airport_data) {
                 // container for the media players and labels
                 let $content_div = $("<div class='content'></div>");
 
+                // click event handler for the tower frequency dropdown
                 $tower_freq.on("click", () => {
                     // toggle visibility
                     $content_div.toggle();
@@ -359,7 +360,9 @@ function draw_airport_markers(airport_data) {
                     $tower_freq.toggleClass("active");
                 });
 
+                // place collapsible menu after the airport properties
                 $("#infoTable").after($tower_freq);
+                // 'content' div for the media players after the frequency menus
                 $tower_freq.after($content_div);
 
                 for (const frequency of airport.tower_frequencies) {
@@ -376,7 +379,19 @@ function draw_airport_markers(airport_data) {
                             src="https://livetraffic2.near.aero/stream/${airport.ident}_${frequency.replace(".", "")}.mp3"
                         >
                         </audio>
+                        <button id="transcribe-${airport.ident}_${frequency.replace(".", "")}">Transcribe</button>
                     `);
+
+                    $(`#transcribe-${airport.ident}_${frequency.replace(".", "")}`).on("click", (event) => {
+                        $.ajax({
+                            url: "/models/transcribe",
+                            method: "POST",
+                            contentType: "text/plain",
+                            data: `https://livetraffic2.near.aero/stream/${airport.ident}_${frequency.replace(".", "")}.mp3`,
+                        }).done(() => {
+                            console.log("Done");
+                        })
+                    });
                 }
             }
 
