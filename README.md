@@ -24,7 +24,21 @@ then all other dependencies call be installed from the requirements file
 pip install -r requirements/requirements.txt
 ```
 
-Unfortunately, the OpenSky API is not available through PyPI and needs to be installed as an editable package. [Follow the instructions on their GitHub for Python installation](https://github.com/openskynetwork/opensky-api/blob/master/README.md#python-api).
+### OpenSky Python API
+Unfortunately, the OpenSky API is not available through PyPI and needs to be installed as an editable package.
+
+First clone the OpenSky API repository:
+```bash
+git clone https://github.com/openskynetwork/opensky-api.git
+```
+
+Change to the `python` directory and install the API through `pip` as an editable package
+```bash
+# Change to the python directory
+cd opensky-api/python
+# Install as an editable package
+pip install -e .
+```
 
 ## Project Setup
 

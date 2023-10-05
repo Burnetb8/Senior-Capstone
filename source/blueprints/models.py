@@ -3,16 +3,14 @@ from multiprocessing import Process, Lock
 from flask import Blueprint, make_response, request
 
 # from multiprocessing import Process, Queue
-from asr_project.models import PretrainedFineTunedJasper, Model
-from asr_project.utils import transcribe_audio_buffer
-
 bp = Blueprint("models", __name__, url_prefix="/models")
 
 
+# if the model isn't run in a separate thread, it blocks the entire server
 def asr_model_thread():
-    model = PretrainedFineTunedJasper(checkpoint_path="models/jasper_finetuned.nemo")
+    pass
 
-
+# using mutliprocessing to sidestep GIL
 model_init_process = Process(target=asr_model_thread)
 model_init_process.start()
 
