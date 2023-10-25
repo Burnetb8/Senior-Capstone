@@ -10,16 +10,17 @@ body,
 #map {
     height: 100%;
     width: 100%;
-    position: relative;
+    position: fixed; /*changed by Maxwell Moolchan, from relative*/
+    display: flex; /*added by Maxwell Moolchan*/
 }
 
 #infoPane {
     height: 100%;
-    width: 30%;
-    position: absolute;
+    width: 350px; /*changed by Maxwell Moolchan, from 30%*/
+    /* position: absolute; */ /*remvoed by Maxwell Moolchan, this breaks the flex box controls*/
     z-index: 800;
     background-color: white;
-    display: none;
+    display: none; /*changed by Max M from none to inline-block, this may not work because using Jquery */
     cursor: default;
 }
 
@@ -52,7 +53,6 @@ body,
 
 .collapsible:after {
     content: "\02B9C";
-    float: right;
 }
 
 .active:after {
@@ -69,3 +69,140 @@ body,
     overflow: hidden;
     background-color: white;
 }
+
+/* added by Maxwell Moolchan*/
+
+
+#zoomedTooFarOut {
+    /*display: flex;*/
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    flex-grow: 1;
+    z-index: 800;
+}
+
+/*
+#zoomedTooFarOutMessage {
+    background-color: #000000;
+    height: 50px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#zoomedTooFarOutMessage span {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ffffff;
+    font-weight: bold;
+}*/
+
+#zoomedTooFarOut span {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #000000;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/*
+.leaflet-map-pane {  need to add toggle in future
+    filter: blur(10px);
+}
+*/
+
+/* for the collapsable menu menu on the map screen */
+
+.mapCollapsible, .collapsibleContent{
+    background-color: #ffffff;
+    color: white;
+    cursor: pointer;
+    padding: 0px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+  }
+  
+  .active {
+    border-radius: 2px 2px 0px 0px !important;
+  }
+  
+  .active, .mapCollapsible:hover, .collapsibleContent:hover {
+    background-color: #f4f4f4;  
+  }
+  
+  .firstButton {
+    border-radius: 2px 2px 0px 0px;
+  }
+  
+  .lastButton {
+    border-radius: 0px 0px 2px 2px;
+  }
+  
+  
+  .mapCollapsible:after, .collapsibleContent:after {
+    content: '\002B';
+    color: #000000;
+    font-weight: bold;
+  }
+  
+  .active:after {
+    content: "\2212";
+  }
+  
+  .contentDropdown p {
+      margin-block-start: 0;
+      margin-block-end: 0;
+  }
+  
+  .contentDropdown {
+    padding: 0 0;
+    box-sizing: border-box;
+    max-height: 0;
+    width: 30px;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+  }
+  
+  .selectionCluster {
+    width: 30px;
+    border: 2px solid rgba(0,0,0,0.2);
+    background-clip: padding-box;
+    border-radius: 4px;
+  }
+  
+  .primaryButton {
+    border-radius: 2px 2px 2px 2px;
+    pointer-events: auto;
+  }
+  
+  .collapsibleContent {
+    border-top: 1px solid #cccccc;
+    pointer-events: auto;
+  }
+
+  .collapsibleContent:active {
+    background-color: #cccccc;
+  }
+
+  .selectionClusterLocation {
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+    margin-left: 10px;
+    margin-top: 80px;
+  }
+
+  .selectionClusterLocationParent {
+    position: absolute;
+  }

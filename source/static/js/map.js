@@ -9,9 +9,121 @@ var flightPathLayer = L.layerGroup().addTo(map).setZIndex(550);     // For fligh
 var planeData = [];
 var airportData = [];
 
+var testInterval;
+
+var currentMapType = null;
+var VFRMapCycle = "20230810";
+var mapTiles = {};
+var mapTypes = {
+    geographic: {
+        maxZoom: 18,
+        defaultZoom: 7
+    },
+    vfrc: {
+        maxZoom: 12,
+        defaultZoom: 7
+    },
+    sectc: {
+        maxZoom: 11,
+        defaultZoom: 7
+    },
+    helic: {
+        maxZoom: 13,
+        defaultZoom: 7
+    },
+    ifrlc: {
+        maxZoom: 11,
+        defaultZoom: 7
+    },
+    ehc: {
+        maxZoom: 10,
+        defaultZoom: 7
+    }
+};
+
+function initializeMapTiles() {
+    for (var type in mapTypes) {
+        var mapLink;
+        var mapSettings = {
+            attribution: "&copy; <a href='https://vfrmap.com/tos.html'>VFRMap</a> contributors",
+            maxZoomSetting: mapTypes[type].maxZoom,
+            tms: true
+        };
+        if (type == "geographic") {
+            mapLink = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            mapSettings.attribution = "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors",
+            mapSettings.tms = false
+        }
+        else {
+            mapLink = "https://vfrmap.com/" + VFRMapCycle + "/tiles/" + type + "/{z}/{y}/{x}.jpg"
+        }
+        mapTiles[type] = L.tileLayer(mapLink, mapSettings);
+    }
+}
+
+function setMapType(mapType) {    
+    if (currentMapType != null && mapType != currentMapType) {
+        mapTiles[currentMapType].removeFrom(map);
+        currentMapType = mapType;
+        mapTiles[currentMapType].addTo(map);
+    }
+    else if (currentMapType == null) {
+        currentMapType = mapType;
+        mapTiles[currentMapType].addTo(map);
+    }
+
+    // The following code works but would refresh again after hitting button which personally I didn't like
+    /*
+    if (currentMapType) {
+        mapTiles[currentMapType].removeFrom(map);
+    }
+    currentMapType = mapType;
+    mapTiles[currentMapType].addTo(map);*/
+    
+}
+
+function initializeMap() {
+    initializeMapTiles();
+    setMapType("geographic");
+    tileSetChange("geographic");
+}
+
+// IMPORTANT, KEEP THE TILELAYER BELOW THIS COMMENT, IS PRIMARY FOR GEOGRAPHIC MAP
+/*
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
 }).addTo(map);
+*/
+
+// THIS SORT OF WORKS NOW BUT NEEDS ADJUSTING
+// format for vfrmap is https://vfrmap.com/20230810/tiles/vfrc/{z}/{x}/{y}.jpg
+// FOR DIFFERENT VFRMaps
+// vfrc - 
+// ehc - 
+// sectc -
+// ifrlc -
+// helic - 
+
+// POSSIBLY FIXED WITH tms IN tileLayer SETTINGS
+/*
+L.TileLayer.VFRCoords = L.TileLayer.extend({
+    getTileUrl: function(tilecoords) {
+        var tilecoordsNewZ = tilecoords.z;
+        var tilecoordsNewX = ((2**tilecoords.z) - 1) - tilecoords.y;
+        var tilecoordsNewY = tilecoords.x;
+        return 'https://vfrmap.com/20230810/tiles/ifrlc/' + tilecoordsNewZ + '/' + tilecoordsNewX + '/' + tilecoordsNewY + '.jpg';
+    },
+    getAttribution: function() {
+        return "&copy; <a href='https://vfrmap.com/tos.html'>VFRMap</a> contributors"
+    }
+});
+
+L.tileLayer.VFRCoords = function() {
+    return new L.TileLayer.VFRCoords();
+}
+
+L.tileLayer.VFRCoords().addTo(map);
+*/
 
 /**
  * Decodes a transponder type to the string version (i.e. int -> string). Useful for displaying this data in the UI.
@@ -43,6 +155,7 @@ function get_position_source_string(position_source) {
     return source;
 }
 
+
 /**
  * Clears the table in the info pane in preparation for new data.
  */
@@ -64,13 +177,76 @@ function clear_table() {
  * @param {int} category plane category from API endpoint
  * @returns {string} decoded plane category
  */
-function get_plane_category_string(category) {
+// in the future use a lookup table for this, switch statement isnt the fastest or cleanest
+// https://dev.to/k_penguin_sato/use-lookup-tables-for-cleaning-up-your-js-ts-code-9gk
+function get_plane_category_string(category_plane) {
     var category = "";
-
-    // TODO: there are a lot of categories to cover here
-    switch (category) {
+    switch (category_plane) {
+        case 0:
+            category = "No Information";
+            break;
+        case 1:
+            category = "No ADS-B Emitter Category Information";
+            break;
+        case 2:
+            category = "Light";
+            break;
+        case 3:
+            category = "Small";
+            break;
+        case 4:
+            category = "Large";
+            break;
+        case 5:
+            category = "High Vortex Large";
+            break;
+        case 6:
+            category = "Heavy";
+            break;
+        case 7:
+            category = "High Performance";
+            break;
+        case 8:
+            category = "Rotocraft";
+            break;
+        case 9:
+            category = "Glider/sailplane";
+            break;
+        case 10:
+            category = "Lighter-than-air";
+            break;
+        case 11:
+            category = "Parachutist/Skydiver";
+            break;
+        case 12:
+            category = "Ultralight/Hang-Glider/Paraglider";
+            break;
+        case 13:
+            category = "Reserved";
+            break;
+        case 14:
+            category = "Unmanned Aerial Vehicle";
+            break;
+        case 15:
+            category = "Space/Trans-Atmospheric Vehicle";
+            break;
+        case 16:
+            category = "Surface Vehicle-Emergency Vehicle";
+            break;
+        case 17:
+            category = "Surface Vehicle-Service Vehicle";
+            break;
+        case 18:
+            category = "Point Obstacle";
+            break;
+        case 19:
+            category = "Cluster Obstacle";
+            break;
+        case 20:
+            category = "Line Obstacle";
+            break;
         default:
-            category = "Unknown";
+            category = "Unknown Aircraft";
     }
 
     return category;
@@ -147,7 +323,9 @@ function draw_plane_markers(plane_data) {
         });
 
         // order in which these methods are called doesn't matter
-        marker.setIcon(planeIcon);
+        
+        marker.setIcon(L.icon({ iconUrl: plane.category_icon, iconSize: [20, 20], iconAnchor: [10, 10], className: "planeMarker" }));
+
         // Rotate icon to match actual plane heading
         marker.setRotationAngle(plane.true_track);
         marker.addTo(planeLayer);
@@ -247,8 +425,9 @@ function draw_plane_markers(plane_data) {
 
             draw_flight_path(plane.icao24);
 
-            // Hide zoom controls (draws over top of the table)
+            // Hide zoom controls and map type selection (draws over top of the table)
             $(".leaflet-control-zoom").hide();
+            $(".selectionClusterLocation").hide();
 
             // Display data
             $("#infoPane").show();
@@ -395,8 +574,9 @@ function draw_airport_markers(airport_data) {
                 }
             }
 
-            // Hide zoom controls (draws over top of the table)
+            // Hide zoom controls and map type selection (draws over top of the table)
             $(".leaflet-control-zoom").hide();
+            $(".selectionClusterLocation").hide();
 
             // Display data
             $("#infoPane").show();
@@ -412,8 +592,9 @@ function setup_event_listeners() {
     $("#closeButton").on('click', (event) => {
         // Hide table
         $("#infoPane").hide();
-        // Redraw zoom controls
+        // Redraw zoom and map type selection controls
         $(".leaflet-control-zoom").show();
+        $(".selectionClusterLocation").show();
     });
 
     // Prevent mouse events from interacting with the map below the info panel
@@ -459,3 +640,82 @@ function main() {
     // Send request
     plane_data_request.send();
 }
+
+
+map.on("zoomend", onMapZoomEnd);
+map.on("moveend", onMapMoveEnd);
+
+function getMapLatLonBounds() { // this function order got fucked up, need to fix mm
+    var minLonEast = map.getBounds().getEast();
+    var maxLonWest = map.getBounds().getWest();
+    var minLatSouth = map.getBounds().getSouth();
+    var maxLatNorth = map.getBounds().getNorth();
+
+    //var latLonBounds = [minLonEast, maxLonWest, minLatSouth, maxLatNorth]
+    var latLonBounds = [minLatSouth, maxLatNorth, maxLonWest, minLonEast]
+    
+    //console.log(JSON.stringify({latLonBounds : latLonBounds})); // for debugging purposes
+    $.ajax({
+        url: '/data/getMapLatLonBounds',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({latLonBounds: latLonBounds}),
+//        success: function(response) { console.log(response); },
+        error: function(error) {
+            console.log(error);
+        }
+    })
+}
+
+function onMapZoomEnd() {
+    getMapLatLonBounds();
+    checkMapZoomLevel();
+}
+
+function onMapMoveEnd() {
+    getMapLatLonBounds();
+}
+
+function checkMapZoomLevel() {
+    // Enable the overlay, we are zoomed too far out
+    if (map.getZoom() < 8) {
+        document.getElementsByClassName('leaflet-map-pane')[0].style.filter = 'blur(10px)';
+        document.getElementById('zoomedTooFarOut').style.display = 'flex';
+
+        clearInterval(testInterval); // clear the current interval we have to stop calling planes
+        testInterval = null;
+    }
+    // Disable the overlay, we are zoomed in enough to load planes
+    else {
+        document.getElementsByClassName('leaflet-map-pane')[0].style.filter = 'blur(0px)';
+        document.getElementById('zoomedTooFarOut').style.display = 'none';
+
+        if (map.getZoom() == 8 && testInterval == null) {
+            testInterval = setInterval(main, 30000);
+        }
+    }
+}
+
+function dropDownSelection() {
+    var coll = document.getElementsByClassName("mapCollapsible");
+    coll[0].classList.toggle("active");
+    var content = coll[0].nextElementSibling;
+    if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+    }
+    else {
+        content.style.maxHeight = content.scrollHeight + "px";
+    }
+}
+
+var currentMapTilesetSelection = "geographic";
+
+function tileSetChange(mapType) {
+    document.getElementById(currentMapTilesetSelection).style.backgroundColor = '';
+    document.getElementById(mapType).style.backgroundColor = '#cccccc';
+    currentMapTilesetSelection = mapType;
+    // also need to change the active tileset on the map and remove the old but that sounds like a tommorow issue
+    setMapType(mapType);
+}
+
+

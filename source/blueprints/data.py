@@ -1,9 +1,11 @@
 import pandas as pd
-from flask import Blueprint, g, make_response
+from flask import Blueprint, g, make_response, request, jsonify
 from opensky_api import OpenSkyApi
 from requests.exceptions import ReadTimeout
 
 from .map import initial_center
+
+latLonBoundBox = [initial_center["lat"] - 3, initial_center["lat"] + 3, initial_center["lon"] - 3, initial_center["lon"] + 3]
 
 try:
     # try to use the opensky API with credentials
@@ -70,11 +72,18 @@ def plane_states():
 
     try:
         states = opensky.get_states(
+#            bbox=(
+#                initial_center["lat"] - 3,
+#                initial_center["lat"] + 3,
+#                initial_center["lon"] - 3,
+#                initial_center["lon"] + 3,
+#            )
+
             bbox=(
-                initial_center["lat"] - 3,
-                initial_center["lat"] + 3,
-                initial_center["lon"] - 3,
-                initial_center["lon"] + 3,
+                latLonBoundBox[0],
+                latLonBoundBox[1],
+                latLonBoundBox[2],
+                latLonBoundBox[3],
             )
         )
 
@@ -105,6 +114,7 @@ def plane_states():
                 "squawk": state.squawk,
                 "position_source": state.position_source,
                 "category": state.category,
+                "category_icon": f"../static/images/markers/planeCategory{state.category}.svg", # f string format
             }
         )
 
@@ -209,3 +219,13 @@ def airports(state):
                 response_data["airport_data"].append(data)
 
     return make_response(response_data)
+
+@bp.route("/getMapLatLonBounds", methods=["POST"])
+def getMapLatLonBounds():
+    global latLonBoundBox
+    latLonBoundBox = request.json['latLonBounds'] 
+    return getLatLonBoundBox()
+
+def getLatLonBoundBox():
+    global latLonBoundBox
+    return latLonBoundBox
